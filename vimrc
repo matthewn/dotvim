@@ -64,6 +64,7 @@
   Bundle 'mikewest/vimroom'
   Bundle 'tpope/vim-surround'
   Bundle 'tpope/vim-commentary'
+  Bundle 'tpope/vim-fugitive'
   Bundle 'vim-scripts/ZoomWin'
   Bundle 'altercation/vim-colors-solarized'
   filetype plugin indent on
