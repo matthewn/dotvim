@@ -145,6 +145,10 @@
   " make Y effect to end of line instead of whole line
     map Y y$
 
+  " reselect visual block after indent/outdent
+    vnoremap < <gv
+    vnoremap > >gv
+
   " blog input mappings
     " a href's
     map \a gewi<a href=""><Esc>ea</a><Esc>F>hi
