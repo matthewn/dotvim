@@ -62,9 +62,10 @@
   Bundle 'vim-scripts/BufOnly.vim'
   Bundle 'nathanaelkane/vim-indent-guides'
   Bundle 'mikewest/vimroom'
-  Bundle 'tpope/vim-surround'
   Bundle 'tpope/vim-commentary'
   Bundle 'tpope/vim-fugitive'
+  Bundle 'tpope/vim-surround'
+  Bundle 'tpope/vim-unimpaired'
   Bundle 'vim-scripts/ZoomWin'
   Bundle 'altercation/vim-colors-solarized'
   filetype plugin indent on
