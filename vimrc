@@ -104,6 +104,9 @@
     set guioptions-=T
     "set guioptions-=m
     colorscheme darkocean
+    if has("unix")
+      set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
+    endif
     if has("unix") && match(system('hostname'), 'vardaman') == 0
         set lines=43
         set columns=85
