@@ -67,7 +67,8 @@
   Bundle 'tpope/vim-surround'
   Bundle 'tpope/vim-unimpaired'
   Bundle 'vim-scripts/ZoomWin'
-  Bundle 'altercation/vim-colors-solarized'
+  Bundle 'nelstrom/vim-visual-star-search'
+  Bundle 'nelstrom/vim-qargs'
   filetype plugin indent on
 
 " IF COLOR IS AVAILABLE...
