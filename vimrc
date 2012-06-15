@@ -69,6 +69,7 @@
   Bundle 'vim-scripts/ZoomWin'
   Bundle 'nelstrom/vim-visual-star-search'
   Bundle 'nelstrom/vim-qargs'
+  Bundle 'yesmeck/tips.vim.git'
   filetype plugin indent on
 
 " IF COLOR IS AVAILABLE...
