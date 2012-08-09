@@ -85,7 +85,8 @@
   if has("autocmd")
     " put these in an autocmd group (so we can delete them easily)
     augroup vimrcEx
-      au! " clear out the augroup
+      " clear out the augroup
+      au! 
       " for all text files set 'textwidth' to 78 characters.
       autocmd FileType text setlocal textwidth=78
       " when editing a file, always jump to the last known cursor position.
