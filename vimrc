@@ -69,7 +69,6 @@
   Bundle 'vim-scripts/ZoomWin'
   Bundle 'nelstrom/vim-visual-star-search'
   Bundle 'nelstrom/vim-qargs'
-  Bundle 'yesmeck/tips.vim.git'
   filetype plugin indent on
 
 " IF COLOR IS AVAILABLE...
@@ -84,18 +83,24 @@
 
 " IF AUTOCOMMANDS ARE AVAILABLE...
   if has("autocmd")
-    " Put these in an autocmd group, so that we can delete them easily.
+    " put these in an autocmd group (so we can delete them easily)
     augroup vimrcEx
-    au!
-    " For all text files set 'textwidth' to 78 characters.
-    autocmd FileType text setlocal textwidth=78
-    " When editing a file, always jump to the last known cursor position.
-    " Don't do it when the position is invalid or when inside an event handler
-    " (happens when dropping a file on gvim).
-    autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal g`\"" |
-      \ endif
+      au! " clear out the augroup
+      " for all text files set 'textwidth' to 78 characters.
+      autocmd FileType text setlocal textwidth=78
+      " when editing a file, always jump to the last known cursor position.
+      " (don't do it when the position is invalid or when inside an event handler
+      " (happens when dropping a file on gvim))
+      autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+      au BufWritePost .vimrc,vimrc source % " reload vimrc on save
+      au BufNewFile,BufRead *.html,*.shtml set indentexpr= | set smartindent | set autoindent
+      au BufNewFile,BufRead *.blog setf html | set lbr | set spell
+      au BufNewFile,BufRead *.module,*.install,*.inc setf php | set tabstop=2 | set softtabstop=2 | set shiftwidth=2
+      au BufNewFile,BufRead *.css set tabstop=2 | set softtabstop=2 | set shiftwidth=2
+      au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h 
     augroup END
   else
     set autoindent
@@ -109,7 +114,7 @@
     if has("unix")
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
     endif
-    if has("unix") && match(system('hostname'), 'vardaman') == 0
+    if has("unix") && match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'fiatlux') == 0 
         set lines=43
         set columns=85
         set guifont=Ubuntu\ Mono\ 12
@@ -184,9 +189,8 @@
     imap <C-S-tab> <esc>:bprev<CR>
     " toggle line wrap
     nmap <silent> <leader>W :silent set wrap!<cr>:set wrap?<cr>
-    " shortcuts to get here [.vimrc] and reload automatically after save
+    " shortcut to get here [.vimrc]
     nmap <leader>v :e $MYVIMRC<cr>
-    autocmd! BufWritePost .vimrc source %
     " remove trailing spaces on the current line
     nmap <silent> <leader>s :silent s/\s\+$<cr>
     " remove trailing spaces on entire buffer without altering the cursor position
