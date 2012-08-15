@@ -99,7 +99,7 @@
       au BufWritePost .vimrc,vimrc source % " reload vimrc on save
       au BufNewFile,BufRead *.html,*.shtml set indentexpr= | set smartindent | set autoindent
       au BufNewFile,BufRead *.blog setf html | set lbr | set spell
-      au BufNewFile,BufRead *.module,*.install,*.inc setf php | set tabstop=2 | set softtabstop=2 | set shiftwidth=2
+      au BufNewFile,BufRead *.module,*.install,*.inc setf php | set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set matchpairs=(:),[:],{:}
       au BufNewFile,BufRead *.css set tabstop=2 | set softtabstop=2 | set shiftwidth=2
       au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h 
     augroup END
