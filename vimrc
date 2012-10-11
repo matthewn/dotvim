@@ -25,13 +25,18 @@
   set encoding=utf-8
   set ttyfast
   set background=dark
-  set dict +=~/.vim/dictionaries/drupal6.dict " add Drupal 6 dictionary to autocomplete (^X^K)
+  set dict +=~/.vim/dictionaries/drupal6.dict
+  set dict +=~/.vim/dictionaries/wordlist.dict
   set autochdir
   set foldmethod=indent
   set nofoldenable
+  set directory=~/.vim/tmp//
+  if has('mouse')
+    set mouse=a
+  endif
 
 " VERSION DEPENDENT SETTINGS
-" persistent undo is only in vim ≥ 7.3
+  " persistent undo is only in vim ≥ 7.3
   if v:version >= 703
     set undofile
     set undodir=$HOME/.vim/undo,/tmp
@@ -41,37 +46,39 @@
   filetype off
   set rtp+=~/.vim/bundle/vundle/
   call vundle#rc()
-  Bundle 'bsl/obviousmode'
-  Bundle 'gmarik/vundle'
-  Bundle 'mileszs/ack.vim'
-  Bundle 'vim-scripts/bufkill.vim'
-  Bundle 'vim-scripts/buftabs'
-  Bundle 'tomtom/checksyntax_vim'
   Bundle 'agileadam/drupal6complete'
-  Bundle 'sjl/gundo.vim'
-  Bundle 'sjbach/lusty'
-  Bundle 'vim-scripts/mru.vim'
-  Bundle 'scrooloose/nerdtree'
-  Bundle 'vim-scripts/php-doc'
-  Bundle 'vim-scripts/Smart-Home-Key'
-  Bundle 'vim-scripts/svndiff'
-  Bundle 'vim-scripts/taglist.vim'
-  Bundle 'vim-scripts/TaskList.vim'
-  "Bundle 'tomtom/tcomment_vim'
-  Bundle 'vim-scripts/vcscommand.vim'
-  Bundle 'vim-scripts/BufOnly.vim'
-  Bundle 'nathanaelkane/vim-indent-guides'
+  Bundle 'bsl/obviousmode'
+  Bundle 'ervandew/supertab'
+  Bundle 'gmarik/vundle'
   Bundle 'mikewest/vimroom'
+  Bundle 'mileszs/ack.vim'
+  Bundle 'nathanaelkane/vim-indent-guides'
+  Bundle 'nelstrom/vim-qargs'
+  Bundle 'nelstrom/vim-visual-star-search'
+  Bundle 'scrooloose/nerdtree'
+  Bundle 'sjbach/lusty'
+  Bundle 'sjl/gundo.vim'
+  Bundle 'tomtom/checksyntax_vim'
   Bundle 'tpope/vim-commentary'
   Bundle 'tpope/vim-fugitive'
   Bundle 'tpope/vim-surround'
   Bundle 'tpope/vim-unimpaired'
+  Bundle 'tsaleh/vim-matchit'
+  Bundle 'vim-scripts/BufOnly.vim'
+  Bundle 'vim-scripts/Smart-Home-Key'
+  Bundle 'vim-scripts/TaskList.vim'
   Bundle 'vim-scripts/ZoomWin'
-  Bundle 'nelstrom/vim-visual-star-search'
-  Bundle 'nelstrom/vim-qargs'
+  Bundle 'vim-scripts/bufkill.vim'
+  Bundle 'vim-scripts/buftabs'
+  Bundle 'vim-scripts/mru.vim'
+  Bundle 'vim-scripts/php-doc'
+  Bundle 'vim-scripts/svndiff'
+  Bundle 'vim-scripts/taglist.vim'
+  Bundle 'vim-scripts/vcscommand.vim'
+  "Bundle 'tomtom/tcomment_vim'
   filetype plugin indent on
 
-" IF COLOR IS AVAILABLE...
+" COLOR SETTINGS
   if &t_Co > 2 || has("gui_running")
     syntax on
     set hlsearch
@@ -81,7 +88,30 @@
     let g:indent_guides_enable_on_vim_startup = 1
   endif
 
-" IF AUTOCOMMANDS ARE AVAILABLE...
+" GVIM SETTINGS
+  if v:progname =~? "gvim"
+    set guioptions-=T
+    "set guioptions-=m
+    colorscheme darkocean
+    " completion
+    highlight Pmenu guifg=#aee guibg=#111
+    if has("unix")
+      set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
+    endif
+    if has("unix") && match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'fiatlux') == 0 
+        set lines=43
+        set columns=85
+        set guifont=Ubuntu\ Mono\ 12
+    else
+        set lines=110
+        set columns=100
+    endif
+    if has("win32") || has("win64")
+      set guifont=Lucida_Sans_Typewriter:h10:cANSI
+    endif
+  endif
+
+" AUTOCOMMANDS
   if has("autocmd")
     " put these in an autocmd group (so we can delete them easily)
     augroup vimrcEx
@@ -107,41 +137,15 @@
     set autoindent
   endif
 
-" CONDITIONAL SETTINGS (how we're running, where we are)
-  if v:progname =~? "gvim"
-    set guioptions-=T
-    "set guioptions-=m
-    colorscheme darkocean
-    if has("unix")
-      set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
-    endif
-    if has("unix") && match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'fiatlux') == 0 
-        set lines=43
-        set columns=85
-        set guifont=Ubuntu\ Mono\ 12
-    else
-        set lines=110
-        set columns=100
-    endif
-    if has("win32") || has("win64")
-      set guifont=Lucida_Sans_Typewriter:h10:cANSI
-    endif
-  endif
-
 " KEY REMAPPINGS ******************************************** [nore = don't recurse]
 
-  " MSWIN-STYLE CUT/COPY/PASTE (stolen from $VIMRUNTIME/mswin.vim)
-    " CTRL-X is Cut
+    let mapleader = ","
+
+  " MSWIN-STYLE CUT/COPY/PASTE (from $VIMRUNTIME/mswin.vim)
     vnoremap <C-X> "+x
-    " CTRL-C is Copy
     vnoremap <C-C> "+y
-    " CTRL-V is Paste
     map <C-V> "+gP
     cmap <C-V> <C-R>+
-    " Pasting blockwise and linewise selections is not possible in Insert and
-    " Visual mode without the +virtualedit feature.  They are pasted as if they
-    " were characterwise instead.
-    " Uses the paste.vim autoload script.
     exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
     exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
     " Use CTRL-Q to do what CTRL-V used to do (blockwise visual mode)
@@ -163,18 +167,16 @@
 
   " blog input mappings
     " a href's
-    map \a gewi<a href=""><Esc>ea</a><Esc>F>hi
-    vmap \a di<a href=""<Esc>mza><Esc>pa</a><Esc>`zi
+    map <leader>a gewi<a href=""><Esc>ea</a><Esc>F>hi
+    vmap <leader>a di<a href=""<Esc>mza><Esc>pa</a><Esc>`zi
     " img
-    map \i i<img src="" class="" width="" height="" alt="" /><Esc>
+    map <leader>i i<img src="" class="" width="" height="" alt="" /><Esc>
     " fill in double <br />s
-    map \d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
+    map <leader>d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
     " make a 'more' jump
-    map \M i<!-- more --><Esc>
+    map <leader>M i<!-- more --><Esc>
 
   " handy shortcuts
-    " (<leader> defaults to \)
-    let mapleader = ","
     " quick tab stop settings
     map <leader>2 :set tabstop=2<cr><Esc>:set softtabstop=2<cr><Esc>:set shiftwidth=2<cr>
     map <leader>4 :set tabstop=4<cr><Esc>:set softtabstop=4<cr><Esc>:set shiftwidth=4<cr>
@@ -219,8 +221,6 @@
     map <leader>e :e <C-R>=expand("%:p:h") . "/" <cr>
     " save & check php syntax
     " nnoremap <leader>cs :w !php -l %<cr>
-    " cd to zinch trunk
-    nnoremap <leader>zd :cd /home/matthewn/zw/trunk<cr>
     " maximize window
     nnoremap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
   
@@ -253,7 +253,7 @@
     " bufonly
     nnoremap <leader>o :BufOnly<cr>
 
-" SETTINGS *************************************************************************
+" PLUGIN SETTINGS
 
   " winmanager
   let g:persistentBehaviour = 0
@@ -274,8 +274,6 @@
   " minibufexplorer ctrl-tabs
   " let g:miniBufExplMapCTabSwitchBufs = 1
   " let g:miniBufExplModSelTarget = 1
-  " fuzzyfinder color tweak
-  " highlight Pmenu guifg=#aee guibg=#111
   " buftabs
   let g:buftabs_in_statusline=1
   let g:buftabs_only_basename=1
@@ -285,10 +283,39 @@
   " showmarks
   let g:showmarks_enable=0
 
+" FONT TWIDDLING
+  " http://vim.wikia.com/wiki/Change_font_size_quickly
+  let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
+  let s:minfontsize = 6
+  let s:maxfontsize = 16
+  function! AdjustFontSize(amount)
+    if has("gui_gtk2") && has("gui_running")
+      let fontname = substitute(&guifont, s:pattern, '\1', '')
+      let cursize = substitute(&guifont, s:pattern, '\2', '')
+      let newsize = cursize + a:amount
+      if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
+        let newfont = fontname . newsize
+        let &guifont = newfont
+      endif
+    else
+      echoerr "You need to run the GTK2 version of Vim to use this function."
+    endif
+  endfunction
 
+  function! LargerFont()
+    call AdjustFontSize(1)
+  endfunction
+  command! LargerFont call LargerFont()
 
+  function! SmallerFont()
+    call AdjustFontSize(-1)
+  endfunction
+  command! SmallerFont call SmallerFont()
 
-" CRUFT ****************************************************************************
+  nmap g= :LargerFont<cr>
+  nmap g- :SmallerFont<cr>
+
+" CRUFT
 
   "Make the completion menus readable
   "highlight Pmenu ctermfg=0 ctermbg=3
