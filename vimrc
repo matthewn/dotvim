@@ -128,7 +128,7 @@
       au BufWritePost .vimrc,vimrc source % 
       " compile sassy css on save
       au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h 
-      au BufNewFile,BufRead *.blog setf blog
+      au BufNewFile,BufRead *.blog setf html | set lbr | set spell
       au BufNewFile,BufRead *.module,*.install,*.inc setf php
     augroup END
   else
