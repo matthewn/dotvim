@@ -117,8 +117,6 @@
     augroup vimrcEx
       " clear out the augroup
       au! 
-      " for all text files set 'textwidth' to 78 characters.
-      autocmd FileType text setlocal textwidth=78
       " when editing a file, always jump to the last known cursor position.
       " (don't do it when the position is invalid or when inside an event handler
       " (happens when dropping a file on gvim))
@@ -126,12 +124,12 @@
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
-      au BufWritePost .vimrc,vimrc source % " reload vimrc on save
-      au BufNewFile,BufRead *.html,*.shtml set indentexpr= | set smartindent | set autoindent
-      au BufNewFile,BufRead *.blog setf html | set lbr | set spell
-      au BufNewFile,BufRead *.module,*.install,*.inc setf php | set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set matchpairs=(:),[:],{:}
-      au BufNewFile,BufRead *.css set tabstop=2 | set softtabstop=2 | set shiftwidth=2
+      " reload vimrc on save
+      au BufWritePost .vimrc,vimrc source % 
+      " compile sassy css on save
       au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h 
+      au BufNewFile,BufRead *.blog setf blog
+      au BufNewFile,BufRead *.module,*.install,*.inc setf php
     augroup END
   else
     set autoindent
@@ -141,22 +139,22 @@
 
     let mapleader = ","
 
-  " MSWIN-STYLE CUT/COPY/PASTE (from $VIMRUNTIME/mswin.vim)
+  " make up and down arrows not linewise in insert mode
+    imap <Up> <C-o>gk
+    imap <Down> <C-o>gj
+
+  " mswin-style cut/copy/paste (from $VIMRUNTIME/mswin.vim)
     vnoremap <C-X> "+x
     vnoremap <C-C> "+y
     map <C-V> "+gP
     cmap <C-V> <C-R>+
     exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
     exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
-    " Use CTRL-Q to do what CTRL-V used to do (blockwise visual mode)
+    " <C-Q> for what <C-V> used to do (blockwise visual mode)
     noremap <C-Q> <C-V>
 
   " don't use Ex mode, use Q for formatting
     map Q gq
-
-  " make up and down arrows not linewise in insert mode
-    imap <Up> <C-o>gk
-    imap <Down> <C-o>gj
 
   " make Y effect to end of line instead of whole line
     map Y y$
@@ -166,34 +164,30 @@
     vnoremap > >gv
 
   " blog input mappings
-    " a href's
     map <leader>a gewi<a href=""><Esc>ea</a><Esc>F>hi
     vmap <leader>a di<a href=""<Esc>mza><Esc>pa</a><Esc>`zi
-    " img
     map <leader>i i<img src="" class="" width="" height="" alt="" /><Esc>
-    " fill in double <br />s
     map <leader>d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
-    " make a 'more' jump
     map <leader>M i<!-- more --><Esc>
 
-  " handy shortcuts
-    " quick tab stop settings
-    map <leader>2 :set tabstop=2<cr><Esc>:set softtabstop=2<cr><Esc>:set shiftwidth=2<cr>
-    map <leader>4 :set tabstop=4<cr><Esc>:set softtabstop=4<cr><Esc>:set shiftwidth=4<cr>
-    map <leader>8 :set tabstop=8<cr><Esc>:set softtabstop=8<cr><Esc>:set shiftwidth=4<cr>
-    " toggle line numbering
-    nmap <silent> <leader># :silent set number!<cr>:set number?<cr>
+  " shortcuts
+    " easy escape
+    inoremap jj <esc>
     " warp speed auto-complete: map ';;' to trigger in insert mode
     imap ;; <C-x><C-o>
-    " switch between buffers with ctrl-arrows
+    " switch between buffers with ctrl-tabs
     nmap <C-tab> :bnext<CR> 
     nmap <C-S-tab> :bprev<CR>
     imap <C-tab> <esc>:bnext<CR> 
     imap <C-S-tab> <esc>:bprev<CR>
-    " toggle line wrap
-    nmap <silent> <leader>W :silent set wrap!<cr>:set wrap?<cr>
     " shortcut to get here [.vimrc]
     nmap <leader>v :e $MYVIMRC<cr>
+    " clear the search highlights
+    nnoremap <silent> g<space> :nohlsearch<cr>
+    " toggle line wrap
+    nmap <silent> <leader>W :silent set wrap!<cr>:set wrap?<cr>
+    " toggle line numbering
+    nmap <silent> <leader># :silent set number!<cr>:set number?<cr>
     " remove trailing spaces on the current line
     nmap <silent> <leader>s :silent s/\s\+$<cr>
     " remove trailing spaces on entire buffer without altering the cursor position
@@ -202,10 +196,6 @@
     nnoremap <leader>S ?{<cr>jV/^\s*\}?$<cr>k:sort<cr>:noh<cr>
     " fold tag
     nnoremap <leader>zT Vatzf
-    " easy escape
-    inoremap jj <esc>
-    " clear the search highlights
-    nnoremap <silent> g<space> :nohlsearch<cr>
     " write with sudo, dammit
     cmap w!! w !sudo tee % >/dev/null
     " write and refresh in browser
@@ -223,14 +213,25 @@
     " nnoremap <leader>cs :w !php -l %<cr>
     " maximize window
     nnoremap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
+    " tab stop changes
+    map <leader>2 :set tabstop=2<cr><Esc>:set softtabstop=2<cr><Esc>:set shiftwidth=2<cr>
+    map <leader>4 :set tabstop=4<cr><Esc>:set softtabstop=4<cr><Esc>:set shiftwidth=4<cr>
+    map <leader>8 :set tabstop=8<cr><Esc>:set softtabstop=8<cr><Esc>:set shiftwidth=4<cr>
   
   " plugin access shortcuts
+    " MRU
+    nnoremap <leader>m :MRU<cr>
+    " bufkill.vim's :BD
+    nnoremap <silent> gx :BD<cr>
+    " lusty
+    nnoremap <silent> <leader>f :LustyFilesystemExplorerFromHere<cr>
+    nnoremap <silent> <leader>b :LustyBufferExplorer<cr>
+    " gundo
+    nnoremap <leader>g :GundoToggle<cr>
     " winmanager
     map <leader>w :WMToggle<cr>
     map <c-w><c-f> :FirstExplorerWindow<cr>
     map <c-w><c-b> :BottomExplorerWindow<cr>
-    " gundo
-    nnoremap <leader>g :GundoToggle<cr>
     " tasklist (have to map twice; tasklist bug?)
     nnoremap <leader>Zd <Plug>TaskList
     nnoremap <leader>d :TaskList<cr>
@@ -240,18 +241,17 @@
     " taglist
     set tags+=./tags;/
     nnoremap <leader>t :TlistToggle<cr>
-    " MRU
-    nnoremap <leader>m :MRU<cr>
     " Ack
     nnoremap <leader>a :Ack 
-    " lusty
-    nnoremap <silent> <leader>f :LustyFilesystemExplorerFromHere<cr>
-    nnoremap <silent> <leader>b :LustyBufferExplorer<cr>
     " smarthomekey
     map <silent> <Home> :SmartHomeKey<CR>
 		imap <silent> <Home> <C-O>:SmartHomeKey<CR>
     " bufonly
     nnoremap <leader>o :BufOnly<cr>
+    " font twiddling
+    runtime fonts.vim
+    nmap g= :LargerFont<cr>
+    nmap g- :SmallerFont<cr>
 
 " PLUGIN SETTINGS
 
@@ -271,9 +271,6 @@
   " nerdtree
   let NERDTreeMinimalUI=1
   let NERDTreeDirArrows=1
-  " minibufexplorer ctrl-tabs
-  " let g:miniBufExplMapCTabSwitchBufs = 1
-  " let g:miniBufExplModSelTarget = 1
   " buftabs
   let g:buftabs_in_statusline=1
   let g:buftabs_only_basename=1
@@ -282,55 +279,5 @@
   set statusline=%{buftabs#statusline()}\ %q%h%m%r%=%-14.(%l,%c%V%)\ %P
   " showmarks
   let g:showmarks_enable=0
-
-" FONT TWIDDLING
-  " http://vim.wikia.com/wiki/Change_font_size_quickly
-  let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
-  let s:minfontsize = 6
-  let s:maxfontsize = 16
-  function! AdjustFontSize(amount)
-    if has("gui_gtk2") && has("gui_running")
-      let fontname = substitute(&guifont, s:pattern, '\1', '')
-      let cursize = substitute(&guifont, s:pattern, '\2', '')
-      let newsize = cursize + a:amount
-      if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
-        let newfont = fontname . newsize
-        let &guifont = newfont
-      endif
-    else
-      echoerr "You need to run the GTK2 version of Vim to use this function."
-    endif
-  endfunction
-
-  function! LargerFont()
-    call AdjustFontSize(1)
-  endfunction
-  command! LargerFont call LargerFont()
-
-  function! SmallerFont()
-    call AdjustFontSize(-1)
-  endfunction
-  command! SmallerFont call SmallerFont()
-
-  nmap g= :LargerFont<cr>
-  nmap g- :SmallerFont<cr>
-
-" CRUFT
-
-  "Make the completion menus readable
-  "highlight Pmenu ctermfg=0 ctermbg=3
-  "highlight PmenuSel ctermfg=0 ctermbg=7
-
-  "The following should be done automatically for the default colour scheme
-  "at least, but it is not in Vim 7.0.17.
-  "if &bg == "dark"
-  "  highlight MatchParen ctermbg=darkblue guibg=blue
-  "endif
-  "
-  "if &diff
-      "I'm only interested in diff colours
-  "    syntax off
-  "endif
-  "
 
 " /\/\/\/ vimrc END

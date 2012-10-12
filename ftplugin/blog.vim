@@ -1,0 +1,2 @@
+set lbr
+set spell

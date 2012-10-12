@@ -1,3 +1,8 @@
+set indentexpr= 
+set smartindent
+set autoindent
+
+
 " Vim plugin for showing matching html tags.
 " Maintainer:  Greg Sexton <gregsexton@gmail.com>
 " Credits: Bram Moolenar and the 'matchparen' plugin from which this draws heavily.
