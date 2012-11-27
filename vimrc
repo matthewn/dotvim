@@ -166,7 +166,9 @@
   " blog input mappings
     map <leader>a gewi<a href=""><Esc>ea</a><Esc>F>hi
     vmap <leader>a di<a href=""<Esc>mza><Esc>pa</a><Esc>`zi
-    map <leader>i i<img src="" class="" width="" height="" alt="" /><Esc>
+    vmap <leader>i di<i>pa</i>
+    vmap <leader>b di<b>pa</b>
+    map <leader>I i<img src="" class="" width="" height="" alt="" /><Esc>
     map <leader>d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
     map <leader>M i<!-- more --><Esc>
 
