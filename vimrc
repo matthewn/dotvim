@@ -25,7 +25,6 @@
   set encoding=utf-8
   set ttyfast
   set background=dark
-  set dict +=~/.vim/dictionaries/drupal6.dict
   set dict +=~/.vim/dictionaries/wordlist.dict
   set autochdir
   set foldmethod=indent
@@ -72,10 +71,11 @@
   Bundle 'vim-scripts/buftabs'
   Bundle 'vim-scripts/mru.vim'
   Bundle 'vim-scripts/php-doc'
-  Bundle 'vim-scripts/svndiff'
   Bundle 'vim-scripts/taglist.vim'
   Bundle 'vim-scripts/vcscommand.vim'
   "Bundle 'tomtom/tcomment_vim'
+  "Bundle 'bling/vim-airline'
+  "Bundle 'bling/vim-bufferline'
   filetype plugin indent on
 
 " COLOR SETTINGS
@@ -116,6 +116,7 @@
     " put these in an autocmd group (so we can delete them easily)
     augroup vimrcEx
       " clear out the augroup
+      " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
       au! 
       " when editing a file, always jump to the last known cursor position.
       " (don't do it when the position is invalid or when inside an event handler
@@ -277,8 +278,8 @@
   let g:buftabs_in_statusline=1
   let g:buftabs_only_basename=1
   let g:buftabs_separator=":"
-  set laststatus=2
   set statusline=%{buftabs#statusline()}\ %q%h%m%r%=%-14.(%l,%c%V%)\ %P
+  set laststatus=2
   " showmarks
   let g:showmarks_enable=0
 
