@@ -76,6 +76,8 @@
   "Bundle 'tomtom/tcomment_vim'
   "Bundle 'bling/vim-airline'
   "Bundle 'bling/vim-bufferline'
+  "Bundle 'euclio/vim-nocturne'
+  Bundle 'vim-scripts/ColorSchemeEditor'
   filetype plugin indent on
 
 " COLOR SETTINGS
@@ -92,7 +94,8 @@
   if v:progname =~? "gvim"
     set guioptions-=T
     "set guioptions-=m
-    colorscheme darkocean
+    "colorscheme darkocean
+    colorscheme nocturne
     " completion
     highlight Pmenu guifg=#aee guibg=#111
     if has("unix")
