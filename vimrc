@@ -45,7 +45,8 @@
   filetype off
   set rtp+=~/.vim/bundle/vundle/
   call vundle#rc()
-  Bundle 'agileadam/drupal6complete'
+  Bundle 'bling/vim-airline'
+  Bundle 'bling/vim-bufferline'
   Bundle 'bsl/obviousmode'
   Bundle 'ervandew/supertab'
   Bundle 'gmarik/vundle'
@@ -54,6 +55,7 @@
   Bundle 'nathanaelkane/vim-indent-guides'
   Bundle 'nelstrom/vim-qargs'
   Bundle 'nelstrom/vim-visual-star-search'
+  Bundle 'psynaptic/vim-drupal'
   Bundle 'scrooloose/nerdtree'
   Bundle 'sjbach/lusty'
   Bundle 'sjl/gundo.vim'
@@ -64,20 +66,18 @@
   Bundle 'tpope/vim-unimpaired'
   Bundle 'tsaleh/vim-matchit'
   Bundle 'vim-scripts/BufOnly.vim'
+  Bundle 'vim-scripts/ColorSchemeEditor'
   Bundle 'vim-scripts/Smart-Home-Key'
   Bundle 'vim-scripts/TaskList.vim'
   Bundle 'vim-scripts/ZoomWin'
   Bundle 'vim-scripts/bufkill.vim'
-  Bundle 'vim-scripts/buftabs'
   Bundle 'vim-scripts/mru.vim'
   Bundle 'vim-scripts/php-doc'
   Bundle 'vim-scripts/taglist.vim'
   Bundle 'vim-scripts/vcscommand.vim'
+  "Bundle 'vim-scripts/buftabs'
   "Bundle 'tomtom/tcomment_vim'
-  "Bundle 'bling/vim-airline'
-  "Bundle 'bling/vim-bufferline'
   "Bundle 'euclio/vim-nocturne'
-  Bundle 'vim-scripts/ColorSchemeEditor'
   filetype plugin indent on
 
 " COLOR SETTINGS
@@ -277,13 +277,24 @@
   " nerdtree
   let NERDTreeMinimalUI=1
   let NERDTreeDirArrows=1
-  " buftabs
-  let g:buftabs_in_statusline=1
-  let g:buftabs_only_basename=1
-  let g:buftabs_separator=":"
-  set statusline=%{buftabs#statusline()}\ %q%h%m%r%=%-14.(%l,%c%V%)\ %P
+  " airline
+  let g:airline_detect_whitespace = 0
+  let g:airline_enable_tagbar = 0
+  let g:airline_section_x = ''
+  let g:airline_section_y = ''
+  " bufferline
   set laststatus=2
+  let g:bufferline_echo = 0
+  let g:bufferline_show_bufnr = 0
+  autocmd VimEnter *
+    \ let &statusline='%{bufferline#refresh_status()}'
+    \ .bufferline#get_status_string()
   " showmarks
-  let g:showmarks_enable=0
+  let g:showmarks_enable = 0
+  " buftabs
+  "let g:buftabs_in_statusline=1
+  "let g:buftabs_only_basename=1
+  "let g:buftabs_separator=":"
+  "set statusline=%{buftabs#statusline()}\ %q%h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " /\/\/\/ vimrc END
