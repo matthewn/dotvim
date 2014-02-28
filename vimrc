@@ -31,13 +31,14 @@
   set foldmethod=indent
   set nofoldenable
   set directory=~/.vim/tmp//
+  set iskeyword-=_ " make _ act as a word boundary
   if has('mouse')
     set mouse=a
   endif
 
 " VERSION DEPENDENT SETTINGS
   " persistent undo is only in vim ≥ 7.3
-  if v:version >= 703
+  if v:version >= 703 " or if has('persistent_undo')
     set undofile
     set undodir=$HOME/.vim/undo,/tmp
   endif
@@ -48,7 +49,6 @@
   call vundle#rc()
   Bundle 'bling/vim-airline'
   Bundle 'bling/vim-bufferline'
-  Bundle 'bsl/obviousmode'
   Bundle 'ervandew/supertab'
   Bundle 'gmarik/vundle'
   Bundle 'gregsexton/gitv'
@@ -64,6 +64,7 @@
   Bundle 'tomtom/checksyntax_vim'
   Bundle 'tomtom/tcomment_vim'
   Bundle 'tpope/vim-fugitive'
+  Bundle 'tpope/vim-ragtag'
   Bundle 'tpope/vim-surround'
   Bundle 'tpope/vim-unimpaired'
   Bundle 'tsaleh/vim-matchit'
@@ -75,6 +76,8 @@
   Bundle 'vim-scripts/bufkill.vim'
   Bundle 'vim-scripts/php-doc'
   Bundle 'vim-scripts/taglist.vim'
+  Bundle 'xolox/vim-easytags'
+  Bundle 'xolox/vim-misc'
   "following plugin breaks checksyntax_vim :(
   "Bundle 'psynaptic/vim-drupal'
   filetype plugin indent on
@@ -200,6 +203,8 @@
     imap <C-S-tab> <esc>:bprev<CR>
     " shortcut to get here [.vimrc]
     nmap <leader>v :e $MYVIMRC<cr>
+    " cd to ~/working/caa
+    nmap <leader>c :cd ~/working/caa<cr>
     " clear the search highlights
     nnoremap <silent> g<space> :nohlsearch<cr>
     " toggle line wrap
@@ -232,17 +237,17 @@
     " maximize window
     nnoremap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     " tab stop changes
-    map <leader>2 :set tabstop=2<cr><Esc>:set softtabstop=2<cr><Esc>:set shiftwidth=2<cr>
-    map <leader>4 :set tabstop=4<cr><Esc>:set softtabstop=4<cr><Esc>:set shiftwidth=4<cr>
-    map <leader>8 :set tabstop=8<cr><Esc>:set softtabstop=8<cr><Esc>:set shiftwidth=4<cr>
+    nnoremap <leader>2 :set tabstop=2<cr><Esc>:set softtabstop=2<cr><Esc>:set shiftwidth=2<cr>
+    nnoremap <leader>4 :set tabstop=4<cr><Esc>:set softtabstop=4<cr><Esc>:set shiftwidth=4<cr>
+    nnoremap <leader>8 :set tabstop=8<cr><Esc>:set softtabstop=8<cr><Esc>:set shiftwidth=4<cr>
+    " this used to point at bufkill.vim's :BD
+    nnoremap <silent> gx :bd<cr>
 
   " plugin access shortcuts
     " ctrlp.vim
     nnoremap <silent> <leader>m :CtrlPMRUFiles<cr>
     nnoremap <silent> <leader>f :CtrlP<cr>
     nnoremap <silent> <leader>b :CtrlPBuffer<cr>
-    " bufkill.vim's :BD
-    nnoremap <silent> gx :BD<cr>
     " gundo
     nnoremap <leader>g :GundoToggle<cr>
     " tasklist (have to map twice; tasklist bug?)
@@ -252,8 +257,8 @@
     nnoremap <leader>n :NERDTreeToggle<cr>
     nnoremap <leader>N :NERDTreeFind<cr>
     " taglist
-    set tags+=./tags;/
     nnoremap <leader>t :TlistToggle<cr>
+    " superceded by easytags: set tags+=./tags;/
     " ack
     nnoremap <leader>a :Ack
     " smarthomekey
@@ -282,6 +287,7 @@
   " nerdtree
   let NERDTreeMinimalUI=1
   let NERDTreeDirArrows=1
+  let NERDTreeMapQuit='<Esc>'
   " airline
   let g:airline_detect_whitespace = 0
   let g:airline_enable_tagbar = 0
