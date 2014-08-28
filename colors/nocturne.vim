@@ -81,7 +81,7 @@ hi PmenuSbar    guifg=NONE    guibg=#444444 gui=NONE
 hi PmenuThumb   guifg=NONE    guibg=#767676 gui=NONE
 
 " Visual Mode
-hi Visual       guifg=NONE    guibg=#303030 gui=NONE
+hi Visual       guifg=NONE    guibg=#a9a9a9 gui=NONE
 
 " Warnings and  errors
 hi WarningMsg   guifg=#ff8700 guibg=NONE    gui=NONE

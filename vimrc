@@ -44,42 +44,45 @@
   endif
 
 " VUNDLE
+  set nocompatible
   filetype off
-  set rtp+=~/.vim/bundle/vundle/
-  call vundle#rc()
-  Bundle 'bling/vim-airline'
-  Bundle 'bling/vim-bufferline'
-  Bundle 'ervandew/supertab'
-  Bundle 'gmarik/vundle'
-  Bundle 'gregsexton/gitv'
-  Bundle 'kien/ctrlp.vim.git'
-  Bundle 'mikewest/vimroom'
-  Bundle 'mileszs/ack.vim'
-  Bundle 'nathanaelkane/vim-indent-guides'
-  Bundle 'nelstrom/vim-qargs'
-  Bundle 'nelstrom/vim-visual-star-search'
-  Bundle 'osyo-manga/vim-over'
-  Bundle 'scrooloose/nerdtree'
-  Bundle 'sjl/gundo.vim'
-  Bundle 'tomtom/checksyntax_vim'
-  Bundle 'tomtom/tcomment_vim'
-  Bundle 'tpope/vim-fugitive'
-  Bundle 'tpope/vim-ragtag'
-  Bundle 'tpope/vim-surround'
-  Bundle 'tpope/vim-unimpaired'
-  Bundle 'tsaleh/vim-matchit'
-  Bundle 'vim-scripts/BufOnly.vim'
-  Bundle 'vim-scripts/ColorSchemeEditor'
-  Bundle 'vim-scripts/Smart-Home-Key'
-  Bundle 'vim-scripts/TaskList.vim'
-  Bundle 'vim-scripts/ZoomWin'
-  Bundle 'vim-scripts/bufkill.vim'
-  Bundle 'vim-scripts/php-doc'
-  Bundle 'vim-scripts/taglist.vim'
-  Bundle 'xolox/vim-easytags'
-  Bundle 'xolox/vim-misc'
+  set runtimepath+=~/.vim/bundle/vundle/
+  call vundle#begin()
+  Plugin 'bling/vim-airline'
+  Plugin 'bling/vim-bufferline'
+  Plugin 'gmarik/vundle'
+  Plugin 'gregsexton/gitv'
+  Plugin 'kien/ctrlp.vim.git'
+  Plugin 'mikewest/vimroom'
+  Plugin 'mileszs/ack.vim'
+  Plugin 'nathanaelkane/vim-indent-guides'
+  Plugin 'nelstrom/vim-qargs'
+  Plugin 'nelstrom/vim-visual-star-search'
+  Plugin 'osyo-manga/vim-over'
+  Plugin 'scrooloose/nerdtree'
+  Plugin 'sjl/gundo.vim'
+  Plugin 'tomtom/checksyntax_vim'
+  Plugin 'tomtom/tcomment_vim'
+  Plugin 'tpope/vim-fugitive'
+  Plugin 'tpope/vim-ragtag'
+  Plugin 'tpope/vim-surround'
+  Plugin 'tpope/vim-unimpaired'
+  Plugin 'tsaleh/vim-matchit'
+  Plugin 'Valloric/YouCompleteMe'
+  Plugin 'vim-scripts/BufOnly.vim'
+  Plugin 'vim-scripts/ColorSchemeEditor'
+  Plugin 'vim-scripts/LargeFile'
+  Plugin 'vim-scripts/Smart-Home-Key'
+  Plugin 'vim-scripts/TaskList.vim'
+  Plugin 'vim-scripts/ZoomWin'
+  Plugin 'vim-scripts/bufkill.vim'
+  Plugin 'vim-scripts/php-doc'
+  Plugin 'vim-scripts/taglist.vim'
+  Plugin 'xolox/vim-easytags'
+  Plugin 'xolox/vim-misc'
   "following plugin breaks checksyntax_vim :(
   "Bundle 'psynaptic/vim-drupal'
+  call vundle#end()
   filetype plugin indent on
 
 " COLOR SETTINGS
@@ -146,7 +149,8 @@
       " reload vimrc on save
       au BufWritePost .vimrc,vimrc source %
       " compile sassy css on save
-      au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h
+      "au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h
+      au BufWritePost,FileWritePost *.scss :!~/bin/compile_compass <afile>:p:h
       au BufNewFile,BufRead *.blog setf html | set lbr | set spell
       au BufNewFile,BufRead *.module,*.install,*.inc setf php
     augroup END
@@ -274,6 +278,8 @@
 " PLUGIN SETTINGS
   " php case statement indenting
   let g:PHP_vintage_case_default_indent = 1
+  " checksyntax: suppress an ugly msg on startup
+  let g:checksyntax#async_runner = 0
   " taglist
   let Tlist_Use_Right_Window = 1
   let Tlist_Compact_Format = 1
@@ -299,10 +305,13 @@
   set laststatus=2
   let g:bufferline_echo = 0
   let g:bufferline_show_bufnr = 0
+  let g:bufferline_rotate = 2
   autocmd VimEnter *
     \ let &statusline='%{bufferline#refresh_status()}'
     \ .bufferline#get_status_string()
   " showmarks
   let g:showmarks_enable = 0
+  " ack
+  let g:ack_autoclose = 1
 
 " /\/\/\/ vimrc END
