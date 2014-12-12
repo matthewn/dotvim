@@ -43,47 +43,49 @@
     set undodir=$HOME/.vim/undo,/tmp
   endif
 
-" VUNDLE
-  set nocompatible
-  filetype off
-  set runtimepath+=~/.vim/bundle/vundle/
-  call vundle#begin()
-  Plugin 'bling/vim-airline'
-  Plugin 'bling/vim-bufferline'
-  Plugin 'gmarik/vundle'
-  Plugin 'gregsexton/gitv'
-  Plugin 'kien/ctrlp.vim.git'
-  Plugin 'mikewest/vimroom'
-  Plugin 'mileszs/ack.vim'
-  Plugin 'nathanaelkane/vim-indent-guides'
-  Plugin 'nelstrom/vim-qargs'
-  Plugin 'nelstrom/vim-visual-star-search'
-  Plugin 'osyo-manga/vim-over'
-  Plugin 'scrooloose/nerdtree'
-  Plugin 'sjl/gundo.vim'
-  Plugin 'tomtom/checksyntax_vim'
-  Plugin 'tomtom/tcomment_vim'
-  Plugin 'tpope/vim-fugitive'
-  Plugin 'tpope/vim-ragtag'
-  Plugin 'tpope/vim-surround'
-  Plugin 'tpope/vim-unimpaired'
-  Plugin 'tsaleh/vim-matchit'
-  Plugin 'Valloric/YouCompleteMe'
-  Plugin 'vim-scripts/BufOnly.vim'
-  Plugin 'vim-scripts/ColorSchemeEditor'
-  Plugin 'vim-scripts/LargeFile'
-  Plugin 'vim-scripts/Smart-Home-Key'
-  Plugin 'vim-scripts/TaskList.vim'
-  Plugin 'vim-scripts/ZoomWin'
-  Plugin 'vim-scripts/bufkill.vim'
-  Plugin 'vim-scripts/php-doc'
-  Plugin 'vim-scripts/taglist.vim'
-  Plugin 'xolox/vim-easytags'
-  Plugin 'xolox/vim-misc'
+" VIM-PLUG
+  call plug#begin('~/.vim/bundle')
+  "Plug 'airblade/vim-gitgutter'
+  Plug 'bling/vim-airline'
+  Plug 'bling/vim-bufferline'
+  Plug 'junegunn/vim-easy-align'
+  Plug 'gmarik/vundle'
+  Plug 'gregsexton/gitv'
+  Plug 'kien/ctrlp.vim'
+  Plug 'justinmk/vim-sneak'
+  Plug 'mikewest/vimroom'
+  Plug 'mileszs/ack.vim'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'nelstrom/vim-qargs'
+  Plug 'nelstrom/vim-visual-star-search'
+  Plug 'osyo-manga/vim-over'
+  Plug 'scrooloose/nerdtree'
+  "Plug 'scrooloose/syntastic'
+  Plug 'sjl/gundo.vim'
+  Plug 'tomtom/checksyntax_vim'
+  Plug 'tomtom/tcomment_vim'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-ragtag'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-unimpaired'
+  "Plug 'Valloric/YouCompleteMe'
+  Plug 'vim-scripts/BufOnly.vim'
+  Plug 'vim-scripts/ColorSchemeEditor'
+  Plug 'vim-scripts/LargeFile'
+  Plug 'vim-scripts/Smart-Home-Key'
+  Plug 'vim-scripts/TaskList.vim'
+  Plug 'vim-scripts/ZoomWin'
+  Plug 'vim-scripts/bufkill.vim'
+  Plug 'vim-scripts/matchit.zip'
+  Plug 'vim-scripts/php-doc'
+  Plug 'vim-scripts/taglist.vim'
+  Plug 'whatyouhide/vim-gotham'
+  Plug 'xolox/vim-easytags'
+  Plug 'xolox/vim-misc'
+  Plug 'xolox/vim-session'
   "following plugin breaks checksyntax_vim :(
-  "Bundle 'psynaptic/vim-drupal'
-  call vundle#end()
-  filetype plugin indent on
+  "Plug 'psynaptic/vim-drupal'
+  call plug#end()
 
 " COLOR SETTINGS
   if &t_Co > 2 || has("gui_running")
@@ -118,9 +120,9 @@
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
     endif
     " linux laptop size & font
-    if has("unix") && match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'fiatlux') == 0
+    if has("unix") && match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'cash') == 0
         set lines=43
-        set columns=85
+        set columns=90
         set guifont=Ubuntu\ Mono\ 12
     else
         set lines=110
@@ -160,6 +162,7 @@
 
 " KEY REMAPPINGS *************************************** [nore = don't recurse]
 
+    "let mapleader = "\<space>"
     let mapleader = ","
 
   " make up and down arrows not linewise in insert mode
@@ -195,7 +198,7 @@
     map <leader>d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
     map <leader>M i<!-- more --><Esc>
 
-  " shortcuts
+  " remappings
     " easy escape
     inoremap jj <esc>
     " warp speed auto-complete: map ';;' to trigger in insert mode
@@ -247,7 +250,11 @@
     " this used to point at bufkill.vim's :BD
     nnoremap <silent> gx :bd<cr>
 
-  " plugin access shortcuts
+  " plugin access remappings
+    " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+    vmap <Enter> <Plug>(EasyAlign)
+    " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+    nmap <Leader>a <Plug>(EasyAlign)
     " ctrlp.vim
     nnoremap <silent> <leader>m :CtrlPMRUFiles<cr>
     nnoremap <silent> <leader>f :CtrlP<cr>
@@ -280,6 +287,8 @@
   let g:PHP_vintage_case_default_indent = 1
   " checksyntax: suppress an ugly msg on startup
   let g:checksyntax#async_runner = 0
+  " force checksyntax on save`:w
+  let g:checksyntax#auto_enable_rx = '.'
   " taglist
   let Tlist_Use_Right_Window = 1
   let Tlist_Compact_Format = 1
@@ -294,6 +303,8 @@
   let NERDTreeMinimalUI=1
   let NERDTreeDirArrows=1
   let NERDTreeMapQuit='<Esc>'
+  let NERDTreeQuitOnOpen = 1
+
   " airline
   let g:airline_detect_whitespace = 0
   let g:airline_enable_tagbar = 0
@@ -313,5 +324,7 @@
   let g:showmarks_enable = 0
   " ack
   let g:ack_autoclose = 1
+  " vim-session
+  let g:session_autosave = 'no'
 
 " /\/\/\/ vimrc END
