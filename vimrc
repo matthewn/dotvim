@@ -46,43 +46,44 @@
 " VIM-PLUG
   call plug#begin('~/.vim/bundle')
   "Plug 'airblade/vim-gitgutter'
-  Plug 'bling/vim-airline'
-  Plug 'bling/vim-bufferline'
-  Plug 'junegunn/vim-easy-align'
-  Plug 'gmarik/vundle'
-  Plug 'gregsexton/gitv'
-  Plug 'kien/ctrlp.vim'
-  Plug 'justinmk/vim-sneak'
-  Plug 'mikewest/vimroom'
-  Plug 'mileszs/ack.vim'
-  Plug 'nathanaelkane/vim-indent-guides'
-  Plug 'nelstrom/vim-qargs'
-  Plug 'nelstrom/vim-visual-star-search'
-  Plug 'osyo-manga/vim-over'
-  Plug 'scrooloose/nerdtree'
-  "Plug 'scrooloose/syntastic'
-  Plug 'sjl/gundo.vim'
-  Plug 'tomtom/checksyntax_vim'
-  Plug 'tomtom/tcomment_vim'
-  Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-ragtag'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-unimpaired'
-  "Plug 'Valloric/YouCompleteMe'
-  Plug 'vim-scripts/BufOnly.vim'
-  Plug 'vim-scripts/ColorSchemeEditor'
-  Plug 'vim-scripts/LargeFile'
-  Plug 'vim-scripts/Smart-Home-Key'
-  Plug 'vim-scripts/TaskList.vim'
-  Plug 'vim-scripts/ZoomWin'
-  Plug 'vim-scripts/bufkill.vim'
-  Plug 'vim-scripts/matchit.zip'
-  Plug 'vim-scripts/php-doc'
-  Plug 'vim-scripts/taglist.vim'
-  Plug 'whatyouhide/vim-gotham'
-  Plug 'xolox/vim-easytags'
-  Plug 'xolox/vim-misc'
-  Plug 'xolox/vim-session'
+  Plug 'alvan/vim-php-manual' " PHP docs for Shift-K, etc.
+  Plug 'bling/vim-airline' " essential
+  Plug 'bling/vim-bufferline' " essential
+  Plug 'ctrlpvim/ctrlp.vim' " essential
+  Plug 'dyng/ctrlsf.vim' " search/replace across files visually
+  Plug 'junegunn/vim-easy-align' " <enter> in visual mode
+  Plug 'gregsexton/gitv' " fugitive extension: git browser at :Gitv
+  Plug 'int3/vim-extradite' " :Extradite to view git log of curent file
+  Plug 'justinmk/vim-sneak' " s{char}{char} to move to it
+  Plug 'KabbAmine/zeavim.vim' " integration with zeal doc reader
+  Plug 'keith/investigate.vim' " gK for information on word at cursor
+  Plug 'mikewest/vimroom' " <leader>V to toggle; do i use this?
+  Plug 'mileszs/ack.vim' " essential
+  Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
+  Plug 'nathanaelkane/vim-indent-guides' " pretty
+  Plug 'nelstrom/vim-qargs' " :Qargs moves quicklist items to arglist
+  Plug 'scrooloose/nerdtree' " essential
+  "Plug 'scrooloose/syntastic' " essential
+  Plug 'severin-lemaignan/vim-minimap' " sublime minimap clone
+  Plug 'Shougo/unite.vim'
+  Plug 'sjl/gundo.vim' " essential
+  Plug 'tomtom/checksyntax_vim' " essential; check syntax on save
+  Plug 'tomtom/tcomment_vim' " essential; gc to comment/uncomment
+  Plug 'tpope/vim-fugitive' " essential
+  Plug 'tpope/vim-ragtag' " useful html-related mappings
+  Plug 'tpope/vim-surround' " essential
+  Plug 'tpope/vim-unimpaired' " handy mappings
+  Plug 'vim-scripts/BufOnly.vim' " :BufOnly <leader>o closes all but current buffer; do I use this?
+  Plug 'vim-scripts/ColorSchemeEditor' " no longer works?
+  Plug 'vim-scripts/LargeFile' " make vim handle large files more gracefully
+  Plug 'vim-scripts/Smart-Home-Key' " does what it says on the tin; do I use this?
+  Plug 'vim-scripts/matchit.zip' " make % much smarter
+  Plug 'vim-scripts/taglist.vim' " <leader>t
+  Plug 'whatyouhide/vim-gotham' " dark colorscheme
+  Plug 'xolox/vim-easytags' " auto generation of tagfiles in ~/.vimtags
+  Plug 'xolox/vim-misc' " dependency for xolox scripts
+  Plug 'xolox/vim-session' " makes vim sessions work the way they should; :SaveSession and :OpenSession
+  "Plug 'Xuyuanp/nerdtree-git-plugin' " git statuses in nerdtree
   "following plugin breaks checksyntax_vim :(
   "Plug 'psynaptic/vim-drupal'
   call plug#end()
@@ -140,11 +141,11 @@
     augroup vimrcEx
       " clear out the augroup
       " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
-      au!
+      autocmd!
       " when editing a file, always jump to the last known cursor position.
       " (don't do it when the position is invalid or when inside an event handler
       " (happens when dropping a file on gvim))
-      autocmd BufReadPost *
+      au BufReadPost *
         \ if line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
@@ -210,8 +211,6 @@
     imap <C-S-tab> <esc>:bprev<CR>
     " shortcut to get here [.vimrc]
     nmap <leader>v :e $MYVIMRC<cr>
-    " cd to ~/working/caa
-    nmap <leader>c :cd ~/working/caa<cr>
     " clear the search highlights
     nnoremap <silent> g<space> :nohlsearch<cr>
     " toggle line wrap
@@ -222,6 +221,10 @@
     nmap <silent> <leader>s :silent s/\s\+$<cr>
     " remove trailing spaces on entire buffer without altering the cursor position
     nmap <silent> <leader>SS :silent %s/\s\+$<cr>:normal ``<cr>
+    " :SaveSession
+    nmap <leader>ss :SaveSession 
+    " :OpenSession
+    nmap <leader>oo :OpenSession<cr>
     " sort css properties
     nnoremap <leader>S ?{<cr>jV/^\s*\}?$<cr>k:sort<cr>:noh<cr>
     " fold tag
@@ -239,8 +242,6 @@
     nnoremap <C-l> <C-w>l
     " edit file, starting in same directory as current file
     map <leader>e :e <C-R>=expand("%:p:h") . "/" <cr>
-    " save & check php syntax
-    " nnoremap <leader>cs :w !php -l %<cr>
     " maximize window
     nnoremap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     " tab stop changes
@@ -249,6 +250,8 @@
     nnoremap <leader>8 :set tabstop=8<cr><Esc>:set softtabstop=8<cr><Esc>:set shiftwidth=4<cr>
     " this used to point at bufkill.vim's :BD
     nnoremap <silent> gx :bd<cr>
+    " edit macro
+    nnoremap <leader>q  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 
   " plugin access remappings
     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -261,9 +264,6 @@
     nnoremap <silent> <leader>b :CtrlPBuffer<cr>
     " gundo
     nnoremap <leader>g :GundoToggle<cr>
-    " tasklist (have to map twice; tasklist bug?)
-    nnoremap <leader>Zd <Plug>TaskList
-    nnoremap <leader>d :TaskList<cr>
     " nerdtree
     nnoremap <leader>n :NERDTreeToggle<cr>
     nnoremap <leader>N :NERDTreeFind<cr>
@@ -271,24 +271,40 @@
     nnoremap <leader>t :TlistToggle<cr>
     " superceded by easytags: set tags+=./tags;/
     " ack
-    nnoremap <leader>a :Ack
+    "nnoremap <leader>a :Ack 
+    nnoremap <leader>a :CtrlSF 
     " smarthomekey
     map <silent> <Home> :SmartHomeKey<CR>
 		imap <silent> <Home> <C-O>:SmartHomeKey<CR>
     " bufonly
     nnoremap <leader>o :BufOnly<cr>
     " font twiddling
-    runtime fonts.vim
-    nmap g= :LargerFont<cr>
-    nmap g- :SmallerFont<cr>
+    command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+    command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
+    nmap g= :Bigger<cr>
+    nmap g- :Smaller<cr>
+    " unite
+    nnoremap <Leader>, :Unite -start-insert file<CR>
+    nnoremap <silent> <Leader>' :Unite -buffer-name=recent -winheight=10 file_mru<cr>
 
 " PLUGIN SETTINGS
+  " unite
+  "call unite#filters#matcher_default#use(['matcher_fuzzy'])
+  "let g:unite_split_rule = "botright"
+  " format mru
+  "let g:unite_source_file_mru_filename_format = ':~:.'
+  "let g:unite_source_file_mru_time_format = ''
+
+  "let g:unite_source_grep_command = 'ack-grep'
+  "let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+  "let g:unite_source_grep_recursive_opt = ''
+
   " php case statement indenting
   let g:PHP_vintage_case_default_indent = 1
-  " checksyntax: suppress an ugly msg on startup
-  let g:checksyntax#async_runner = 0
-  " force checksyntax on save`:w
-  let g:checksyntax#auto_enable_rx = '.'
+  " force checksyntax on save for php, js
+  let g:checksyntax#auto_enable_rx = 'php\|javascript'
+  " ctrlp
+  let g:ctrlp_mruf_max = 250
   " taglist
   let Tlist_Use_Right_Window = 1
   let Tlist_Compact_Format = 1
@@ -297,17 +313,22 @@
   let Tlist_Show_One_File = 1
   let Tlist_WinWidth = 35
   let tlist_php_settings = 'php;f:function'
-  " tasklist: move window to bottom
-  let g:tlWindowPosition = 1
   " nerdtree
   let NERDTreeMinimalUI=1
   let NERDTreeDirArrows=1
   let NERDTreeMapQuit='<Esc>'
   let NERDTreeQuitOnOpen = 1
+  " syntastic
+  " always open location list
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_enable_signs = 1
+  let g:syntastic_echo_current_error = 0
 
   " airline
-  let g:airline_detect_whitespace = 0
-  let g:airline_enable_tagbar = 0
+  let g:airline#extensions#whitespace#enabled = 0
+  let g:airline_section_warning = ''
+  " let g:airline#extensions#tagbar#enabled = 0
   let g:airline_section_x = ''
   let g:airline_section_y = ''
   let g:airline_left_sep=''
@@ -320,11 +341,12 @@
   autocmd VimEnter *
     \ let &statusline='%{bufferline#refresh_status()}'
     \ .bufferline#get_status_string()
-  " showmarks
-  let g:showmarks_enable = 0
   " ack
   let g:ack_autoclose = 1
+  " ctrlsf
+  let g:ctrlsf_position = 'bottom'
   " vim-session
   let g:session_autosave = 'no'
+  let g:session_autoload = 'no'
 
 " /\/\/\/ vimrc END
