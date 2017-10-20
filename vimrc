@@ -1,35 +1,38 @@
 " /\/\/\/ vimrc BEGIN
+" reminder: zR opens all folds; zM closes
 
-" CORE SETTINGS
+" VIM SETTINGS
+  set confirm     " confirm dialog instead of fail
+  set background=dark
   set backspace=indent,eol,start " allow b/s over everything in insert mode
+  set dict +=~/.vim/dictionaries/wordlist.dict
+  set directory=~/.vim/tmp//
+  set encoding=utf-8
+  set expandtab
+  set foldmethod=indent
+  set hidden       " abandoned buffers get hidden, not unloaded
   set history=100
+  set iskeyword-=_ " make _ act as a word boundary
+  set mousemodel=popup_setpos
+  set noequalalways
+  set nofoldenable
+  set printfont=:h09
+  set scrolloff=10
+  set shiftround
+  set shiftwidth=2
   set showcmd     " display incomplete commands in status bar
-  set incsearch   " do incremental searching
-  set ignorecase  "   make / searches ignore case
-  set smartcase   "   unless there's a capital in the expression
-  set hidden      " abandoned buffers get hidden, not unloaded
+  set showmatch
+  set softtabstop=2
+  set tabstop=2
+  set ttyfast
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-  set confirm     " confirm dialog instead of fail
-  set showmatch
-  set expandtab
-  set shiftwidth=2
-  set softtabstop=2
-  set shiftround
-  set tabstop=2
-  set scrolloff=10
-  set printfont=:h09
-  set mousemodel=popup_setpos
-  set noequalalways
-  set encoding=utf-8
-  set ttyfast
-  set background=dark
-  set dict +=~/.vim/dictionaries/wordlist.dict
-  set foldmethod=indent
-  set nofoldenable
-  set directory=~/.vim/tmp//
-  set iskeyword-=_ " make _ act as a word boundary
+
+  set incsearch   " do incremental searching
+  set ignorecase  "   make / searches ignore case
+  set smartcase   "   unless there's a capital in the expression
+
   if has('mouse')
     set mouse=a
   endif
@@ -38,9 +41,10 @@
     set undodir=$HOME/.vim/undo,/tmp
   endif
 
-" MINPAC
+" PACKAGES BY MINPAC
   packadd minpac
   call minpac#init()
+  call minpac#add('k-takata/minpac', {'type': 'opt'})
   call minpac#add('airblade/vim-rooter') " auto change cwd to project root (.git)
   call minpac#add('alvan/vim-php-manual') " PHP docs for Shift-K, etc.
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
@@ -82,15 +86,11 @@
   "following plugin breaks checksyntax_vim :(
   "call minpac#add('psynaptic/vim-drupal')
 
-" COLOR SETTINGS
+" COLOR DEPENDENT SETTINGS
   if &t_Co > 2 || has("gui_running")
-    if !exists("g:syntax_on")
-      syntax enable
-    endif
+    if has ("vim_starting") | colorscheme gotham256 | endif
+    if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
-    if has ("vim_starting") " only on startup
-      colorscheme gotham256
-    endif
     " make tabs stand out in color terminal
     highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
     highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
@@ -105,7 +105,7 @@
     highlight ColorColumn ctermbg=magenta guibg=DarkRed
     call matchadd('ColorColumn', '\%81v', 100)
     " completion colors
-    highlight Pmenu guifg='#aaeeee' guibg='#111111'
+    highlight Pmenu guifg=#aaeeee guibg=#111111
     " indent_guides on by default (vim-indent-guides bundle)
     let g:indent_guides_enable_on_vim_startup = 1
   endif
@@ -158,12 +158,20 @@
     set autoindent
   endif
 
-" KEY REMAPPINGS *************************************** [nore = don't recurse]
-    let mapleader = ","
+" COMMANDS
+  " minpac
+  command! PackUpdate call minpac#update()
+  command! PackClean call minpac#clean()
+  " font twiddling
+  command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+  command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
 
-  " make up and down arrows not linewise in insert mode
-    imap <Up> <C-o>gk
-    imap <Down> <C-o>gj
+" KEY REMAPPINGS *************************************** [nore = don't recurse]
+  let mapleader = ","
+
+  " make up and down arrows NOT linewise in insert mode
+    inoremap <Up> <C-\><C-o>gk
+    inoremap <Down> <C-\><C-o>gj
 
   " mswin-style cut/copy/paste (from $VIMRUNTIME/mswin.vim)
     vnoremap <C-X> "+x
@@ -175,36 +183,26 @@
     " <C-Q> for what <C-V> used to do (blockwise visual mode)
     noremap <C-Q> <C-V>
 
-  " don't use Ex mode, use Q for formatting
+  " make standard mappings behave a bit differently
+    " avoid useless Ex mode, reassign Q to reflow/rewrap
     map Q gq
-
-  " make Y effect to end of line instead of whole line
+    " make Y effect to end of line instead of whole line
     map Y y$
-
-  " reselect visual block after indent/outdent
+    " reselect visual block after indent/outdent
     vnoremap < <gv
     vnoremap > >gv
 
-  " blog input mappings
-    map <leader>a gewi<a href=""><Esc>ea</a><Esc>F>hi
-    vmap <leader>a di<a href=""<Esc>mza><Esc>pa</a><Esc>`zi
-    vmap <leader>i di<i>pa</i>
-    vmap <leader>b di<b>pa</b>
-    map <leader>I i<img src="" class="" width="" height="" alt="" /><Esc>
-    map <leader>d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
-    map <leader>M i<!-- more --><Esc>
-
-  " remappings
+  " custom mappings
     " easy escape
     inoremap jj <esc>
-    " warp speed auto-complete: map ';;' to trigger in insert mode
+    " warp speed omnicomplete: map ';;' to trigger in insert mode
     imap ;; <C-x><C-o>
     " switch between buffers with ctrl-tabs
     nmap <C-tab> :bnext<CR>
     nmap <C-S-tab> :bprev<CR>
     imap <C-tab> <esc>:bnext<CR>
     imap <C-S-tab> <esc>:bprev<CR>
-    " shortcut to get here [.vimrc]
+    " shortcut to .vimrc
     nmap <leader>v :e $MYVIMRC<cr>
     " clear the search highlights
     nnoremap <silent> g<space> :nohlsearch<cr>
@@ -257,12 +255,8 @@
     nnoremap <silent> <leader>b :CtrlPBuffer<cr>
     " vim-grepper
     nnoremap <leader>g :GrepperRg<space>
-    " gundo
-    "let g:gundo_prefer_python3 = 1
-    "nnoremap <leader>u :GundoToggle<cr>
     " undotree
     nnoremap <leader>u :UndotreeToggle<cr>
-    let g:undotree_SetFocusWhenToggle = 1
     " nerdtree
     nnoremap <leader>n :NERDTreeToggle<cr>
     nnoremap <leader>N :NERDTreeFind<cr>
@@ -273,40 +267,19 @@
     " bufonly
     nnoremap <leader>o :BufOnly<cr>
     " font twiddling
-    command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
-    command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
 
-" GLOBAL SETTINGS/OVERRIDES
-  " php case statement indenting
-  let g:PHP_vintage_case_default_indent = 1
-  " php SQL inside strings
-  let php_sql_query = 1
-  " php HTML inside strings
-  let php_htmlInStrings = 1
+  " blog input mappings
+    map <leader>a gewi<a href=""><Esc>ea</a><Esc>F>hi
+    vmap <leader>a di<a href=""<Esc>mza><Esc>pa</a><Esc>`zi
+    vmap <leader>i di<i>pa</i>
+    vmap <leader>b di<b>pa</b>
+    map <leader>I i<img src="" class="" width="" height="" alt="" /><Esc>
+    map <leader>d <Esc>:%s#\n\n#\r<br /><br />\r#g<cr>
+    map <leader>M i<!-- more --><Esc>
 
 " PLUGIN SETTINGS
-  " force checksyntax on save for php, js
-  let g:checksyntax#auto_enable_rx = 'php\|javascript'
-  " ctrlp
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
-  let g:ctrlp_match_window_reversed = 1
-  let g:ctrlp_mruf_max = 250
-  " taglist
-  let Tlist_Use_Right_Window = 1
-  let Tlist_Compact_Format = 1
-  let Tlist_File_Fold_Auto_Close = 1
-  let Tlist_Exit_OnlyWindow = 1
-  let Tlist_Show_One_File = 1
-  let Tlist_WinWidth = 35
-  let tlist_php_settings = 'php;f:function'
-  " nerdtree
-  let NERDTreeMinimalUI=1
-  let NERDTreeDirArrows=1
-  let NERDTreeMapQuit='<Esc>'
-  let NERDTreeQuitOnOpen = 1
   " airline
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline_section_warning = ''
@@ -324,23 +297,39 @@
   let g:bufferline_fname_mod = ':t'
   let g:bufferline_pathshorten = 1
   let g:bufferline_echo = 0
+  " checksyntax: force on save for php, js
+  let g:checksyntax#auto_enable_rx = 'php\|javascript'
   " ctrlsf
   let g:ctrlsf_position = 'bottom'
-  " vim-session
-  let g:session_autosave = 'no'
-  let g:session_autoload = 'no'
+  " ctrlp
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_match_window_reversed = 1
+  let g:ctrlp_mruf_max = 250
   " minimap
   let g:minimap_show='<leader>MS'
   let g:minimap_update='<leader>MU'
   let g:minimap_close='<leader>MC'
   let g:minimap_toggle='<leader>MM'
+  " nerdtree
+  let NERDTreeMinimalUI=1
+  let NERDTreeDirArrows=1
+  let NERDTreeMapQuit='<Esc>'
+  let NERDTreeQuitOnOpen = 1
+  " taglist
+  let Tlist_Use_Right_Window = 1
+  let Tlist_Compact_Format = 1
+  let Tlist_File_Fold_Auto_Close = 1
+  let Tlist_Exit_OnlyWindow = 1
+  let Tlist_Show_One_File = 1
+  let Tlist_WinWidth = 35
+  let tlist_php_settings = 'php;f:function'
+  " undotree
+  let g:undotree_SetFocusWhenToggle = 1
   " vim-grepper
   let g:rooter_silent_chdir = 1
-  " syntastic
-  " always open location list
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_enable_signs = 1
-  let g:syntastic_echo_current_error = 0
+  " vim-session
+  let g:session_autosave = 'no'
+  let g:session_autoload = 'no'
 
 " /\/\/\/ vimrc END
