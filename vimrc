@@ -3,16 +3,15 @@
 " CORE SETTINGS
   set backspace=indent,eol,start " allow b/s over everything in insert mode
   set history=100
-  set ruler
   set showcmd     " display incomplete commands in status bar
   set incsearch   " do incremental searching
-  set ignorecase      " / searches ignore case
-  set smartcase       "   unless there's a capital in the expression
+  set ignorecase  "   make / searches ignore case
+  set smartcase   "   unless there's a capital in the expression
   set hidden      " abandoned buffers get hidden, not unloaded
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-  set confirm
+  set confirm     " confirm dialog instead of fail
   set showmatch
   set expandtab
   set shiftwidth=2
@@ -27,7 +26,6 @@
   set ttyfast
   set background=dark
   set dict +=~/.vim/dictionaries/wordlist.dict
-  set autochdir
   set foldmethod=indent
   set nofoldenable
   set directory=~/.vim/tmp//
@@ -35,75 +33,68 @@
   if has('mouse')
     set mouse=a
   endif
-
-" VERSION DEPENDENT SETTINGS
-  " persistent undo is only in vim ≥ 7.3
-  if v:version >= 703 " or if has('persistent_undo')
+  if has('persistent_undo')
     set undofile
     set undodir=$HOME/.vim/undo,/tmp
   endif
 
 " VIM-PLUG
   call plug#begin('~/.vim/bundle')
-  "Plug 'airblade/vim-gitgutter'
+  Plug 'airblade/vim-rooter' " auto change cwd to project root (.git)
   Plug 'alvan/vim-php-manual' " PHP docs for Shift-K, etc.
-  Plug 'bling/vim-airline' " essential
+  Plug 'AndrewRadev/ember_tools.vim' " ember.js niceties
+  Plug 'joukevandermaas/vim-ember-hbs' " ember.js hbs syntax highlighting
   Plug 'bling/vim-bufferline' " essential
   Plug 'ctrlpvim/ctrlp.vim' " essential
   Plug 'dyng/ctrlsf.vim' " search/replace across files visually
   Plug 'junegunn/vim-easy-align' " <enter> in visual mode
+  Plug 'gioele/vim-autoswap' " auto-swap to the correct window
   Plug 'gregsexton/gitv' " fugitive extension: git browser at :Gitv
-  Plug 'int3/vim-extradite' " :Extradite to view git log of curent file
-  Plug 'justinmk/vim-sneak' " s{char}{char} to move to it
-  Plug 'KabbAmine/zeavim.vim' " integration with zeal doc reader
+  Plug 'int3/vim-extradite' " :Extradite to view git log of current file
   Plug 'keith/investigate.vim' " gK for information on word at cursor
+  Plug 'mbbill/undotree' " gundo replacement; essential
+  Plug 'mhinz/vim-grepper' " replacement for ack; uses rg
   Plug 'mikewest/vimroom' " <leader>V to toggle; do i use this?
-  Plug 'mileszs/ack.vim' " essential
   Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
   Plug 'nathanaelkane/vim-indent-guides' " pretty
   Plug 'nelstrom/vim-qargs' " :Qargs moves quicklist items to arglist
+  Plug 'rhysd/clever-f.vim' " improve f and F searches; no need for ; or ,
   Plug 'scrooloose/nerdtree' " essential
-  "Plug 'scrooloose/syntastic' " essential
   Plug 'severin-lemaignan/vim-minimap' " sublime minimap clone
-  Plug 'Shougo/unite.vim'
-  Plug 'sjl/gundo.vim' " essential
+  "Plug 'sjl/gundo.vim' " essential
   Plug 'tomtom/checksyntax_vim' " essential; check syntax on save
   Plug 'tomtom/tcomment_vim' " essential; gc to comment/uncomment
   Plug 'tpope/vim-fugitive' " essential
   Plug 'tpope/vim-ragtag' " useful html-related mappings
   Plug 'tpope/vim-surround' " essential
   Plug 'tpope/vim-unimpaired' " handy mappings
+  Plug 'vim-airline/vim-airline' " essential
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-scripts/BufOnly.vim' " :BufOnly <leader>o closes all but current buffer; do I use this?
-  Plug 'vim-scripts/ColorSchemeEditor' " no longer works?
+  Plug 'vim-scripts/ColorSchemeEditor' " nifty
   Plug 'vim-scripts/LargeFile' " make vim handle large files more gracefully
-  Plug 'vim-scripts/Smart-Home-Key' " does what it says on the tin; do I use this?
   Plug 'vim-scripts/matchit.zip' " make % much smarter
   Plug 'vim-scripts/taglist.vim' " <leader>t
   Plug 'whatyouhide/vim-gotham' " dark colorscheme
   Plug 'xolox/vim-easytags' " auto generation of tagfiles in ~/.vimtags
   Plug 'xolox/vim-misc' " dependency for xolox scripts
-  Plug 'xolox/vim-session' " makes vim sessions work the way they should; :SaveSession and :OpenSession
-  "Plug 'Xuyuanp/nerdtree-git-plugin' " git statuses in nerdtree
+  Plug 'xolox/vim-session' " better vim sessions! :SaveSession & :OpenSession
   "following plugin breaks checksyntax_vim :(
   "Plug 'psynaptic/vim-drupal'
   call plug#end()
 
 " COLOR SETTINGS
   if &t_Co > 2 || has("gui_running")
-    syntax on
+    if !exists("g:syntax_on")
+      syntax enable
+    endif
     set hlsearch
+    if has ("vim_starting") " only on startup
+      colorscheme gotham256
+    endif
     " make tabs stand out in color terminal
     highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
     highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
-    " indent_guides on by default (vim-indent-guides bundle)
-    let g:indent_guides_enable_on_vim_startup = 1
-  endif
-
-" GVIM SETTINGS
-  if v:progname =~? "gvim"
-    set guioptions-=T
-    "set guioptions-=m
-    colorscheme nocturne
     " highlight trailing whitespace
     highlight ExtraWhitespace ctermbg=red guibg=purple
     match ExtraWhitespace /\s\+$/
@@ -116,6 +107,14 @@
     call matchadd('ColorColumn', '\%81v', 100)
     " completion colors
     highlight Pmenu guifg=#aee guibg=#111
+    " indent_guides on by default (vim-indent-guides bundle)
+    let g:indent_guides_enable_on_vim_startup = 1
+  endif
+
+" GVIM SETTINGS
+  if v:progname =~? "gvim"
+    set guioptions-=T " remove toolbar
+    "set guioptions-=m " remove menubar
     " use gtklp for printing if we're on a linux box
     if has("unix")
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
@@ -152,8 +151,7 @@
       " reload vimrc on save
       au BufWritePost .vimrc,vimrc source %
       " compile sassy css on save
-      "au BufWritePost,FileWritePost *.scss :!compass compile --boring <afile>:p:h:h
-      au BufWritePost,FileWritePost *.scss :!~/bin/compile_compass <afile>:p:h
+      au BufWritePost,FileWritePost *.scss :!~/bin/polycompile <afile>:p:h
       au BufNewFile,BufRead *.blog setf html | set lbr | set spell
       au BufNewFile,BufRead *.module,*.install,*.inc setf php
     augroup END
@@ -162,8 +160,6 @@
   endif
 
 " KEY REMAPPINGS *************************************** [nore = don't recurse]
-
-    "let mapleader = "\<space>"
     let mapleader = ","
 
   " make up and down arrows not linewise in insert mode
@@ -217,24 +213,20 @@
     nmap <silent> <leader>W :silent set wrap!<cr>:set wrap?<cr>
     " toggle line numbering
     nmap <silent> <leader># :silent set number!<cr>:set number?<cr>
-    " remove trailing spaces on the current line
-    nmap <silent> <leader>s :silent s/\s\+$<cr>
+    " quick substitution setup
+    nmap <leader>% :%s//g<left><left>
     " remove trailing spaces on entire buffer without altering the cursor position
     nmap <silent> <leader>SS :silent %s/\s\+$<cr>:normal ``<cr>
     " :SaveSession
-    nmap <leader>ss :SaveSession 
+    nmap <leader>ss :SaveSession<space>
     " :OpenSession
     nmap <leader>oo :OpenSession<cr>
-    " sort css properties
-    nnoremap <leader>S ?{<cr>jV/^\s*\}?$<cr>k:sort<cr>:noh<cr>
     " fold tag
     nnoremap <leader>zT Vatzf
     " write with sudo, dammit
     cmap w!! w !sudo tee % >/dev/null
     " write and refresh in browser
     cmap ww<cr> w<cr> :silent! !~/bin/refresh<cr>
-    " open new vertical split, move to it
-    nnoremap <leader>VS <C-w>v<C-w>l
     " make moving between windows easier
     nnoremap <C-h> <C-w>h
     nnoremap <C-j> <C-w>j
@@ -252,6 +244,8 @@
     nnoremap <silent> gx :bd<cr>
     " edit macro
     nnoremap <leader>q  :<c-u><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+    " autoclose quickfix on selection
+    autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
   " plugin access remappings
     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -262,20 +256,21 @@
     nnoremap <silent> <leader>m :CtrlPMRUFiles<cr>
     nnoremap <silent> <leader>f :CtrlP<cr>
     nnoremap <silent> <leader>b :CtrlPBuffer<cr>
+    " vim-grepper
+    nnoremap <leader>g :GrepperRg<space>
     " gundo
-    nnoremap <leader>g :GundoToggle<cr>
+    "let g:gundo_prefer_python3 = 1
+    "nnoremap <leader>u :GundoToggle<cr>
+    " undotree
+    nnoremap <leader>u :UndotreeToggle<cr>
+    let g:undotree_SetFocusWhenToggle = 1
     " nerdtree
     nnoremap <leader>n :NERDTreeToggle<cr>
     nnoremap <leader>N :NERDTreeFind<cr>
     " taglist
     nnoremap <leader>t :TlistToggle<cr>
-    " superceded by easytags: set tags+=./tags;/
-    " ack
-    "nnoremap <leader>a :Ack 
-    nnoremap <leader>a :CtrlSF 
-    " smarthomekey
-    map <silent> <Home> :SmartHomeKey<CR>
-		imap <silent> <Home> <C-O>:SmartHomeKey<CR>
+    " ctrlsf
+    nnoremap <leader>a :CtrlSF<space>
     " bufonly
     nnoremap <leader>o :BufOnly<cr>
     " font twiddling
@@ -283,27 +278,22 @@
     command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
-    " unite
-    nnoremap <Leader>, :Unite -start-insert file<CR>
-    nnoremap <silent> <Leader>' :Unite -buffer-name=recent -winheight=10 file_mru<cr>
 
-" PLUGIN SETTINGS
-  " unite
-  "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-  "let g:unite_split_rule = "botright"
-  " format mru
-  "let g:unite_source_file_mru_filename_format = ':~:.'
-  "let g:unite_source_file_mru_time_format = ''
-
-  "let g:unite_source_grep_command = 'ack-grep'
-  "let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
-  "let g:unite_source_grep_recursive_opt = ''
-
+" GLOBAL SETTINGS/OVERRIDES
   " php case statement indenting
   let g:PHP_vintage_case_default_indent = 1
+  " php SQL inside strings
+  let php_sql_query = 1
+  " php HTML inside strings
+  let php_htmlInStrings = 1
+
+" PLUGIN SETTINGS
   " force checksyntax on save for php, js
   let g:checksyntax#auto_enable_rx = 'php\|javascript'
   " ctrlp
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_match_window_reversed = 1
   let g:ctrlp_mruf_max = 250
   " taglist
   let Tlist_Use_Right_Window = 1
@@ -318,35 +308,40 @@
   let NERDTreeDirArrows=1
   let NERDTreeMapQuit='<Esc>'
   let NERDTreeQuitOnOpen = 1
+  " airline
+  let g:airline#extensions#whitespace#enabled = 0
+  let g:airline_section_warning = ''
+  let g:airline#extensions#tagbar#enabled = 0
+  let g:airline_section_x = ''
+  let g:airline_section_y = ''
+  let g:airline_left_sep=''
+  let g:airline_right_sep=''
+  let g:airline_mode_map = {'__': '-', 'n': 'N', 'i': 'I', 'R': 'R', 'c': 'C', 'v': 'V', 'V': 'V', 's': 'S', 'S': 'S',}
+  " bufferline
+  set laststatus=2
+  let g:bufferline_show_bufnr = 0
+  let g:bufferline_rotate = 2
+  let g:bufferline_modified = '+'
+  let g:bufferline_fname_mod = ':t'
+  let g:bufferline_pathshorten = 1
+  let g:bufferline_echo = 0
+  " ctrlsf
+  let g:ctrlsf_position = 'bottom'
+  " vim-session
+  let g:session_autosave = 'no'
+  let g:session_autoload = 'no'
+  " minimap
+  let g:minimap_show='<leader>MS'
+  let g:minimap_update='<leader>MU'
+  let g:minimap_close='<leader>MC'
+  let g:minimap_toggle='<leader>MM'
+  " vim-grepper
+  let g:rooter_silent_chdir = 1
   " syntastic
   " always open location list
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_auto_loc_list = 1
   let g:syntastic_enable_signs = 1
   let g:syntastic_echo_current_error = 0
-
-  " airline
-  let g:airline#extensions#whitespace#enabled = 0
-  let g:airline_section_warning = ''
-  " let g:airline#extensions#tagbar#enabled = 0
-  let g:airline_section_x = ''
-  let g:airline_section_y = ''
-  let g:airline_left_sep=''
-  let g:airline_right_sep=''
-  " bufferline
-  set laststatus=2
-  let g:bufferline_echo = 0
-  let g:bufferline_show_bufnr = 0
-  let g:bufferline_rotate = 2
-  autocmd VimEnter *
-    \ let &statusline='%{bufferline#refresh_status()}'
-    \ .bufferline#get_status_string()
-  " ack
-  let g:ack_autoclose = 1
-  " ctrlsf
-  let g:ctrlsf_position = 'bottom'
-  " vim-session
-  let g:session_autosave = 'no'
-  let g:session_autoload = 'no'
 
 " /\/\/\/ vimrc END
