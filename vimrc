@@ -38,50 +38,49 @@
     set undodir=$HOME/.vim/undo,/tmp
   endif
 
-" VIM-PLUG
-  call plug#begin('~/.vim/bundle')
-  Plug 'airblade/vim-rooter' " auto change cwd to project root (.git)
-  Plug 'alvan/vim-php-manual' " PHP docs for Shift-K, etc.
-  Plug 'AndrewRadev/ember_tools.vim' " ember.js niceties
-  Plug 'joukevandermaas/vim-ember-hbs' " ember.js hbs syntax highlighting
-  Plug 'bling/vim-bufferline' " essential
-  Plug 'ctrlpvim/ctrlp.vim' " essential
-  Plug 'dyng/ctrlsf.vim' " search/replace across files visually
-  Plug 'junegunn/vim-easy-align' " <enter> in visual mode
-  Plug 'gioele/vim-autoswap' " auto-swap to the correct window
-  Plug 'gregsexton/gitv' " fugitive extension: git browser at :Gitv
-  Plug 'int3/vim-extradite' " :Extradite to view git log of current file
-  Plug 'keith/investigate.vim' " gK for information on word at cursor
-  Plug 'mbbill/undotree' " gundo replacement; essential
-  Plug 'mhinz/vim-grepper' " replacement for ack; uses rg
-  Plug 'mikewest/vimroom' " <leader>V to toggle; do i use this?
-  Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
-  Plug 'nathanaelkane/vim-indent-guides' " pretty
-  Plug 'nelstrom/vim-qargs' " :Qargs moves quicklist items to arglist
-  Plug 'rhysd/clever-f.vim' " improve f and F searches; no need for ; or ,
-  Plug 'scrooloose/nerdtree' " essential
-  Plug 'severin-lemaignan/vim-minimap' " sublime minimap clone
-  "Plug 'sjl/gundo.vim' " essential
-  Plug 'tomtom/checksyntax_vim' " essential; check syntax on save
-  Plug 'tomtom/tcomment_vim' " essential; gc to comment/uncomment
-  Plug 'tpope/vim-fugitive' " essential
-  Plug 'tpope/vim-ragtag' " useful html-related mappings
-  Plug 'tpope/vim-surround' " essential
-  Plug 'tpope/vim-unimpaired' " handy mappings
-  Plug 'vim-airline/vim-airline' " essential
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'vim-scripts/BufOnly.vim' " :BufOnly <leader>o closes all but current buffer; do I use this?
-  Plug 'vim-scripts/ColorSchemeEditor' " nifty
-  Plug 'vim-scripts/LargeFile' " make vim handle large files more gracefully
-  Plug 'vim-scripts/matchit.zip' " make % much smarter
-  Plug 'vim-scripts/taglist.vim' " <leader>t
-  Plug 'whatyouhide/vim-gotham' " dark colorscheme
-  Plug 'xolox/vim-easytags' " auto generation of tagfiles in ~/.vimtags
-  Plug 'xolox/vim-misc' " dependency for xolox scripts
-  Plug 'xolox/vim-session' " better vim sessions! :SaveSession & :OpenSession
+" MINPAC
+  packadd minpac
+  call minpac#init()
+  call minpac#add('airblade/vim-rooter') " auto change cwd to project root (.git)
+  call minpac#add('alvan/vim-php-manual') " PHP docs for Shift-K, etc.
+  call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
+  call minpac#add('joukevandermaas/vim-ember-hbs') " ember.js hbs syntax highlighting
+  call minpac#add('bling/vim-bufferline') " essential
+  call minpac#add('ctrlpvim/ctrlp.vim') " essential
+  call minpac#add('dyng/ctrlsf.vim') " search/replace across files visually
+  call minpac#add('junegunn/vim-easy-align') " <enter> in visual mode
+  call minpac#add('gioele/vim-autoswap') " auto-swap to the correct window
+  call minpac#add('gregsexton/gitv') " fugitive extension: git browser at :Gitv
+  call minpac#add('int3/vim-extradite') " :Extradite to view git log of current file
+  call minpac#add('keith/investigate.vim') " gK for information on word at cursor
+  call minpac#add('mbbill/undotree') " gundo replacement; essential
+  call minpac#add('mhinz/vim-grepper') " replacement for ack; uses rg
+  call minpac#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
+  call minpac#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
+  call minpac#add('nathanaelkane/vim-indent-guides') " pretty
+  call minpac#add('nelstrom/vim-qargs') " :Qargs moves quicklist items to arglist
+  call minpac#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
+  call minpac#add('scrooloose/nerdtree') " essential
+  call minpac#add('severin-lemaignan/vim-minimap') " sublime minimap clone
+  call minpac#add('tomtom/checksyntax_vim') " essential; check syntax on save
+  call minpac#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
+  call minpac#add('tpope/vim-fugitive') " essential
+  call minpac#add('tpope/vim-ragtag') " useful html-related mappings
+  call minpac#add('tpope/vim-surround') " essential
+  call minpac#add('tpope/vim-unimpaired') " handy mappings
+  call minpac#add('vim-airline/vim-airline') " essential
+  call minpac#add('vim-airline/vim-airline-themes')
+  call minpac#add('vim-scripts/BufOnly.vim') " :BufOnly <leader>o closes all but current buffer; do I use this?
+  call minpac#add('vim-scripts/ColorSchemeEditor') " nifty
+  call minpac#add('vim-scripts/LargeFile') " make vim handle large files more gracefully
+  call minpac#add('vim-scripts/matchit.zip') " make % much smarter
+  call minpac#add('vim-scripts/taglist.vim') " <leader>t
+  call minpac#add('whatyouhide/vim-gotham') " dark colorscheme
+  call minpac#add('xolox/vim-easytags') " auto generation of tagfiles in ~/.vimtags
+  call minpac#add('xolox/vim-misc') " dependency for xolox scripts
+  call minpac#add('xolox/vim-session') " better vim sessions! :SaveSession & :OpenSession
   "following plugin breaks checksyntax_vim :(
-  "Plug 'psynaptic/vim-drupal'
-  call plug#end()
+  "call minpac#add('psynaptic/vim-drupal')
 
 " COLOR SETTINGS
   if &t_Co > 2 || has("gui_running")
@@ -106,7 +105,7 @@
     highlight ColorColumn ctermbg=magenta guibg=DarkRed
     call matchadd('ColorColumn', '\%81v', 100)
     " completion colors
-    highlight Pmenu guifg=#aee guibg=#111
+    highlight Pmenu guifg='#aaeeee' guibg='#111111'
     " indent_guides on by default (vim-indent-guides bundle)
     let g:indent_guides_enable_on_vim_startup = 1
   endif
