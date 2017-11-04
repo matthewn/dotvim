@@ -70,20 +70,21 @@
   if v:progname =~? "gvim" && has("vim_starting")
     set guioptions-=T " remove toolbar
     "set guioptions-=m " remove menubar
-    " use gtklp for printing if we're on a linux box
+    " on linux
     if has("unix")
+      " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
-    endif
-    " linux laptop size & font
-    if has("unix") && match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'cash') == 0
-      set lines=43
-      set columns=90
       set guifont=Ubuntu\ Mono\ 12
-      set helpheight=32
     endif
-    " windows gui font
+    " on windows
     if has("win32") || has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
+    endif
+    " on laptop
+    if match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'cash') == 0
+      set lines=43
+      set columns=90
+      set helpheight=32
     endif
   endif
 
