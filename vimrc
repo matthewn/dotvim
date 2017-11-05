@@ -231,7 +231,6 @@
   call minpac#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
   call minpac#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
   call minpac#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
-  call minpac#add('nelstrom/vim-qargs') " :Qargs moves quicklist items to arglist
   call minpac#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
   call minpac#add('sheerun/vim-polyglot') " languages (including twig)
   call minpac#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
