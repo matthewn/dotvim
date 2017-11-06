@@ -5,9 +5,6 @@ setl shiftwidth=2
 " avoids errant beeps
 setl matchpairs=(:),[:],{:}
 
-" idea taken from http://vim.wikia.com/wiki/VimTip598
-setl keywordprg=~/bin/php_doc
-
 " include drupal 7 dictionary
 setl dict +=~/.vim/dictionaries/drupal7.dict
 

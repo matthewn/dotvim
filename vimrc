@@ -291,6 +291,11 @@
   nmap <silent> <leader>f :CtrlP<cr>
   nmap <silent> <leader>b :CtrlPBuffer<cr>
 
+  " Dokumentary - shift-K anything
+  call minpac#add('gastonsimone/vim-dokumentary')
+  let g:dokumentary_docprgs = {'php': 'pman {0}'}
+  let g:dokumentary_open = 'topleft new'
+
   " MatchTagAlways - html tag highlighting
   call minpac#add('Valloric/MatchTagAlways')
   let g:mta_filetypes = {
