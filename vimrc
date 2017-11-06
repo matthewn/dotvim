@@ -18,7 +18,7 @@
   set iskeyword-=_ " make _ act as a word boundary
   set mousemodel=popup_setpos
   set printfont=:h09
-  let &runtimepath.=','.'~/.composer/vendor/bin'
+  set runtimepath+=~/.composer/vendor/bin
   set scrolloff=10
   set shiftround
   set shiftwidth=2
