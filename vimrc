@@ -69,6 +69,9 @@
 " GVIM OPTIONS
   if v:progname =~? "gvim" && has("vim_starting")
     set guioptions-=T " remove toolbar
+    set lines=43
+    set columns=90
+    set helpheight=32
     "set guioptions-=m " remove menubar
     " on linux
     if has("unix")
@@ -80,11 +83,9 @@
     if has("win32") || has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
-    " on laptop
-    if match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'cash') == 0
-      set lines=43
-      set columns=90
-      set helpheight=32
+    " on big pc
+    if match(system('hostname'), 'hillsboro') == 0
+      set lines=64
     endif
   endif
 
