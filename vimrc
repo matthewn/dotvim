@@ -78,6 +78,8 @@
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
       set guifont=Ubuntu\ Mono\ 12
+      " maximize window mapping
+      nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     endif
     " on windows
     if has("win32") || has("win64")
@@ -193,8 +195,6 @@
     nnoremap <c-l> <c-w>l
     " edit file, starting in same directory as current file [brilliant!]
     map <leader>e :e <c-r>=expand("%:p:h") . "/" <cr>
-    " maximize window
-    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     " tab stop changes
     nmap <leader>2 :set tabstop=2<cr><esc>:set softtabstop=2<cr><esc>:set shiftwidth=2<cr>
     nmap <leader>4 :set tabstop=4<cr><esc>:set softtabstop=4<cr><esc>:set shiftwidth=4<cr>
