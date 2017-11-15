@@ -218,7 +218,6 @@
   call minpac#init()
 
   call minpac#add('k-takata/minpac', {'type': 'opt'})
-  call minpac#add('alvan/vim-php-manual') " PHP docs for Shift-K, etc.
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
   call minpac#add('dhruvasagar/vim-open-url') " gB=open URL; gG=Google; gW=wikipedia
   call minpac#add('gioele/vim-autoswap') " essential: don't bug me about swap files
