@@ -69,22 +69,25 @@
 " GVIM OPTIONS
   if v:progname =~? "gvim" && has("vim_starting")
     set guioptions-=T " remove toolbar
+    set lines=43
+    set columns=90
+    set helpheight=32
     "set guioptions-=m " remove menubar
     " on linux
     if has("unix")
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
       set guifont=Ubuntu\ Mono\ 12
+      " maximize window mapping
+      nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     endif
     " on windows
     if has("win32") || has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
-    " on laptop
-    if match(system('hostname'), 'vardaman') == 0 || match(system('hostname'), 'cash') == 0
-      set lines=43
-      set columns=90
-      set helpheight=32
+    " on big pc
+    if match(system('hostname'), 'hillsboro') == 0
+      set lines=64
     endif
   endif
 
@@ -192,8 +195,6 @@
     nnoremap <c-l> <c-w>l
     " edit file, starting in same directory as current file [brilliant!]
     map <leader>e :e <c-r>=expand("%:p:h") . "/" <cr>
-    " maximize window
-    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     " tab stop changes
     nmap <leader>2 :set tabstop=2<cr><esc>:set softtabstop=2<cr><esc>:set shiftwidth=2<cr>
     nmap <leader>4 :set tabstop=4<cr><esc>:set softtabstop=4<cr><esc>:set shiftwidth=4<cr>
