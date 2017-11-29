@@ -108,12 +108,16 @@
         \ endif
       " re-source vimrc on save, then refresh Airline if necessary
       au BufWritePost .vimrc,vimrc source % | call RefreshUI()
-      " compile sassy css on save
-      au BufWritePost,FileWritePost *.scss :!~/bin/polycompile <afile>:p:h
-      au BufNewFile,BufRead *.blog setf html | set lbr | set spell
-      au BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
+      " ensure twig files handled properly
+      au BufNewFile,BufRead *.twig setf twig.html
       " autoclose quickfix on selection
       au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
+      " ensure proper highlighting of css files
+      au FileType css setlocal iskeyword+=-
+      " blog
+      au BufNewFile,BufRead *.blog setf html | set lbr | set spell
+      " drupal
+      au BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
     augroup END
   endif
 
@@ -220,19 +224,22 @@
 
   call minpac#add('k-takata/minpac', {'type': 'opt'})
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
+  call minpac#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
   call minpac#add('dhruvasagar/vim-open-url') " gB=open URL; gG=Google; gW=wikipedia
+  call minpac#add('djmoch/vim-makejob') " essential: async make
   call minpac#add('gioele/vim-autoswap') " essential: don't bug me about swap files
   call minpac#add('gregsexton/gitv') " fugitive extension: git browser at :Gitv
+  call minpac#add('hail2u/vim-css3-syntax') " essential: syntax for css3
   call minpac#add('int3/vim-extradite') " :Extradite to view git log of current file
   call minpac#add('joonty/vdebug') " modern vim debugger
   call minpac#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
   call minpac#add('keith/investigate.vim') " gK for information on word at cursor
+  call minpac#add('lumiliet/vim-twig') " twig syntax highlighting
   call minpac#add('metakirby5/codi.vim') " a vimmy REPL for various langs
   call minpac#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
   call minpac#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
   call minpac#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
   call minpac#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
-  call minpac#add('sheerun/vim-polyglot') " languages (including twig)
   call minpac#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
   call minpac#add('tpope/vim-fugitive') " essential: git gateway
   call minpac#add('tpope/vim-ragtag') " useful html-related mappings
@@ -261,6 +268,12 @@
   let g:ale_lint_on_insert_leave = 1
   let g:ale_list_window_size = 5
   let g:ale_open_list = 'on_save'
+  let g:ale_linters = {
+    \ 'php': ['php'],
+    \ 'javascript': ['eslint'],
+    \ 'html': [],
+    \ 'scss': ['scsslint'],
+    \}
 
   " bufferline - show buffers in airline
   call minpac#add('bling/vim-bufferline')
