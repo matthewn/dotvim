@@ -13,6 +13,7 @@
   set expandtab
   set nofoldenable
   set foldmethod=indent
+  set formatoptions+=j " make J command grok multiline code comments
   set hidden       " abandoned buffers get hidden, not unloaded
   set history=1000
   set iskeyword-=_ " make _ act as a word boundary
@@ -67,19 +68,19 @@
   endif
 
 " GVIM OPTIONS
-  if v:progname =~? "gvim" && has("vim_starting")
+  if v:progname =~? "gvim"
     set guioptions-=T " remove toolbar
-    set lines=43
-    set columns=90
     set helpheight=32
+    if has("vim_starting")
+      set lines=43
+      set columns=90
+    endif
     "set guioptions-=m " remove menubar
     " on linux
     if has("unix")
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
       set guifont=Ubuntu\ Mono\ 12
-      " maximize window mapping
-      nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
     endif
     " on windows
     if has("win32") || has("win64")
@@ -87,7 +88,9 @@
     endif
     " on big pc
     if match(system('hostname'), 'hillsboro') == 0
-      set lines=64
+      if has("vim_starting")
+        set lines=64
+      endif
     endif
   endif
 
@@ -208,6 +211,8 @@
     " font twiddling
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
+    " maximize gvim
+    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
 
   " blog input mappings
     map <leader>a gewi<a href=""><esc>ea</a><esc>F>hi
@@ -224,6 +229,7 @@
 
   call minpac#add('k-takata/minpac', {'type': 'opt'})
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
+  call minpac#add('andymass/vim-matchup') " make % much smarter
   call minpac#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
   call minpac#add('dhruvasagar/vim-open-url') " gB=open URL; gG=Google; gW=wikipedia
   call minpac#add('djmoch/vim-makejob') " essential: async make
@@ -231,7 +237,6 @@
   call minpac#add('gregsexton/gitv') " fugitive extension: git browser at :Gitv
   call minpac#add('hail2u/vim-css3-syntax') " essential: syntax for css3
   call minpac#add('int3/vim-extradite') " :Extradite to view git log of current file
-  call minpac#add('joonty/vdebug') " modern vim debugger
   call minpac#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
   call minpac#add('keith/investigate.vim') " gK for information on word at cursor
   call minpac#add('lumiliet/vim-twig') " twig syntax highlighting
@@ -246,7 +251,6 @@
   call minpac#add('tpope/vim-surround') " essential
   call minpac#add('tpope/vim-unimpaired') " handy mappings
   call minpac#add('vim-scripts/ColorSchemeEditor') " nifty
-  call minpac#add('vim-scripts/matchit.zip') " make % much smarter
   call minpac#add('whatyouhide/vim-gotham') " dark colorscheme
 
   " airline - essential status line replacement
@@ -266,7 +270,7 @@
   let g:ale_lint_delay = 200
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
-  let g:ale_list_window_size = 5
+  "let g:ale_list_window_size = 5
   let g:ale_open_list = 'on_save'
   let g:ale_linters = {
     \ 'php': ['php'],
@@ -274,6 +278,7 @@
     \ 'html': [],
     \ 'scss': ['scsslint'],
     \}
+  nmap <silent> <leader>A :ALEToggle<cr>
 
   " bufferline - show buffers in airline
   call minpac#add('bling/vim-bufferline')
@@ -316,6 +321,7 @@
     \ 'xhtml' : 1,
     \ 'xml' : 1,
     \ 'twig' : 1,
+    \ 'php' : 1,
     \}
   let g:mta_use_matchparen_group = 0
 
@@ -355,6 +361,22 @@
   let g:undotree_SetFocusWhenToggle = 1
   nnoremap <leader>u :UndotreeToggle<cr>
 
+  " vdebug - modern vim debugger
+  "call minpac#add('joonty/vdebug', {'branch': 'v2-integration'})
+  "call minpac#add('markkimsal/vdebug', {'branch': 'python3'})
+  let g:vdebug_options = {'break_on_open': 0}
+  let g:vdebug_keymap = {
+    \ "run"            : "<leader>5",
+    \ "run_to_cursor"  : "<Down>",
+    \ "step_over"      : "<Up>",
+    \ "step_into"      : "<Left>",
+    \ "step_out"       : "<Right>",
+    \ "close"          : "q",
+    \ "detach"         : "x",
+    \ "set_breakpoint" : "<leader>p",
+    \ "eval_visual"    : "<leader>E"
+    \ }
+
   " vim-easy-align - hit <enter> in visual mode to begin
   call minpac#add('junegunn/vim-easy-align')
   " EasyAlign in visual mode (e.g. vip<Enter>)
@@ -377,10 +399,10 @@
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
 
-  " vim-peekaoo - see what's in registers when you hit @ or "
-  call minpac#add('junegunn/vim-peekaboo')
-  let g:peekaboo_compact = 1
-  let g:peekaboo_delay = 250
+  " vim-peekaboo - see what's in registers when you hit @ or "
+  "call minpac#add('junegunn/vim-peekaboo')
+  "let g:peekaboo_compact = 1
+  "let g:peekaboo_delay = 250
 
   " vim-rooter - auto cwd to project root
   call minpac#add('airblade/vim-rooter')
