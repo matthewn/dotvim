@@ -1,3 +1,6 @@
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal shiftwidth=2
 compiler sass
 setl makeprg=polycompile\ %:p:h
 "setl makeprg=polycompile\ %:p:h\ \\\|\ sed\ 's/^>>\ //'

@@ -47,7 +47,7 @@
 
 " COLOR DEPENDENT OPTIONS
   if &t_Co > 2 || has("gui_running")
-    if has ("vim_starting") | colorscheme gotham256 | endif
+    if has ("vim_starting") | colorscheme gotham256_mn | endif
     if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
     " make tabs stand out in color terminal
@@ -70,9 +70,11 @@
 " GVIM OPTIONS
   if v:progname =~? "gvim"
     set guioptions-=T " remove toolbar
+    set guioptions-=m " remove menubar
+    set guioptions+=c " console > dialogs
     set helpheight=32
     if has("vim_starting")
-      set lines=43
+      set lines=42
       set columns=90
     endif
     "set guioptions-=m " remove menubar
@@ -121,6 +123,10 @@
       au BufNewFile,BufRead *.blog setf html | set lbr | set spell
       " drupal
       au BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
+      " webdev auto-marks for jumping between files
+      autocmd BufLeave *.css,*.scss normal! mC
+      autocmd BufLeave *.html       normal! mH
+      autocmd BufLeave *.js         normal! mJ
     augroup END
   endif
 
@@ -147,8 +153,8 @@
     inoremap <Down> <c-\><c-o>gj
 
   " mswin-style cut/copy/paste (from $VIMRUNTIME/mswin.vim)
-    vnoremap <c-X> "+x
-    vnoremap <c-C> "+y
+    vnoremap <c-x> "+x
+    vnoremap <c-c> "+y
     map <c-V> "+gP
     cmap <c-V> <c-R>+
     exe 'inoremap <script> <c-V>' paste#paste_cmd['i']
@@ -164,6 +170,8 @@
     " reselect visual block after indent/outdent
     vnoremap < <gv
     vnoremap > >gv
+    " do not omve cursor after yanking in visual mode
+    vmap y ygv<esc>
 
   " custom mappings
     " easy escape
@@ -212,7 +220,8 @@
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
     " maximize gvim
-    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz<cr>
+    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz<cr>
+    nmap <leader>M :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert<cr>
 
   " blog input mappings
     map <leader>a gewi<a href=""><esc>ea</a><esc>F>hi
@@ -220,8 +229,6 @@
     vmap <leader>i di<i>pa</i>
     vmap <leader>b di<b>pa</b>
     map <leader>I i<img src="" class="" width="" height="" alt="" /><esc>
-    map <leader>d <esc>:%s#\n\n#\r<br /><br />\r#g<cr>
-    map <leader>M i<!-- more --><esc>
 
 " PLUGINS - PACKAGES BY MINPAC
   packadd minpac
@@ -229,27 +236,24 @@
 
   call minpac#add('k-takata/minpac', {'type': 'opt'})
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
-  call minpac#add('andymass/vim-matchup') " make % much smarter
-  call minpac#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
-  call minpac#add('dhruvasagar/vim-open-url') " gB=open URL; gG=Google; gW=wikipedia
-  call minpac#add('djmoch/vim-makejob') " essential: async make
+  call minpac#add('andymass/vim-matchup') " replace vim's matchit plugin
+  call minpac#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
   call minpac#add('gioele/vim-autoswap') " essential: don't bug me about swap files
   call minpac#add('gregsexton/gitv') " fugitive extension: git browser at :Gitv
   call minpac#add('hail2u/vim-css3-syntax') " essential: syntax for css3
-  call minpac#add('int3/vim-extradite') " :Extradite to view git log of current file
   call minpac#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
   call minpac#add('keith/investigate.vim') " gK for information on word at cursor
-  call minpac#add('lumiliet/vim-twig') " twig syntax highlighting
-  call minpac#add('metakirby5/codi.vim') " a vimmy REPL for various langs
   call minpac#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
   call minpac#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
   call minpac#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
+  call minpac#add('ObserverOfTime/scss.vim') " essential: syntax for scss
   call minpac#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
   call minpac#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
   call minpac#add('tpope/vim-fugitive') " essential: git gateway
   call minpac#add('tpope/vim-ragtag') " useful html-related mappings
   call minpac#add('tpope/vim-surround') " essential
   call minpac#add('tpope/vim-unimpaired') " handy mappings
+  call minpac#add('tweekmonster/django-plus.vim') " django niceties
   call minpac#add('vim-scripts/ColorSchemeEditor') " nifty
   call minpac#add('whatyouhide/vim-gotham') " dark colorscheme
 
@@ -276,18 +280,23 @@
     \ 'php': ['php'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
-    \ 'scss': ['scsslint'],
+    \ 'scss': ['sasslint'],
     \}
   nmap <silent> <leader>A :ALEToggle<cr>
 
   " bufferline - show buffers in airline
-  call minpac#add('bling/vim-bufferline')
-  set laststatus=2
-  let g:bufferline_echo = 0
-  let g:bufferline_fname_mod = ':t'
-  let g:bufferline_pathshorten = 1
-  let g:bufferline_rotate = 2
-  let g:bufferline_show_bufnr = 0
+  " call minpac#add('bling/vim-bufferline')
+  " set laststatus=2
+  " let g:bufferline_echo = 0
+  " let g:bufferline_fname_mod = ':t'
+  " let g:bufferline_pathshorten = 1
+  " let g:bufferline_rotate = 2
+  " let g:bufferline_show_bufnr = 0
+
+  " buftabline
+  call minpac#add('ap/vim-buftabline')
+  let g:buftabline_indicators = 1
+  let g:buftabline_separators = 1
 
   " bufonly - closes all but current buffer; do I use this?
   call minpac#add('vim-scripts/BufOnly.vim')
@@ -349,7 +358,7 @@
 
   " tagbar - essential tag browser [right drawer]
   call minpac#add('majutsushi/tagbar') " <leader>t for tag browser
-  let g:tagbar_autoclose = 1 " autofocus tagbar & autoclose
+  let g:tagbar_autofocus = 1 " autofocus tagbar
   let g:tagbar_compact = 1 " don't show help banner
   let g:tagbar_expand = 1 " expand gvim window
   let g:tagbar_iconchars = ['▸', '▾']
@@ -362,20 +371,19 @@
   nnoremap <leader>u :UndotreeToggle<cr>
 
   " vdebug - modern vim debugger
-  "call minpac#add('joonty/vdebug', {'branch': 'v2-integration'})
-  "call minpac#add('markkimsal/vdebug', {'branch': 'python3'})
+  call minpac#add('vim-vdebug/vdebug')
   let g:vdebug_options = {'break_on_open': 0}
-  let g:vdebug_keymap = {
-    \ "run"            : "<leader>5",
-    \ "run_to_cursor"  : "<Down>",
-    \ "step_over"      : "<Up>",
-    \ "step_into"      : "<Left>",
-    \ "step_out"       : "<Right>",
-    \ "close"          : "q",
-    \ "detach"         : "x",
-    \ "set_breakpoint" : "<leader>p",
-    \ "eval_visual"    : "<leader>E"
-    \ }
+  " let g:vdebug_keymap = {
+  "   \ "run"            : "<leader>5",
+  "   \ "run_to_cursor"  : "<Down>",
+  "   \ "step_over"      : "<Up>",
+  "   \ "step_into"      : "<Left>",
+  "   \ "step_out"       : "<Right>",
+  "   \ "close"          : "q",
+  "   \ "detach"         : "x",
+  "   \ "set_breakpoint" : "<leader>p",
+  "   \ "eval_visual"    : "<leader>E"
+  "   \ }
 
   " vim-easy-align - hit <enter> in visual mode to begin
   call minpac#add('junegunn/vim-easy-align')
