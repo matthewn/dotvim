@@ -77,7 +77,6 @@
       set lines=42
       set columns=90
     endif
-    "set guioptions-=m " remove menubar
     " on linux
     if has("unix")
       " use gtklp for printing
@@ -113,8 +112,6 @@
         \ endif
       " re-source vimrc on save, then refresh Airline if necessary
       au BufWritePost .vimrc,vimrc source % | call RefreshUI()
-      " ensure twig files handled properly
-      au BufNewFile,BufRead *.twig setf twig.html
       " autoclose quickfix on selection
       au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
       " ensure proper highlighting of css files
@@ -284,15 +281,6 @@
     \}
   nmap <silent> <leader>A :ALEToggle<cr>
 
-  " bufferline - show buffers in airline
-  " call minpac#add('bling/vim-bufferline')
-  " set laststatus=2
-  " let g:bufferline_echo = 0
-  " let g:bufferline_fname_mod = ':t'
-  " let g:bufferline_pathshorten = 1
-  " let g:bufferline_rotate = 2
-  " let g:bufferline_show_bufnr = 0
-
   " buftabline
   call minpac#add('ap/vim-buftabline')
   let g:buftabline_indicators = 1
@@ -406,11 +394,6 @@
   call minpac#add('nathanaelkane/vim-indent-guides')
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
-
-  " vim-peekaboo - see what's in registers when you hit @ or "
-  "call minpac#add('junegunn/vim-peekaboo')
-  "let g:peekaboo_compact = 1
-  "let g:peekaboo_delay = 250
 
   " vim-rooter - auto cwd to project root
   call minpac#add('airblade/vim-rooter')
