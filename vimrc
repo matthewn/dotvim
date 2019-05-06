@@ -74,7 +74,7 @@
     set guioptions+=c " console > dialogs
     set helpheight=32
     if has("vim_starting")
-      set lines=42
+      set lines=46
       set columns=90
     endif
     " on linux
@@ -233,17 +233,18 @@
 
   call minpac#add('k-takata/minpac', {'type': 'opt'})
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
+  call minpac#add('AndrewRadev/tagalong.vim') " tag fixin'
   call minpac#add('andymass/vim-matchup') " replace vim's matchit plugin
+  call minpac#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
   call minpac#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
   call minpac#add('gioele/vim-autoswap') " essential: don't bug me about swap files
-  call minpac#add('gregsexton/gitv') " fugitive extension: git browser at :Gitv
   call minpac#add('hail2u/vim-css3-syntax') " essential: syntax for css3
   call minpac#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
-  call minpac#add('keith/investigate.vim') " gK for information on word at cursor
+  call minpac#add('keith/investigate.vim') " gK for vimhelp on word at cursor
   call minpac#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
   call minpac#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
   call minpac#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
-  call minpac#add('ObserverOfTime/scss.vim') " essential: syntax for scss
+  call minpac#add('rbong/vim-flog') " fugitive extension: git browser at :Flog
   call minpac#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
   call minpac#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
   call minpac#add('tpope/vim-fugitive') " essential: git gateway
@@ -266,7 +267,7 @@
   let g:airline_section_x = ''
   let g:airline_section_y = ''
 
-  " ale - essential asynchronous lint engine
+ " ale - essential asynchronous lint engine
   call minpac#add('w0rp/ale')
   let g:ale_lint_delay = 200
   let g:ale_lint_on_text_changed = 'normal'
@@ -275,6 +276,7 @@
   let g:ale_open_list = 'on_save'
   let g:ale_linters = {
     \ 'php': ['php'],
+    \ 'python': ['flake8'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['sasslint'],
@@ -293,6 +295,8 @@
   " ctrlsf - search/replace across files visually
   call minpac#add('dyng/ctrlsf.vim')
   let g:ctrlsf_ackprg = '/usr/bin/rg'
+  let g:ctrlsf_auto_focus = { "at" : "done" }
+  let g:ctrlsf_default_root = 'project+ff' " ctrlsf in project by default
   let g:ctrlsf_position = 'bottom'
   nmap <leader>a :CtrlSF<space>
 
@@ -384,6 +388,7 @@
   call minpac#add('mhinz/vim-grepper')
   let g:grepper = {}
   let g:grepper.quickfix = 0
+  let g:grepper.dir = 'repo,cwd' " grep in project by default
   nnoremap <leader>g :GrepperRg<space>
 
   " vim-gutentags - essential automated ctags mgr (vim-easytags replacement)
@@ -396,8 +401,10 @@
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
 
   " vim-rooter - auto cwd to project root
-  call minpac#add('airblade/vim-rooter')
-  let g:rooter_silent_chdir = 1
+  " MAY NOT NEED after new options for vim-grepper and ctrlsf
+  " do i use this?
+  "call minpac#add('airblade/vim-rooter')
+  "let g:rooter_silent_chdir = 1
 
   " vim-sessionist - session manager
   call minpac#add('manasthakur/vim-sessionist')
