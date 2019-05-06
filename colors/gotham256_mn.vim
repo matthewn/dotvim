@@ -1,7 +1,7 @@
 " Colorscheme created with ColorSchemeEditor v1.2.3
 "Name: gotham256
 "Maintainer: 
-"Last Change: 2018 Oct 12
+"Last Change: 2019 Jan 15
 set background=dark
 if version > 580
 	highlight clear
@@ -29,7 +29,7 @@ if v:version >= 700
 	endif
 endif
 highlight Cursor guifg=#11151c guibg=#99d1ce gui=NONE
-highlight link CursorIM cleared
+highlight CursorIM gui=NONE
 highlight DiffAdd guifg=#d3ebe9 guibg=#2aa889 gui=NONE
 highlight DiffChange guifg=#d3ebe9 guibg=#195466 gui=NONE
 highlight DiffDelete guifg=#d3ebe9 guibg=#c23127 gui=NONE
@@ -44,9 +44,9 @@ highlight MatchParen guifg=#99d1ce guibg=#195446 gui=NONE
 highlight ModeMsg guifg=#195466 gui=NONE
 highlight MoreMsg guifg=SeaGreen gui=bold
 highlight NonText guifg=#195466 gui=NONE
-highlight Normal guifg=#99d1ce guibg=#0c1014 gui=NONE
+highlight Normal guifg=#99D1CE guibg=#0c1014 gui=NONE
 highlight Question guifg=#2aa889 gui=NONE
-highlight Search guifg=#091f2e guibg=#edb443 gui=NONE
+highlight Search guifg=#FFFFFF guibg=#8082B3 gui=NONE
 highlight SignColumn guifg=Cyan guibg=#11151c gui=NONE
 highlight SpecialKey guifg=#0a3749 gui=NONE
 highlight StatusLine guifg=#599cab guibg=#091f2e gui=NONE
@@ -98,7 +98,7 @@ highlight Underlined guifg=#edb443 gui=underline
 if v:version >= 700
 	let g:gotham256_Metadata = {
 				\"Palette" : "black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90",
-				\"Last Change" : "2018 Oct 12",
+				\"Last Change" : "2019 Jan 15",
 				\"Name" : "gotham256",
 				\}
 endif
