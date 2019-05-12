@@ -167,7 +167,7 @@
     " reselect visual block after indent/outdent
     vnoremap < <gv
     vnoremap > >gv
-    " do not omve cursor after yanking in visual mode
+    " do not move cursor after yanking in visual mode
     vmap y ygv<esc>
 
   " custom mappings
@@ -231,6 +231,7 @@
   packadd minpac
   call minpac#init()
 
+  " plugins which need no config or tweaking
   call minpac#add('k-takata/minpac', {'type': 'opt'})
   call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
   call minpac#add('AndrewRadev/tagalong.vim') " tag fixin'
