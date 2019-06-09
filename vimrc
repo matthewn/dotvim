@@ -128,12 +128,14 @@
   endif
 
 " COMMANDS
-  " minpac convenience commands
-  command! PackUpdate call minpac#update()
-  command! PackClean call minpac#clean()
   " font twiddling
   command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
   command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
+  " packager convenience commands
+  command! PackagerInstall call packager#install()
+  command! -bang PackagerUpdate call packager#update({ 'force_hooks': '<bang>' })
+  command! PackagerClean call packager#clean()
+  command! PackagerStatus call packager#status()
 
 " FUNCTIONS
   function! RefreshUI()
@@ -227,38 +229,40 @@
     vmap <leader>b di<b>pa</b>
     map <leader>I i<img src="" class="" width="" height="" alt="" /><esc>
 
-" PLUGINS - PACKAGES BY MINPAC
-  packadd minpac
-  call minpac#init()
+" PLUGINS - PACKAGES BY VIM-PACKAGER
+  packadd vim-packager
+  call packager#init()
 
   " plugins which need no config or tweaking
-  call minpac#add('k-takata/minpac', {'type': 'opt'})
-  call minpac#add('AndrewRadev/ember_tools.vim') " ember.js niceties
-  call minpac#add('AndrewRadev/tagalong.vim') " tag fixin'
-  call minpac#add('andymass/vim-matchup') " replace vim's matchit plugin
-  call minpac#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
-  call minpac#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
-  call minpac#add('gioele/vim-autoswap') " essential: don't bug me about swap files
-  call minpac#add('hail2u/vim-css3-syntax') " essential: syntax for css3
-  call minpac#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
-  call minpac#add('keith/investigate.vim') " gK for vimhelp on word at cursor
-  call minpac#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
-  call minpac#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
-  call minpac#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
-  call minpac#add('rbong/vim-flog') " fugitive extension: git browser at :Flog
-  call minpac#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
-  call minpac#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
-  call minpac#add('tpope/vim-fugitive') " essential: git gateway
-  call minpac#add('tpope/vim-ragtag') " useful html-related mappings
-  call minpac#add('tpope/vim-surround') " essential
-  call minpac#add('tpope/vim-unimpaired') " handy mappings
-  call minpac#add('tweekmonster/django-plus.vim') " django niceties
-  call minpac#add('vim-scripts/ColorSchemeEditor') " nifty
-  call minpac#add('whatyouhide/vim-gotham') " dark colorscheme
+  call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
+  call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
+  call packager#add('AndrewRadev/tagalong.vim') " tag fixin'
+  call packager#add('andymass/vim-matchup') " replace vim's matchit plugin
+  call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
+  call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
+  call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
+  call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
+  call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
+  call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
+  call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
+  call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
+  call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
+  "call packager#add('rbong/vim-flog') " fugitive extension: git browser at :Flog
+  call packager#add('cohama/agit.vim') " git browser at :Agit
+  call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
+  call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
+  call packager#add('tpope/vim-fugitive') " essential: git gateway
+  call packager#add('tpope/vim-ragtag') " useful html-related mappings
+  call packager#add('tpope/vim-surround') " essential
+  call packager#add('tpope/vim-unimpaired') " handy mappings
+  call packager#add('tweekmonster/django-plus.vim') " django niceties
+  call packager#add('vim-scripts/ColorSchemeEditor') " nifty
+  call packager#add('whatyouhide/vim-gotham') " dark colorscheme
+  call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
 
   " airline - essential status line replacement
-  call minpac#add('vim-airline/vim-airline')
-  call minpac#add('vim-airline/vim-airline-themes')
+  call packager#add('vim-airline/vim-airline')
+  call packager#add('vim-airline/vim-airline-themes')
   let g:airline#extensions#tagbar#enabled = 0
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline_left_sep=''
@@ -269,7 +273,7 @@
   let g:airline_section_y = ''
 
  " ale - essential asynchronous lint engine
-  call minpac#add('w0rp/ale')
+  call packager#add('w0rp/ale')
   let g:ale_lint_delay = 200
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
@@ -285,16 +289,16 @@
   nmap <silent> <leader>A :ALEToggle<cr>
 
   " buftabline
-  call minpac#add('ap/vim-buftabline')
+  call packager#add('ap/vim-buftabline')
   let g:buftabline_indicators = 1
   let g:buftabline_separators = 1
 
   " bufonly - closes all but current buffer; do I use this?
-  call minpac#add('vim-scripts/BufOnly.vim')
+  call packager#add('vim-scripts/BufOnly.vim')
   nmap <leader>o :BufOnly<cr>
 
   " ctrlsf - search/replace across files visually
-  call minpac#add('dyng/ctrlsf.vim')
+  call packager#add('dyng/ctrlsf.vim')
   let g:ctrlsf_ackprg = '/usr/bin/rg'
   let g:ctrlsf_auto_focus = { "at" : "done" }
   let g:ctrlsf_default_root = 'project+ff' " ctrlsf in project by default
@@ -302,7 +306,7 @@
   nmap <leader>a :CtrlSF<space>
 
   " ctrlp - essential fuzzy finder for files/buffers/mru
-  call minpac#add('ctrlpvim/ctrlp.vim')
+  call packager#add('ctrlpvim/ctrlp.vim')
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0 " not necessary when using ripgrep
   let g:ctrlp_match_window_reversed = 1
@@ -312,12 +316,12 @@
   nmap <silent> <leader>b :CtrlPBuffer<cr>
 
   " Dokumentary - shift-K anything
-  call minpac#add('gastonsimone/vim-dokumentary')
+  call packager#add('gastonsimone/vim-dokumentary')
   let g:dokumentary_docprgs = {'php': 'pman {0}'}
   let g:dokumentary_open = 'topleft new'
 
   " MatchTagAlways - html tag highlighting
-  call minpac#add('Valloric/MatchTagAlways')
+  call packager#add('Valloric/MatchTagAlways')
   let g:mta_filetypes = {
     \ 'html' : 1,
     \ 'xhtml' : 1,
@@ -328,14 +332,14 @@
   let g:mta_use_matchparen_group = 0
 
   " nerdtree - essential tree file explorer [left drawer]
-  call minpac#add('scrooloose/nerdtree')
+  call packager#add('scrooloose/nerdtree')
   let NERDTreeMapQuit='<esc>'
   let NERDTreeMinimalUI=1
   let NERDTreeQuitOnOpen = 1
   nmap <leader>n :NERDTreeToggle<cr>
   nmap <leader>N :NERDTreeFind<cr>
   " nerdtree-git-plugin - adds git markers
-  call minpac#add('Xuyuanp/nerdtree-git-plugin')
+  call packager#add('Xuyuanp/nerdtree-git-plugin')
   let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "Δ",
     \ "Staged"    : "+",
@@ -350,7 +354,7 @@
     \ }
 
   " tagbar - essential tag browser [right drawer]
-  call minpac#add('majutsushi/tagbar') " <leader>t for tag browser
+  call packager#add('majutsushi/tagbar') " <leader>t for tag browser
   let g:tagbar_autofocus = 1 " autofocus tagbar
   let g:tagbar_compact = 1 " don't show help banner
   let g:tagbar_expand = 1 " expand gvim window
@@ -359,12 +363,12 @@
   nnoremap <leader>t :TagbarToggle<cr>
 
   " undotree - essential undo history visualizer (gundo replacement)
-  call minpac#add('mbbill/undotree')
+  call packager#add('mbbill/undotree')
   let g:undotree_SetFocusWhenToggle = 1
   nnoremap <leader>u :UndotreeToggle<cr>
 
   " vdebug - modern vim debugger
-  call minpac#add('vim-vdebug/vdebug')
+  call packager#add('vim-vdebug/vdebug')
   let g:vdebug_options = {'break_on_open': 0}
   " let g:vdebug_keymap = {
   "   \ "run"            : "<leader>5",
@@ -379,36 +383,36 @@
   "   \ }
 
   " vim-easy-align - hit <enter> in visual mode to begin
-  call minpac#add('junegunn/vim-easy-align')
+  call packager#add('junegunn/vim-easy-align')
   " EasyAlign in visual mode (e.g. vip<Enter>)
   vmap <Enter> <Plug>(EasyAlign)
   " EasyAlign for a motion/text object (e.g. <Leader>aip)
   nmap <Leader>a <Plug>(EasyAlign)
 
   " vim-grepper - essential asynchronous searcher (ack replacement; uses rg)
-  call minpac#add('mhinz/vim-grepper')
+  call packager#add('mhinz/vim-grepper')
   let g:grepper = {}
   let g:grepper.quickfix = 0
   let g:grepper.dir = 'repo,cwd' " grep in project by default
   nnoremap <leader>g :GrepperRg<space>
 
   " vim-gutentags - essential automated ctags mgr (vim-easytags replacement)
-  call minpac#add('ludovicchabant/vim-gutentags')
+  call packager#add('ludovicchabant/vim-gutentags')
   let g:gutentags_cache_dir = $HOME . '/.vim/tags'
 
   " vim-indent-guides - pretty!
-  call minpac#add('nathanaelkane/vim-indent-guides')
+  call packager#add('nathanaelkane/vim-indent-guides')
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
 
   " vim-rooter - auto cwd to project root
   " MAY NOT NEED after new options for vim-grepper and ctrlsf
   " do i use this?
-  "call minpac#add('airblade/vim-rooter')
+  "call packager#add('airblade/vim-rooter')
   "let g:rooter_silent_chdir = 1
 
   " vim-sessionist - session manager
-  call minpac#add('manasthakur/vim-sessionist')
+  call packager#add('manasthakur/vim-sessionist')
   let g:sessionist_directory = $HOME . '/.vim/sessions'
   let g:sessionist_current = '<leader>sc'
   let g:sessionist_delete = '<leader>sd'
