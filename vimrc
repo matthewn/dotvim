@@ -1,5 +1,5 @@
 " /\/\/\/ vimrc BEGIN
-" reminder: zi toggles folds
+" reminder: zi toggles folds, zR opens all, zM closes all
 
 " OPTIONS
   set background=dark
@@ -237,8 +237,8 @@
     " plugins which need no config or tweaking
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
-    call packager#add('AndrewRadev/tagalong.vim') " tag fixin'
-    call packager#add('andymass/vim-matchup') " replace vim's matchit plugin
+    call packager#add('AndrewRadev/tagalong.vim') " html tag fixin' magic
+    call packager#add('andymass/vim-matchup') " replaces vim's matchit plugin
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
     call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
@@ -269,7 +269,7 @@
     call packager#add('gastonsimone/vim-dokumentary')
     call packager#add('junegunn/vim-easy-align')
     call packager#add('ludovicchabant/vim-gutentags')
-    call packager#add('majutsushi/tagbar') " <leader>t for tag browser
+    call packager#add('majutsushi/tagbar')
     call packager#add('manasthakur/vim-sessionist')
     call packager#add('mbbill/undotree')
     call packager#add('mhinz/vim-grepper')
@@ -396,24 +396,18 @@
   " EasyAlign for a motion/text object (e.g. <Leader>aip)
   nmap <Leader>a <Plug>(EasyAlign)
 
-  " vim-grepper - essential asynchronous searcher (ack replacement; uses rg)
+  " vim-grepper - essential asynchronous searcher (replaces ack.vim; uses rg)
   let g:grepper = {}
   let g:grepper.quickfix = 0
   let g:grepper.dir = 'repo,cwd' " grep in project by default
   nnoremap <leader>g :GrepperRg<space>
 
-  " vim-gutentags - essential automated ctags mgr (vim-easytags replacement)
+  " vim-gutentags - essential automated ctags mgr (replaces vim-easytags)
   let g:gutentags_cache_dir = $HOME . '/.vim/tags'
 
   " vim-indent-guides - pretty!
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
-
-  " vim-rooter - auto cwd to project root
-  " MAY NOT NEED after new options for vim-grepper and ctrlsf
-  " do i use this?
-  "call packager#add('airblade/vim-rooter')
-  "let g:rooter_silent_chdir = 1
 
   " vim-sessionist - session manager
   let g:sessionist_directory = $HOME . '/.vim/sessions'
