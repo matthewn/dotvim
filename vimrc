@@ -237,8 +237,6 @@
     " plugins which need no config or tweaking
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
-    call packager#add('AndrewRadev/tagalong.vim') " html tag fixin' magic
-    call packager#add('andymass/vim-matchup') " replaces vim's matchit plugin
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
     call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
@@ -263,6 +261,7 @@
     " plugins that are further tweaked below
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
+    call packager#add('andymass/vim-matchup')
     call packager#add('ap/vim-buftabline')
     call packager#add('ctrlpvim/ctrlp.vim')
     call packager#add('dyng/ctrlsf.vim')
@@ -281,6 +280,9 @@
     call packager#add('vim-vdebug/vdebug')
     call packager#add('w0rp/ale')
   endfunction
+
+  " vim-matchup - replaces vim's matchit plugin
+  let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)
 
   " airline - essential status line replacement
   let g:airline#extensions#tagbar#enabled = 0
