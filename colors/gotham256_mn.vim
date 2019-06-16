@@ -9,7 +9,7 @@ if version > 580
 		syntax reset
 	endif
 endif
-let g:colors_name = "gotham256"
+let g:colors_name = "gotham256_mn"
 
 if v:version >= 700
 	highlight CursorColumn guibg=#11151c gui=NONE
