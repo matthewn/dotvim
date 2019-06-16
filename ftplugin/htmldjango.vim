@@ -1,6 +1,8 @@
 setlocal tabstop=4
 setlocal softtabstop=4
 setlocal shiftwidth=4
+
+" make vim-matchup match django template tags
 let b:surround_{char2nr("v")} = "{{ \r }}"
 let b:surround_{char2nr("{")} = "{{ \r }}"
 let b:surround_{char2nr("%")} = "{% \r %}"

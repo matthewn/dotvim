@@ -1,12 +1,12 @@
-setl tabstop=2
-setl softtabstop=2
-setl shiftwidth=2
+setlocal tabstop=2
+setlocal softtabstop=2
+setlocal shiftwidth=2
 
 " avoids errant beeps
-setl matchpairs=(:),[:],{:}
+setlocal matchpairs=(:),[:],{:}
 
 " include drupal 7 dictionary
-setl dict +=~/.vim/dictionaries/drupal7.dict
+setlocal dict +=~/.vim/dictionaries/drupal7.dict
 
 " php case statement indenting
 let g:PHP_vintage_case_default_indent = 1

@@ -1,3 +1,3 @@
-setl indentexpr= 
-setl smartindent
-setl autoindent
+setlocal indentexpr= 
+setlocal smartindent
+setlocal autoindent
