@@ -57,7 +57,7 @@
   set ttyfast
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+  set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
   set wildignorecase
 
   set incsearch   " do incremental searching
@@ -277,7 +277,6 @@
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
     call packager#add('andymass/vim-matchup')
-    call packager#add('ap/vim-buftabline')
     call packager#add('ctrlpvim/ctrlp.vim')
     call packager#add('dyng/ctrlsf.vim')
     call packager#add('gastonsimone/vim-dokumentary')
@@ -300,6 +299,8 @@
   let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)
 
   " airline - essential status line replacement
+  let g:airline#extensions#tabline#enabled = 1 " (replaces vim-buftabline)
+  let g:airline#extensions#tabline#formatter = 'unique_tail'
   let g:airline#extensions#tagbar#enabled = 0
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline_left_sep=''
@@ -323,10 +324,6 @@
     \ 'scss': ['sasslint'],
     \}
   nmap <silent> <leader>A :ALEToggle<cr>
-
-  " buftabline
-  let g:buftabline_indicators = 1
-  let g:buftabline_separators = 1
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
