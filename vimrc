@@ -83,10 +83,7 @@
         autocmd ColorScheme * call MyHighlights()
       augroup END
     endif
-    if has ("vim_starting")
-      colorscheme gotham256_mn
-      call MyHighlights()
-    endif
+    if has ("vim_starting") | colorscheme gotham256_mn | endif
   endif
 
 " GVIM OPTIONS
