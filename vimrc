@@ -1,6 +1,33 @@
 " /\/\/\/ vimrc BEGIN
 " reminder: zi toggles folds, zR opens all, zM closes all
 
+" FUNCTIONS
+  function! RefreshAirline()
+    if exists(':AirlineRefresh')
+      AirlineRefresh
+    endif
+  endfunction
+
+  " see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
+  " for more on why this is where custom color changes should go
+  function! MyHighlights() abort
+    " make tabs stand out in color terminal
+    highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
+    highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
+    " highlight trailing whitespace
+    highlight ExtraWhitespace ctermbg=red guibg=purple
+    match ExtraWhitespace /\s\+$/
+    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+    autocmd BufWinLeave * call clearmatches()
+    " highlight 81st column on long lines only
+    highlight ColorColumn ctermbg=magenta guibg=DarkRed
+    call matchadd('ColorColumn', '\%81v', 100)
+    " completion colors
+    highlight Pmenu guifg=#aaeeee guibg=#111111
+  endfunction
+
 " OPTIONS
   set background=dark
   set backspace=indent,eol,start " allow b/s over everything in insert mode
@@ -47,24 +74,19 @@
 
 " COLOR DEPENDENT OPTIONS
   if &t_Co > 2 || has("gui_running")
-    if has ("vim_starting") | colorscheme gotham256_mn | endif
     if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
-    " make tabs stand out in color terminal
-    highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
-    highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
-    " highlight trailing whitespace
-    highlight ExtraWhitespace ctermbg=red guibg=purple
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-    " highlight 81st column on long lines only
-    highlight ColorColumn ctermbg=magenta guibg=DarkRed
-    call matchadd('ColorColumn', '\%81v', 100)
-    " completion colors
-    highlight Pmenu guifg=#aaeeee guibg=#111111
+    " re-enable custom highlights after loading a colorscheme
+    if has("autocmd")
+      augroup MyColors
+        autocmd!
+        autocmd ColorScheme * call MyHighlights()
+      augroup END
+    endif
+    if has ("vim_starting")
+      colorscheme gotham256_mn
+      call MyHighlights()
+    endif
   endif
 
 " GVIM OPTIONS
@@ -111,7 +133,7 @@
         \   exe "normal! g`\"" |
         \ endif
       " re-source vimrc on save, then refresh Airline if necessary
-      au BufWritePost .vimrc,vimrc source % | call RefreshUI()
+      au BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
       " autoclose quickfix on selection
       au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
       " ensure proper highlighting of css files
@@ -136,13 +158,6 @@
   command! -bang PackagerUpdate call PackagerInit() | call packager#update({ 'force_hooks': '<bang>' })
   command! PackagerClean call PackagerInit() | call packager#clean()
   command! PackagerStatus call PackagerInit() | call packager#status()
-
-" FUNCTIONS
-  function! RefreshUI()
-    if exists(':AirlineRefresh')
-      AirlineRefresh
-    endif
-  endfunction
 
 " KEY REMAPPINGS
   let mapleader = ","
