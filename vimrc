@@ -30,7 +30,7 @@
   set ttyfast
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+  set wildignore+=*/.git/*,*/tmp/*,*.so,*.swp,*.zip
   set wildignorecase
 
   set incsearch   " do incremental searching
