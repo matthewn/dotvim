@@ -290,9 +290,9 @@
     call packager#add('junegunn/vim-easy-align')
     call packager#add('ludovicchabant/vim-gutentags')
     call packager#add('majutsushi/tagbar')
-    call packager#add('manasthakur/vim-sessionist')
     call packager#add('mbbill/undotree')
     call packager#add('mhinz/vim-grepper')
+    call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
     call packager#add('scrooloose/nerdtree')
     call packager#add('vim-airline/vim-airline')
@@ -430,14 +430,18 @@
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
 
-  " vim-sessionist - session manager
-  let g:sessionist_directory = $HOME . '/.vim/sessions'
-  let g:sessionist_current = '<leader>sc'
-  let g:sessionist_delete = '<leader>sd'
-  let g:sessionist_list = '<leader>sl'
-  let g:sessionist_new = '<leader>sn'
-  let g:sessionist_open = '<leader>so'
-  let g:sessionist_previous = '<leader>sp'
-  let g:sessionist_save = '<leader>ss'
+  " vim-startify - start screen + sane sessions (replaces vim-sessionist)
+  let g:startify_lists = [
+    \ { 'type': 'files',     'header': ['   MRU']            },
+    \ { 'type': 'sessions',  'header': ['   Sessions']       },
+    \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'commands',  'header': ['   Commands']       },
+  \ ]
+  let g:startify_session_dir = $HOME . '/.vim/sessions'
+  let g:startify_session_persistence = 1
+  nnoremap <leader>sc :SClose 
+  nnoremap <leader>sd :SDelete 
+  nnoremap <leader>so :SLoad 
+  nnoremap <leader>ss :SSave!<cr>
 
 " /\/\/\/ vimrc END
