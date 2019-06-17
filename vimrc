@@ -70,13 +70,18 @@
         call matchadd('ColorColumn', '\%81v', 100)
         " completion colors
         highlight Pmenu guifg=#aaeeee guibg=#111111
+        " tweaks to gotham
+        if g:colors_name == 'gotham'
+          highlight MatchParen guifg=#FFFFFF guibg=#0a3749 gui=NONE
+          highlight Search guifg=#FFFFFF guibg=#245361 gui=NONE
+        endif
       endfunction
       augroup MyColors
         autocmd!
         autocmd ColorScheme * call MyHighlights()
       augroup END
     endif
-    if has ("vim_starting") | colorscheme gotham256_mn | endif
+    if has("vim_starting") | colorscheme gotham | endif
   endif
 
 " GVIM OPTIONS
