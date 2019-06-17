@@ -72,7 +72,7 @@
         " completion colors
         highlight Pmenu guifg=#aaeeee guibg=#111111
         " tweaks to gotham
-        if g:colors_name == 'gotham'
+        if g:colors_name == 'gotham256'
           highlight MatchParen guifg=#FFFFFF guibg=#0a3749 gui=NONE
           highlight Search guifg=#FFFFFF guibg=#245361 gui=NONE
         endif
@@ -82,7 +82,7 @@
         autocmd ColorScheme * call MyHighlights()
       augroup END
     endif
-    if has("vim_starting") | colorscheme gotham | endif
+    if has("vim_starting") | colorscheme gotham256 | endif
   endif
 
 " GVIM OPTIONS
