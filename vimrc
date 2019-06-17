@@ -1,33 +1,6 @@
 " /\/\/\/ vimrc BEGIN
 " reminder: zi toggles folds, zR opens all, zM closes all
 
-" FUNCTIONS
-  function! RefreshAirline()
-    if exists(':AirlineRefresh')
-      AirlineRefresh
-    endif
-  endfunction
-
-  " see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
-  " for more on why this is where custom color changes should go
-  function! MyHighlights() abort
-    " make tabs stand out in color terminal
-    highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
-    highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
-    " highlight trailing whitespace
-    highlight ExtraWhitespace ctermbg=red guibg=purple
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
-    " highlight 81st column on long lines only
-    highlight ColorColumn ctermbg=magenta guibg=DarkRed
-    call matchadd('ColorColumn', '\%81v', 100)
-    " completion colors
-    highlight Pmenu guifg=#aaeeee guibg=#111111
-  endfunction
-
 " OPTIONS
   set background=dark
   set backspace=indent,eol,start " allow b/s over everything in insert mode
@@ -76,8 +49,28 @@
   if &t_Co > 2 || has("gui_running")
     if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
+
     " re-enable custom highlights after loading a colorscheme
     if has("autocmd")
+      " see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
+      " for more on why this is where custom color changes should go
+      function! MyHighlights() abort
+        " make tabs stand out in color terminal
+        highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
+        highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
+        " highlight trailing whitespace
+        highlight ExtraWhitespace ctermbg=red guibg=purple
+        match ExtraWhitespace /\s\+$/
+        autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+        autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+        autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+        autocmd BufWinLeave * call clearmatches()
+        " highlight 81st column on long lines only
+        highlight ColorColumn ctermbg=magenta guibg=DarkRed
+        call matchadd('ColorColumn', '\%81v', 100)
+        " completion colors
+        highlight Pmenu guifg=#aaeeee guibg=#111111
+      endfunction
       augroup MyColors
         autocmd!
         autocmd ColorScheme * call MyHighlights()
@@ -130,6 +123,11 @@
         \   exe "normal! g`\"" |
         \ endif
       " re-source vimrc on save, then refresh Airline if necessary
+      function! RefreshAirline()
+        if exists(':AirlineRefresh')
+          AirlineRefresh
+        endif
+      endfunction
       au BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
       " autoclose quickfix on selection
       au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
