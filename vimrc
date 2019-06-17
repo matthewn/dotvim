@@ -26,6 +26,7 @@
   set showcmd     " display incomplete commands in status bar
   set showmatch   " highlight matching parens, etc.
   set softtabstop=2
+  set splitbelow
   set tabstop=2
   set ttyfast
   set wildmenu    " waaaaay better tab completion
@@ -247,7 +248,7 @@
 " PLUGINS - PACKAGES BY VIM-PACKAGER
   function! PackagerInit() abort
     packadd vim-packager
-    call packager#init()
+    call packager#init({ 'window_cmd': 'split new'})
 
     " plugins which need no config or tweaking
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
