@@ -439,9 +439,9 @@
   \ ]
   let g:startify_session_dir = $HOME . '/.vim/sessions'
   let g:startify_session_persistence = 1
-  nnoremap <leader>sc :SClose 
-  nnoremap <leader>sd :SDelete 
-  nnoremap <leader>so :SLoad 
+  nnoremap <leader>sc :SClose<space>
+  nnoremap <leader>sd :SDelete<space>
+  nnoremap <leader>so :SLoad<space>
   nnoremap <leader>ss :SSave!<cr>
 
 " /\/\/\/ vimrc END
