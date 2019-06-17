@@ -51,6 +51,12 @@
     if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
 
+    " useful for highlight debugging
+    function! SynGroup()
+      let l:s = synID(line('.'), col('.'), 1)
+      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+    endfunction
+
     " re-enable custom highlights after loading a colorscheme
     if has("autocmd")
       " see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
