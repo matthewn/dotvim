@@ -105,7 +105,7 @@
     if has("unix")
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
-      set guifont=Ubuntu\ Mono\ 12
+      if has("vim_starting") | set guifont=Ubuntu\ Mono\ 12 | endif
     endif
     " on windows
     if has("win32") || has("win64")
@@ -113,9 +113,7 @@
     endif
     " on big pc
     if match(system('hostname'), 'hillsboro') == 0
-      if has("vim_starting")
-        set lines=64
-      endif
+      if has("vim_starting") | set lines=64 | endif
     endif
   endif
 
