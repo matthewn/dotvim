@@ -334,7 +334,7 @@
     \ 'html': [],
     \ 'scss': ['sasslint'],
     \}
-  nmap <silent> <leader>A :ALEToggle<cr>
+  nmap <silent> <leader>A :ALEToggleBuffer<cr>
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
