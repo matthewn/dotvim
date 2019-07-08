@@ -268,7 +268,6 @@
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
-    call packager#add('maralla/completor.vim') " async omnicompletion
     call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
@@ -294,6 +293,7 @@
     call packager#add('junegunn/vim-easy-align')
     call packager#add('ludovicchabant/vim-gutentags')
     call packager#add('majutsushi/tagbar')
+    call packager#add('maralla/completor.vim')
     call packager#add('mbbill/undotree')
     call packager#add('mhinz/vim-grepper')
     call packager#add('mhinz/vim-startify')
@@ -305,9 +305,6 @@
     call packager#add('vim-vdebug/vdebug')
     call packager#add('w0rp/ale')
   endfunction
-
-  " vim-matchup - replaces vim's matchit plugin
-  let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)
 
   " airline - essential status line replacement
   let g:airline#extensions#tabline#enabled = 1 " (replaces vim-buftabline)
@@ -396,7 +393,7 @@
     \ "Clean"     : "*",
     \ 'Ignored'   : '-',
     \ "Unknown"   : "?"
-    \ }
+    \}
 
   " tagbar - essential tag browser [right drawer]
   let g:tagbar_autofocus = 1 " autofocus tagbar
@@ -442,6 +439,9 @@
   " vim-indent-guides - pretty!
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
+
+  " vim-matchup - replaces vim's matchit plugin
+  let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)
 
   " vim-startify - start screen + sane sessions (replaces vim-sessionist)
   let g:startify_lists = [
