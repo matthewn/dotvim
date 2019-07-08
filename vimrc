@@ -155,6 +155,8 @@
       autocmd BufLeave *.css,*.scss normal! mC
       autocmd BufLeave *.html       normal! mH
       autocmd BufLeave *.js         normal! mJ
+      " auto-delete fugitive buffers
+      autocmd BufReadPost fugitive://* set bufhidden=delete
     augroup END
   endif
 
