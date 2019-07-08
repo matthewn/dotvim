@@ -80,13 +80,16 @@
         highlight Pmenu guifg=#aaeeee guibg=#111111
         " tweaks to gotham
         if g:colors_name == 'gotham256'
-          highlight MatchParen guifg=#FFFFFF guibg=#0a3749 gui=NONE
-          highlight Search guifg=#FFFFFF guibg=#245361 gui=NONE
+          highlight MatchParen guifg=#ffffff guibg=#0a3749 gui=NONE
+          highlight Search guifg=#ffffff guibg=#245361 gui=NONE
+          highlight Pmenu guifg=#ffffff guibg=#000066 gui=NONE
+          highlight pythonStatement guifg=#999999 gui=NONE
         endif
       endfunction
       augroup MyColors
         autocmd!
         autocmd ColorScheme * call MyHighlights()
+        autocmd BufWinEnter * call MyHighlights()
       augroup END
     endif
     if has("vim_starting") | colorscheme gotham256 | endif
