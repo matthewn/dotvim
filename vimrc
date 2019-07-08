@@ -269,6 +269,7 @@
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
+    call packager#add('maralla/completor.vim') " async omnicompletion
     call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
@@ -338,6 +339,14 @@
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
+
+  " completor - aync omnicompletion
+  let g:completor_python_binary = '/usr/bin/python3'
+  " let g:completor_completion_delay = 500
+  " use tab to select completion
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
   " ctrlsf - search/replace across files visually
   let g:ctrlsf_ackprg = '/usr/bin/rg'
