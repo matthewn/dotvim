@@ -320,6 +320,7 @@
   let g:airline_section_warning = ''
   let g:airline_section_x = ''
   let g:airline_section_y = ''
+  let g:airline_theme = 'seagull'
 
   " ale - essential asynchronous lint engine
   let g:ale_lint_delay = 200
