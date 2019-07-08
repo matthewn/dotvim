@@ -27,7 +27,6 @@
   set showcmd     " display incomplete commands in status bar
   set showmatch   " highlight matching parens, etc.
   set softtabstop=2
-  set splitbelow
   set tabstop=2
   set ttyfast
   set wildmenu    " waaaaay better tab completion
@@ -47,7 +46,7 @@
     set undodir=$HOME/.vim/undo,/tmp
   endif
 
-" COLOR DEPENDENT OPTIONS
+" COLOR OPTIONS
   if &t_Co > 2 || has("gui_running")
     if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
@@ -258,7 +257,7 @@
 " PLUGINS - PACKAGES BY VIM-PACKAGER
   function! PackagerInit() abort
     packadd vim-packager
-    call packager#init({ 'window_cmd': 'split new'})
+    call packager#init({ 'window_cmd': 'below split new'})
 
     " plugins which need no config or tweaking
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
