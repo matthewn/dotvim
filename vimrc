@@ -2,6 +2,7 @@
 " reminder: zi toggles folds, zR opens all, zM closes all
 
 " OPTIONS
+  set autochdir
   set background=dark
   set backspace=indent,eol,start " allow b/s over everything in insert mode
   set breakindent " smart/indented line wrapping
