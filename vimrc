@@ -263,9 +263,11 @@
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
+    call packager#add('fcpg/vim-orbital') " colorscheme
     call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
+    call packager#add('haishanh/night-owl.vim') " colorscheme
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
     call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
