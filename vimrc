@@ -198,6 +198,8 @@
     vmap y ygv<esc>
 
   " custom mappings
+    " back to Startify
+    nnoremap <leader><esc> :Startify<cr>
     " easy escape
     inoremap jj <esc>
     " warp speed omnicomplete: map ';;' to trigger in insert mode
