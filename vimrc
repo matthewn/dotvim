@@ -273,6 +273,7 @@
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
     call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
     call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
+    call packager#add('tmhedberg/SimpylFold') " improved folding for python
     call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
     call packager#add('tpope/vim-fugitive') " essential: git gateway
     call packager#add('tpope/vim-ragtag') " useful html-related mappings
