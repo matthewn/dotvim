@@ -398,6 +398,12 @@
     \ 'Ignored'   : '-',
     \ "Unknown"   : "?"
     \}
+    function! NERDTreeRefresh()
+      if &filetype == "nerdtree"
+        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+      endif
+    endfunction
+    autocmd BufEnter * call NERDTreeRefresh()
 
   " tagbar - essential tag browser [right drawer]
   let g:tagbar_autofocus = 1 " autofocus tagbar
