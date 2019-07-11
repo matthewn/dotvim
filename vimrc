@@ -38,10 +38,10 @@
   set ignorecase  "   make / searches ignore case
   set smartcase   "   unless there's a capital in the expression
 
-  if has('mouse')
+  if has("mouse")
     set mouse=a
   endif
-  if has('persistent_undo')
+  if has("persistent_undo")
     set undofile
     set undodir=$HOME/.vim/undo,/tmp
   endif
