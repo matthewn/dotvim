@@ -62,9 +62,6 @@
       " see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
       " for more on why this is where custom color changes should go
       function! MyHighlights() abort
-        " make tabs stand out in color terminal
-        highlight TabLine term=underline cterm=bold ctermfg=7 ctermbg=0
-        highlight TabLineSel term=bold cterm=bold ctermfg=lightyellow
         " highlight trailing whitespace
         highlight ExtraWhitespace ctermbg=red guibg=purple
         match ExtraWhitespace /\s\+$/
@@ -75,8 +72,6 @@
         " highlight 81st column on long lines only
         highlight ColorColumn ctermbg=magenta guibg=DarkRed
         call matchadd('ColorColumn', '\%81v', 100)
-        " completion colors
-        highlight Pmenu guifg=#aaeeee guibg=#111111
         " tweaks to gotham
         if g:colors_name == 'gotham256'
           highlight MatchParen guifg=#ffffff guibg=#0a3749 gui=NONE
@@ -344,21 +339,25 @@
 
   " completor - aync omnicompletion
   let g:completor_python_binary = '/usr/bin/python3'
-  " let g:completor_completion_delay = 500
+  "let g:completor_completion_delay = 500
   " use tab to select completion
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
   " ctrlsf - search/replace across files visually
-  let g:ctrlsf_ackprg = '/usr/bin/rg'
+  if executable('rg')
+    let g:ctrlsf_ackprg = '/usr/bin/rg'
+  endif
   let g:ctrlsf_auto_focus = { "at" : "done" }
   let g:ctrlsf_default_root = 'project+ff' " ctrlsf in project by default
   let g:ctrlsf_position = 'bottom'
   nmap <leader>a :CtrlSF<space>
 
   " ctrlp - essential fuzzy finder for files/buffers/mru
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  if executable('rg')
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  endif
   let g:ctrlp_use_caching = 0 " not necessary when using ripgrep
   let g:ctrlp_match_window_reversed = 1
   let g:ctrlp_mruf_max = 250
@@ -436,7 +435,11 @@
   let g:grepper = {}
   let g:grepper.quickfix = 0
   let g:grepper.dir = 'repo,cwd' " grep in project by default
-  nnoremap <leader>g :GrepperRg<space>
+  if executable('rg')
+    nnoremap <leader>g :GrepperRg<space>
+  else
+    nnoremap <leader>g :Grepper<space>
+  endif
 
   " vim-gutentags - essential automated ctags mgr (replaces vim-easytags)
   let g:gutentags_cache_dir = $HOME . '/.vim/tags'
