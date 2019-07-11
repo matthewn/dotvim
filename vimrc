@@ -3,31 +3,23 @@
 
 " OPTIONS
   set autochdir
-  set background=dark
   set backspace=indent,eol,start " allow b/s over everything in insert mode
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
   set dict +=~/.vim/dictionaries/wordlist.dict
   set directory=~/.vim/tmp//
   set encoding=utf-8
-  set noequalalways
-  set expandtab
   set nofoldenable
   set foldmethod=indent
   set formatoptions+=j " make J command grok multiline code comments
   set hidden       " abandoned buffers get hidden, not unloaded
   set history=1000
   set iskeyword-=_ " make _ act as a word boundary
-  set mousemodel=popup_setpos
   set printfont=:h09
   set runtimepath+=~/.composer/vendor/bin
   set scrolloff=10
-  set shiftround
-  set shiftwidth=2
   set showcmd     " display incomplete commands in status bar
   set showmatch   " highlight matching parens, etc.
-  set softtabstop=2
-  set tabstop=2
   set ttyfast
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
@@ -38,9 +30,17 @@
   set ignorecase  "   make / searches ignore case
   set smartcase   "   unless there's a capital in the expression
 
+  set expandtab
+  set shiftround
+  set shiftwidth=2
+  set softtabstop=2
+  set tabstop=2
+
   if has("mouse")
     set mouse=a
+    set mousemodel=popup_setpos
   endif
+
   if has("persistent_undo")
     set undofile
     set undodir=$HOME/.vim/undo,/tmp
@@ -86,7 +86,10 @@
         autocmd BufWinEnter * call MyHighlights()
       augroup END
     endif
-    if has("vim_starting") | colorscheme gotham256 | endif
+    if has("vim_starting")
+      set background=dark
+      colorscheme gotham256
+    endif
   endif
 
 " GVIM OPTIONS
