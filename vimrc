@@ -63,10 +63,6 @@
       " highlight trailing whitespace
       highlight ExtraWhitespace ctermbg=red guibg=purple
       match ExtraWhitespace /\s\+$/
-      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-      autocmd BufWinLeave * call clearmatches()
       " highlight 81st column on long lines only
       highlight ColorColumn ctermbg=magenta guibg=DarkRed
       call matchadd('ColorColumn', '\%81v', 100)
@@ -81,6 +77,10 @@
     endfunction
     augroup MyColors
       autocmd!
+      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+      autocmd BufWinLeave * call clearmatches()
       autocmd ColorScheme * call MyHighlights()
       autocmd BufWinEnter * call MyHighlights()
     augroup END
