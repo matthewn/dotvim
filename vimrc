@@ -57,35 +57,33 @@
     endfunction
 
     " re-enable custom highlights after loading a colorscheme
-    if has("autocmd")
-      " see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
-      " for more on why this is where custom color changes should go
-      function! MyHighlights() abort
-        " highlight trailing whitespace
-        highlight ExtraWhitespace ctermbg=red guibg=purple
-        match ExtraWhitespace /\s\+$/
-        autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-        autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-        autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-        autocmd BufWinLeave * call clearmatches()
-        " highlight 81st column on long lines only
-        highlight ColorColumn ctermbg=magenta guibg=DarkRed
-        call matchadd('ColorColumn', '\%81v', 100)
-        " tweaks to gotham
-        if g:colors_name == 'gotham256'
-          highlight Comment guifg=#22738c
-          highlight MatchParen guifg=#ffffff guibg=#0a3749
-          highlight Search guifg=#ffffff guibg=#245361
-          highlight Pmenu guifg=#ffffff guibg=#000066
-          highlight pythonStatement guifg=#999999
-        endif
-      endfunction
-      augroup MyColors
-        autocmd!
-        autocmd ColorScheme * call MyHighlights()
-        autocmd BufWinEnter * call MyHighlights()
-      augroup END
-    endif
+    "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
+    "    for more on why this is where custom color changes should go)
+    function! MyHighlights() abort
+      " highlight trailing whitespace
+      highlight ExtraWhitespace ctermbg=red guibg=purple
+      match ExtraWhitespace /\s\+$/
+      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+      autocmd BufWinLeave * call clearmatches()
+      " highlight 81st column on long lines only
+      highlight ColorColumn ctermbg=magenta guibg=DarkRed
+      call matchadd('ColorColumn', '\%81v', 100)
+      " tweaks to gotham
+      if g:colors_name == 'gotham256'
+        highlight Comment guifg=#22738c
+        highlight MatchParen guifg=#ffffff guibg=#0a3749
+        highlight Search guifg=#ffffff guibg=#245361
+        highlight Pmenu guifg=#ffffff guibg=#000066
+        highlight pythonStatement guifg=#999999
+      endif
+    endfunction
+    augroup MyColors
+      autocmd!
+      autocmd ColorScheme * call MyHighlights()
+      autocmd BufWinEnter * call MyHighlights()
+    augroup END
     if has("vim_starting")
       set background=dark
       colorscheme gotham256
@@ -119,43 +117,41 @@
   endif
 
 " AUTOCOMMANDS
-  if has("autocmd")
-    filetype plugin indent on
-    " put these in an autocmd group (so we can delete them easily)
-    augroup vimrcEx
-      " important: clear out the augroup first!
-      " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
-      autocmd!
-      " when editing anything not a commit message, jump to last location in file
-      " (don't do it when the position is invalid or when inside an event handler
-      " (happens when dropping a file on gvim))
-      au BufReadPost *
-        \ if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-      " re-source vimrc on save, then refresh Airline if necessary
-      function! RefreshAirline()
-        if exists(':AirlineRefresh')
-          AirlineRefresh
-        endif
-      endfunction
-      au BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
-      " autoclose quickfix on selection
-      au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
-      " ensure proper highlighting of css files
-      au FileType css setlocal iskeyword+=-
-      " blog
-      au BufNewFile,BufRead *.blog setf html | set lbr | set spell
-      " drupal
-      au BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
-      " webdev auto-marks for jumping between files
-      autocmd BufLeave *.css,*.scss normal! mC
-      autocmd BufLeave *.html       normal! mH
-      autocmd BufLeave *.js         normal! mJ
-      " auto-delete fugitive buffers
-      autocmd BufReadPost fugitive://* set bufhidden=delete
-    augroup END
-  endif
+  filetype plugin indent on
+  " put these in an autocmd group (so we can delete them easily)
+  augroup vimrcEx
+    " important: clear out the augroup first!
+    " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
+    autocmd!
+    " when editing anything not a commit message, jump to last location in file
+    " (don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim))
+    au BufReadPost *
+      \ if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
+    " re-source vimrc on save, then refresh Airline if necessary
+    function! RefreshAirline()
+      if exists(':AirlineRefresh')
+        AirlineRefresh
+      endif
+    endfunction
+    au BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
+    " autoclose quickfix on selection
+    au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
+    " ensure proper highlighting of css files
+    au FileType css setlocal iskeyword+=-
+    " blog
+    au BufNewFile,BufRead *.blog setf html | set lbr | set spell
+    " drupal
+    au BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
+    " webdev auto-marks for jumping between files
+    autocmd BufLeave *.css,*.scss normal! mC
+    autocmd BufLeave *.html       normal! mH
+    autocmd BufLeave *.js         normal! mJ
+    " auto-delete fugitive buffers
+    autocmd BufReadPost fugitive://* set bufhidden=delete
+  augroup END
 
 " COMMANDS
   " font twiddling
