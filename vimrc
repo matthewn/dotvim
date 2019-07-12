@@ -290,15 +290,15 @@
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
     call packager#add('andymass/vim-matchup')
-    call packager#add('ctrlpvim/ctrlp.vim')
     call packager#add('dyng/ctrlsf.vim')
     call packager#add('gastonsimone/vim-dokumentary')
     call packager#add('junegunn/vim-easy-align')
+    call packager#add('junegunn/fzf')
+    call packager#add('junegunn/fzf.vim')
     call packager#add('ludovicchabant/vim-gutentags')
     call packager#add('majutsushi/tagbar')
     call packager#add('maralla/completor.vim')
     call packager#add('mbbill/undotree')
-    call packager#add('mhinz/vim-grepper')
     call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
     call packager#add('scrooloose/nerdtree')
@@ -357,20 +357,37 @@
   let g:ctrlsf_position = 'bottom'
   nmap <leader>a :CtrlSF<space>
 
-  " ctrlp - essential fuzzy finder for files/buffers/mru
-  if executable('rg')
-    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-    let g:ctrlp_use_caching = 0 " not necessary when using ripgrep
-  endif
-  let g:ctrlp_match_window_reversed = 1
-  let g:ctrlp_mruf_max = 250
-  nmap <silent> <leader>m :CtrlPMRUFiles<cr>
-  nmap <silent> <leader>f :CtrlP<cr>
-  nmap <silent> <leader>b :CtrlPBuffer<cr>
-
   " Dokumentary - shift-K anything
   let g:dokumentary_docprgs = {'php': 'pman {0}'}
   let g:dokumentary_open = 'topleft new'
+
+  " fzf and fzf.vim - replaces ctrlp and vim-grepper
+  " set layout
+  let g:fzf_layout = { 'down': '~20%' }
+  " inherit colors from current colorscheme
+  let g:fzf_colors =
+  \ { 'fg':      ['fg', 'Normal'],
+    \ 'bg':      ['bg', 'Normal'],
+    \ 'hl':      ['fg', 'Comment'],
+    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+    \ 'hl+':     ['fg', 'Statement'],
+    \ 'info':    ['fg', 'PreProc'],
+    \ 'border':  ['fg', 'Ignore'],
+    \ 'prompt':  ['fg', 'Conditional'],
+    \ 'pointer': ['fg', 'Exception'],
+    \ 'marker':  ['fg', 'Keyword'],
+    \ 'spinner': ['fg', 'Label'],
+    \ 'header':  ['fg', 'Comment'] }
+  " hide fzf's useless statusline
+  autocmd! FileType fzf
+  autocmd FileType fzf set laststatus=0 noshowmode noruler
+    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+  " mappings
+  nnoremap <silent> <leader>m :History<cr>
+  nnoremap <silent> <leader>f :Files<cr>
+  nnoremap <silent> <leader>b :Buffers<cr>
+  nnoremap <silent> <leader>g :Rg<cr>
 
   " MatchTagAlways - html tag highlighting
   let g:mta_filetypes = {
@@ -442,16 +459,6 @@
   vmap <Enter> <Plug>(EasyAlign)
   " EasyAlign for a motion/text object (e.g. <Leader>aip)
   nmap <Leader>a <Plug>(EasyAlign)
-
-  " vim-grepper - essential asynchronous searcher (replaces ack.vim; uses rg)
-  let g:grepper = {}
-  let g:grepper.quickfix = 0
-  let g:grepper.dir = 'repo,cwd' " grep in project by default
-  if executable('rg')
-    nnoremap <leader>g :GrepperRg<space>
-  else
-    nnoremap <leader>g :Grepper<space>
-  endif
 
   " vim-gutentags - essential automated ctags mgr (replaces vim-easytags)
   let g:gutentags_cache_dir = $HOME . '/.vim/tags'
