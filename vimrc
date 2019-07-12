@@ -2,7 +2,6 @@
 " reminder: zi toggles folds, zR opens all, zM closes all
 
 " OPTIONS
-  set autochdir
   set backspace=indent,eol,start " allow b/s over everything in insert mode
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
@@ -289,6 +288,7 @@
     " plugins that are further tweaked below
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
+    call packager#add('airblade/vim-rooter')
     call packager#add('andymass/vim-matchup')
     call packager#add('dyng/ctrlsf.vim')
     call packager#add('gastonsimone/vim-dokumentary')
@@ -469,6 +469,9 @@
 
   " vim-matchup - replaces vim's matchit plugin
   let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)
+
+  " vim-rooter - auto cwd to project root
+  let g:rooter_silent_chdir = 1
 
   " vim-startify - start screen + sane sessions (replaces vim-sessionist)
   let g:startify_lists = [
