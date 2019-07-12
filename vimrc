@@ -360,8 +360,8 @@
   " ctrlp - essential fuzzy finder for files/buffers/mru
   if executable('rg')
     let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+    let g:ctrlp_use_caching = 0 " not necessary when using ripgrep
   endif
-  let g:ctrlp_use_caching = 0 " not necessary when using ripgrep
   let g:ctrlp_match_window_reversed = 1
   let g:ctrlp_mruf_max = 250
   nmap <silent> <leader>m :CtrlPMRUFiles<cr>
@@ -384,7 +384,7 @@
 
   " nerdtree - essential tree file explorer [left drawer]
   let NERDTreeMapQuit='<esc>'
-  let NERDTreeMinimalUI=1
+  let NERDTreeMinimalUI = 1
   let NERDTreeQuitOnOpen = 1
   nmap <leader>n :NERDTreeToggle<cr>
   nmap <leader>N :NERDTreeFind<cr>
