@@ -406,7 +406,10 @@
         silent exe substitute(mapcheck("R"), "<CR>", "", "")
       endif
     endfunction
-    autocmd BufEnter * call NERDTreeRefresh()
+    augroup nerd
+      autocmd!
+      autocmd BufEnter * call NERDTreeRefresh()
+    augroup END
 
   " tagbar - essential tag browser [right drawer]
   let g:tagbar_autofocus = 1 " autofocus tagbar
