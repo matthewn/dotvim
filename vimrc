@@ -73,10 +73,11 @@
         call matchadd('ColorColumn', '\%81v', 100)
         " tweaks to gotham
         if g:colors_name == 'gotham256'
-          highlight MatchParen guifg=#ffffff guibg=#0a3749 gui=NONE
-          highlight Search guifg=#ffffff guibg=#245361 gui=NONE
-          highlight Pmenu guifg=#ffffff guibg=#000066 gui=NONE
-          highlight pythonStatement guifg=#999999 gui=NONE
+          highlight Comment guifg=#22738c
+          highlight MatchParen guifg=#ffffff guibg=#0a3749
+          highlight Search guifg=#ffffff guibg=#245361
+          highlight Pmenu guifg=#ffffff guibg=#000066
+          highlight pythonStatement guifg=#999999
         endif
       endfunction
       augroup MyColors
