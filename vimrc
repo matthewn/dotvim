@@ -455,7 +455,7 @@
   " EasyAlign in visual mode (e.g. vip<Enter>)
   vmap <Enter> <Plug>(EasyAlign)
   " EasyAlign for a motion/text object (e.g. <Leader>aip)
-  nmap <Leader>a <Plug>(EasyAlign)
+  nmap <leader>a <Plug>(EasyAlign)
 
   " vim-gutentags - essential automated ctags mgr (replaces vim-easytags)
   let g:gutentags_cache_dir = $HOME . '/.vim/tags'
