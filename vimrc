@@ -275,6 +275,7 @@
     call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
     call packager#add('tpope/vim-fugitive') " essential: git gateway
     call packager#add('tpope/vim-ragtag') " useful html-related mappings
+    call packager#add('tpope/vim-repeat') " makes vim-surround better
     call packager#add('tpope/vim-surround') " essential
     call packager#add('tpope/vim-unimpaired') " handy mappings
     call packager#add('tweekmonster/django-plus.vim') " django niceties
