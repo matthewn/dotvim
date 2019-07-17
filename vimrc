@@ -479,7 +479,7 @@
   \ ]
   let g:startify_session_dir = $HOME . '/.vim/sessions'
   let g:startify_session_persistence = 1
-  nnoremap <leader>sc :SClose<space>
+  nnoremap <leader>sc :SClose<cr>
   nnoremap <leader>sd :SDelete<space>
   nnoremap <leader>so :SLoad<space>
   nnoremap <leader>ss :SSave!<cr>
