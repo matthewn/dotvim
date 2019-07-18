@@ -341,7 +341,7 @@
 
   " completor - aync omnicompletion
   let g:completor_python_binary = '/usr/bin/python3'
-  "let g:completor_completion_delay = 500
+  let g:completor_completion_delay = 500
   " use tab to select completion
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
