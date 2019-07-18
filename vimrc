@@ -287,6 +287,7 @@
     " plugins that are further tweaked below
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
+    call packager#add('airblade/vim-gitgutter')
     call packager#add('airblade/vim-rooter')
     call packager#add('andymass/vim-matchup')
     call packager#add('dyng/ctrlsf.vim')
@@ -458,6 +459,10 @@
   vmap <Enter> <Plug>(EasyAlign)
   " EasyAlign for a motion/text object (e.g. <Leader>aip)
   nmap <leader>a <Plug>(EasyAlign)
+
+  " vim-gitgutter - git info expressed as vim signs
+  let g:gitgutter_enabled = 0
+  nmap <silent> <leader>\ :GitGutterToggle<cr>
 
   " vim-gutentags - essential automated ctags mgr (replaces vim-easytags)
   let g:gutentags_cache_dir = $HOME . '/.vim/tags'
