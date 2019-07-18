@@ -259,8 +259,8 @@
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
+    call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
     call packager#add('fcpg/vim-orbital') " colorscheme
-    call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
     call packager#add('haishanh/night-owl.vim') " colorscheme
@@ -269,7 +269,7 @@
     call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
-    call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
+    call packager#add('pbogut/fzf-mru.vim') " add a proper mru to fzf
     call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
     call packager#add('tmhedberg/SimpylFold') " improved folding for python
     call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
@@ -282,6 +282,7 @@
     call packager#add('vim-scripts/ColorSchemeEditor') " nifty
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
+    call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
 
     " plugins that are further tweaked below
     call packager#add('Valloric/MatchTagAlways')
@@ -382,7 +383,7 @@
   autocmd FileType fzf set laststatus=0 noshowmode noruler
     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
   " mappings
-  nnoremap <silent> <leader>m :History<cr>
+  nnoremap <silent> <leader>m :FZFMru<cr>
   nnoremap <silent> <leader>f :Files<cr>
   nnoremap <silent> <leader>b :Buffers<cr>
   nnoremap <silent> <leader>g :Rg<cr>
