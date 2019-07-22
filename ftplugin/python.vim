@@ -23,7 +23,6 @@ do_it = True
 for path in sys.path:
   if venv_path in path:
     do_it = False
-    print('not gonna do it!')
     continue
 if do_it:
   activate_this = vim.eval('activate_this')
