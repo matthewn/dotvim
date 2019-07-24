@@ -253,13 +253,14 @@
 " PLUGINS - PACKAGES BY VIM-PACKAGER
   function! PackagerInit() abort
     packadd vim-packager
-    call packager#init({ 'window_cmd': 'below split new'})
+    call packager#init({ 'window_cmd': 'below split new' })
 
     " plugins which need no config or tweaking
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
     call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
+    call packager#add('dhruvasagar/vim-open-url') " gB to open url
     call packager#add('fcpg/vim-orbital') " colorscheme
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
