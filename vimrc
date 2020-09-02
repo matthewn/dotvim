@@ -231,9 +231,9 @@
     " edit file, starting in same directory as current file [brilliant!]
     map <leader>e :e <c-r>=expand("%:p:h") . "/" <cr>
     " tab stop changes
-    nmap <leader>2 :set tabstop=2<cr><esc>:set softtabstop=2<cr><esc>:set shiftwidth=2<cr>
-    nmap <leader>4 :set tabstop=4<cr><esc>:set softtabstop=4<cr><esc>:set shiftwidth=4<cr>
-    nmap <leader>8 :set tabstop=8<cr><esc>:set softtabstop=8<cr><esc>:set shiftwidth=4<cr>
+    nmap <leader>#2 :set tabstop=2<cr><esc>:set softtabstop=2<cr><esc>:set shiftwidth=2<cr>
+    nmap <leader>#4 :set tabstop=4<cr><esc>:set softtabstop=4<cr><esc>:set shiftwidth=4<cr>
+    nmap <leader>#8 :set tabstop=8<cr><esc>:set softtabstop=8<cr><esc>:set shiftwidth=4<cr>
     " this used to point at bufkill.vim's :BD
     nmap <silent> gx :bd<cr>
     " font twiddling
@@ -258,6 +258,8 @@
     " plugins which need no config or tweaking
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
+    call packager#add('Bakudankun/vim-makejob') " essential: async make
+    call packager#add('arzg/vim-substrata') " colorscheme
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
     call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
     call packager#add('dhruvasagar/vim-open-url') " gB to open url
@@ -265,12 +267,12 @@
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
     call packager#add('haishanh/night-owl.vim') " colorscheme
+    call packager#add('joukevandermaas/vim-ember-hbs.git') " syntax highlighting
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
     call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
-    call packager#add('pbogut/fzf-mru.vim') " add a proper mru to fzf
     call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
     call packager#add('tmhedberg/SimpylFold') " improved folding for python
     call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
@@ -283,7 +285,7 @@
     call packager#add('vim-scripts/ColorSchemeEditor') " nifty
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
-    call packager#add('https://git.danielmoch.com/vim-makejob.git') " essential: async make
+    call packager#add('https://gitlab.com/protesilaos/tempus-themes-vim.git') " WCAG compliant colorscheme
 
     " plugins that are further tweaked below
     call packager#add('Valloric/MatchTagAlways')
@@ -291,7 +293,10 @@
     call packager#add('airblade/vim-gitgutter')
     call packager#add('airblade/vim-rooter')
     call packager#add('andymass/vim-matchup')
+    call packager#add('dahu/vim-lotr')
+    call packager#add('dense-analysis/ale')
     call packager#add('dyng/ctrlsf.vim')
+    call packager#add('editorconfig/editorconfig-vim')
     call packager#add('gastonsimone/vim-dokumentary')
     call packager#add('junegunn/vim-easy-align')
     call packager#add('junegunn/fzf')
@@ -302,16 +307,26 @@
     call packager#add('mbbill/undotree')
     call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
+    call packager#add('pbogut/fzf-mru.vim')
     call packager#add('scrooloose/nerdtree')
     call packager#add('vim-airline/vim-airline')
     call packager#add('vim-airline/vim-airline-themes')
     call packager#add('vim-scripts/BufOnly.vim')
     call packager#add('vim-vdebug/vdebug')
-    call packager#add('w0rp/ale')
   endfunction
 
   " airline - essential status line replacement
   let g:airline#extensions#tabline#enabled = 1 " (replaces vim-buftabline)
+  let g:airline#extensions#tabline#buffer_idx_mode = 1 " easy buffer switching
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
   let g:airline#extensions#tabline#formatter = 'unique_tail'
   let g:airline#extensions#tagbar#enabled = 0
   let g:airline#extensions#whitespace#enabled = 0
@@ -321,7 +336,7 @@
   let g:airline_section_warning = ''
   let g:airline_section_x = ''
   let g:airline_section_y = ''
-  let g:airline_theme = 'seagull'
+  let g:airline_theme = 'lucius'
 
   " ale - essential asynchronous lint engine
   let g:ale_lint_delay = 200
@@ -330,19 +345,25 @@
   "let g:ale_list_window_size = 5
   let g:ale_open_list = 'on_save'
   let g:ale_linters = {
+    \ 'css': ['csslint'],
     \ 'php': ['php'],
     \ 'python': ['flake8'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['sasslint'],
     \}
-  nmap <silent> <leader>A :ALEToggleBuffer<cr>
+  let g:ale_fixers = {
+    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+    \ 'javascript': ['eslint'],
+    \ 'python': ['autopep8'],
+    \}
+  nmap <leader>A :ALEToggleBuffer<cr>
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
 
-  " completor - aync omnicompletion
-  let g:completor_python_binary = '/usr/bin/python3'
+  " completor - async omnicompletion
+  let g:completor_python_binary = '/usr/bin/python3' " NB: jedi must be installed
   let g:completor_completion_delay = 500
   " use tab to select completion
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -361,6 +382,10 @@
   " Dokumentary - shift-K anything
   let g:dokumentary_docprgs = {'php': 'pman {0}'}
   let g:dokumentary_open = 'topleft new'
+
+  " editorconfig-vim
+  " play nice with fugitive
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
   " fzf and fzf.vim - replaces ctrlp and vim-grepper
   " set layout
@@ -386,9 +411,14 @@
     \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
   " mappings
   nnoremap <silent> <leader>m :FZFMru<cr>
-  nnoremap <silent> <leader>f :Files<cr>
+  nnoremap <silent> <leader>f :GFiles<cr>
   nnoremap <silent> <leader>b :Buffers<cr>
   nnoremap <silent> <leader>g :Rg<cr>
+  nnoremap <silent> <leader>t :Tags<cr>
+
+  " fzf-mru - add a proper mru to fzf
+  " always sort by recency
+  let g:fzf_mru_no_sort = 1
 
   " MatchTagAlways - html tag highlighting
   let g:mta_filetypes = {
@@ -407,7 +437,7 @@
   nmap <leader>n :NERDTreeToggle<cr>
   nmap <leader>N :NERDTreeFind<cr>
   " nerdtree-git-plugin - adds git markers
-  let g:NERDTreeIndicatorMapCustom = {
+  let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "Δ",
     \ "Staged"    : "+",
     \ "Untracked" : "∘",
@@ -419,15 +449,15 @@
     \ 'Ignored'   : '-',
     \ "Unknown"   : "?"
     \}
-    function! NERDTreeRefresh()
-      if &filetype == "nerdtree"
-        silent exe substitute(mapcheck("R"), "<CR>", "", "")
-      endif
-    endfunction
-    augroup nerd
-      autocmd!
-      autocmd BufEnter * call NERDTreeRefresh()
-    augroup END
+  function! NERDTreeRefresh()
+    if &filetype == "nerdtree"
+      silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    endif
+  endfunction
+  augroup nerd
+    autocmd!
+    autocmd BufEnter * call NERDTreeRefresh()
+  augroup END
 
   " tagbar - essential tag browser [right drawer]
   let g:tagbar_autofocus = 1 " autofocus tagbar
@@ -435,7 +465,7 @@
   let g:tagbar_expand = 1 " expand gvim window
   let g:tagbar_iconchars = ['▸', '▾']
   let g:tagbar_sort = 0 " show tags in the order they appear, not sorted
-  nnoremap <leader>t :TagbarToggle<cr>
+  nnoremap <leader>T :TagbarToggle<cr>
 
   " undotree - essential undo history visualizer (gundo replacement)
   let g:undotree_SetFocusWhenToggle = 1
@@ -443,17 +473,17 @@
 
   " vdebug - modern vim debugger
   let g:vdebug_options = {'break_on_open': 0}
-  " let g:vdebug_keymap = {
-  "   \ "run"            : "<leader>5",
-  "   \ "run_to_cursor"  : "<Down>",
-  "   \ "step_over"      : "<Up>",
-  "   \ "step_into"      : "<Left>",
-  "   \ "step_out"       : "<Right>",
-  "   \ "close"          : "q",
-  "   \ "detach"         : "x",
-  "   \ "set_breakpoint" : "<leader>p",
-  "   \ "eval_visual"    : "<leader>E"
-  "   \ }
+  let g:vdebug_keymap = {
+    \ "run"            : "<leader>D",
+    \ "run_to_cursor"  : "<Down>",
+    \ "step_over"      : "<Up>",
+    \ "step_into"      : "<Right>",
+    \ "step_out"       : "<Left>",
+    \ "close"          : "<F4>",
+    \ "detach"         : "<F5>",
+    \ "set_breakpoint" : "<leader>p",
+    \ "eval_visual"    : "<leader>E"
+    \ }
 
   " vim-easy-align - hit <enter> in visual mode to begin
   " EasyAlign in visual mode (e.g. vip<Enter>)
@@ -471,6 +501,12 @@
   " vim-indent-guides - pretty!
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
+
+  " vim-lotr - a sidebar for the register list
+  let lotr_position = 'left'
+  let lotr_winsize = '40'
+  let lotr_map_keys = 0
+  nmap <leader>r <Plug>LOTRToggle
 
   " vim-matchup - replaces vim's matchit plugin
   let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)

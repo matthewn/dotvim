@@ -9,7 +9,9 @@ setlocal shiftwidth=4
 " inspired by: https://duseev.com/articles/vim-python-pipenv/
 " and also by: https://stackoverflow.com/a/4017158/546468
 "
-" IMPORTANT: this code assumes that 'autochdir' is set!
+" IMPORTANT: this code assumes that EITHER 'autochdir' is set
+"                                       OR vim-rooter is installed
+
 let pipenv_venv_path = system('pipenv --venv')
 if shell_error == 0
   let venv_path = substitute(pipenv_venv_path, '\n', '', '')
