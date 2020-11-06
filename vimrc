@@ -104,7 +104,7 @@
     if has("unix")
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
-      if has("vim_starting") | set guifont=Ubuntu\ Mono\ 12 | endif
+      if has("vim_starting") | set guifont=Ubuntu\ Mono\ 15 | endif
     endif
     " on windows
     if has("win32") || has("win64")
@@ -274,6 +274,7 @@
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
     call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
+    call packager#add('thiderman/vim-reinhardt.git') " for django-aware 'gf'
     call packager#add('tmhedberg/SimpylFold') " improved folding for python
     call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
     call packager#add('tpope/vim-fugitive') " essential: git gateway
@@ -449,6 +450,7 @@
     \ 'Ignored'   : '-',
     \ "Unknown"   : "?"
     \}
+  " autorefresh on focus
   function! NERDTreeRefresh()
     if &filetype == "nerdtree"
       silent exe substitute(mapcheck("R"), "<CR>", "", "")
@@ -515,10 +517,11 @@
   let g:rooter_silent_chdir = 1
 
   " vim-startify - start screen + sane sessions (replaces vim-sessionist)
+  let g:startify_bookmarks = [ {'b': '~/.bashrc'}, {'v': $MYVIMRC} ]
   let g:startify_lists = [
     \ { 'type': 'sessions',  'header': ['   Sessions']       },
-    \ { 'type': 'files',     'header': ['   MRU']            },
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+    \ { 'type': 'files',     'header': ['   MRU']            },
     \ { 'type': 'commands',  'header': ['   Commands']       },
   \ ]
   let g:startify_session_dir = $HOME . '/.vim/sessions'
