@@ -29,7 +29,7 @@ for path in sys.path:
 if do_it:
   activate_this = vim.eval('activate_this')
   exec(open(activate_this).read(), {'__file__': activate_this})
-  print('python virtualenv detected and added to path')
+  # print('python virtualenv detected and added to path')
 EOF
 
   endif
