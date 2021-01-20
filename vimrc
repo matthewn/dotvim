@@ -284,7 +284,6 @@
     call packager#add('tpope/vim-surround') " essential
     call packager#add('tpope/vim-unimpaired') " handy mappings
     call packager#add('tweekmonster/django-plus.vim') " django niceties
-    call packager#add('vim-scripts/ColorSchemeEditor') " nifty
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
     call packager#add('https://gitlab.com/protesilaos/tempus-themes-vim.git') " WCAG compliant colorscheme
