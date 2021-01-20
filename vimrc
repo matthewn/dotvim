@@ -104,10 +104,10 @@
     if has("unix")
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
-      if has("vim_starting") | set guifont=Ubuntu\ Mono\ 15 | endif
+      if has("vim_starting") | set guifont=Ubuntu\ Mono\ 13 | endif
     endif
     " on windows
-    if has("win32") || has("win64")
+    if has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
     " on big pc
