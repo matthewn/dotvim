@@ -269,6 +269,7 @@
     call packager#add('haishanh/night-owl.vim') " colorscheme
     call packager#add('joukevandermaas/vim-ember-hbs.git') " syntax highlighting
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
+    call packager#add('junegunn/goyo.vim') " replaces vimroom
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
     call packager#add('kovisoft/slimv.git') " <leader>c for SBCL REPL (emacs SLIME for vim)
     call packager#add('mhinz/vim-hugefile') " handle large files more gracefully
@@ -299,9 +300,9 @@
     call packager#add('dyng/ctrlsf.vim')
     call packager#add('editorconfig/editorconfig-vim')
     call packager#add('gastonsimone/vim-dokumentary')
-    call packager#add('junegunn/vim-easy-align')
     call packager#add('junegunn/fzf')
     call packager#add('junegunn/fzf.vim')
+    call packager#add('junegunn/vim-easy-align')
     call packager#add('ludovicchabant/vim-gutentags')
     call packager#add('majutsushi/tagbar')
     call packager#add('maralla/completor.vim')
