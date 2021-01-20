@@ -270,7 +270,8 @@
     call packager#add('joukevandermaas/vim-ember-hbs.git') " syntax highlighting
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
-    call packager#add('mhinz/vim-hugefile') " make vim handle large files more gracefully
+    call packager#add('kovisoft/slimv.git') " <leader>c for SBCL REPL (emacs SLIME for vim)
+    call packager#add('mhinz/vim-hugefile') " handle large files more gracefully
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
     call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
