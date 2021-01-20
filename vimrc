@@ -119,14 +119,14 @@
 " AUTOCOMMANDS
   filetype plugin indent on
   " put these in an autocmd group (so we can delete them easily)
-  augroup vimrcEx
+  augroup vimrc
     " important: clear out the augroup first!
     " http://learnvimscriptthehardway.stevelosh.com/chapters/14.html
     autocmd!
     " when editing anything not a commit message, jump to last location in file
     " (don't do it when the position is invalid or when inside an event handler
     " (happens when dropping a file on gvim))
-    au BufReadPost *
+    autocmd BufReadPost *
       \ if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$") |
       \   exe "normal! g`\"" |
       \ endif
@@ -136,15 +136,15 @@
         AirlineRefresh
       endif
     endfunction
-    au BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
+    autocmd BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
     " autoclose quickfix on selection
-    au FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
+    autocmd FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
     " ensure proper highlighting of css files
-    au FileType css setlocal iskeyword+=-
+    autocmd FileType css setlocal iskeyword+=-
     " blog
-    au BufNewFile,BufRead *.blog setf html | set lbr | set spell
+    autocmd BufNewFile,BufRead *.blog setf html | set lbr | set spell
     " drupal
-    au BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
+    autocmd BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
     " webdev auto-marks for jumping between files
     autocmd BufLeave *.css,*.scss normal! mC
     autocmd BufLeave *.html       normal! mH
@@ -154,9 +154,6 @@
   augroup END
 
 " COMMANDS
-  " font twiddling
-  command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
-  command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
   " packager convenience commands
   command! PackagerInstall call PackagerInit() | call packager#install()
   command! -bang PackagerUpdate call PackagerInit() | call packager#update({ 'force_hooks': '<bang>' })
@@ -237,6 +234,8 @@
     " this used to point at bufkill.vim's :BD
     nmap <silent> gx :bd<cr>
     " font twiddling
+    command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+    command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
     " maximize gvim
