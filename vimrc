@@ -258,6 +258,7 @@
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
     call packager#add('Bakudankun/vim-makejob') " essential: async make
+    call packager#add('Vimjas/vim-python-pep8-indent') " fix python indenting
     call packager#add('arzg/vim-substrata') " colorscheme
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
     call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
