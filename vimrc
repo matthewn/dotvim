@@ -344,19 +344,18 @@
   let g:airline_theme = 'lucius'
 
   " ale - essential: linting, completion, LSP & more
-  let g:ale_completion_enabled = 1
-  let g:ale_completion_autoimport = 1
-  let g:ale_completion_delay = 300
-  let g:ale_lsp_suggestions = 1
-  "set omnifunc=ale#completion#OmniFunc
+  nmap <leader>A :ALEToggleBuffer<cr>
   " use tab to select completion
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+  let g:ale_completion_enabled = 1
+  let g:ale_completion_autoimport = 1
+  let g:ale_completion_delay = 300
+  let g:ale_lsp_suggestions = 1
   let g:ale_lint_delay = 200
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
-  "let g:ale_list_window_size = 5
   let g:ale_open_list = 'on_save'
   let g:ale_linters = {
     \ 'css': ['stylelint'],
@@ -365,6 +364,11 @@
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['sasslint'],
+    \}
+  let g:ale_fixers = {
+    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+    \ 'javascript': ['eslint'],
+    \ 'python': ['autopep8'],
     \}
   let g:ale_python_pyls_config = {
     \   'pyls': {
@@ -375,12 +379,6 @@
     \     }
     \   }
     \ }
-  let g:ale_fixers = {
-    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-    \ 'javascript': ['eslint'],
-    \ 'python': ['autopep8'],
-    \}
-  nmap <leader>A :ALEToggleBuffer<cr>
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
