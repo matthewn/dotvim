@@ -275,7 +275,6 @@
     call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
     call packager#add('junegunn/goyo.vim') " replaces vimroom
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
-    call packager#add('kovisoft/slimv.git') " <leader>c for SBCL REPL (emacs SLIME for vim)
     call packager#add('mhinz/vim-hugefile') " handle large files more gracefully
     call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
@@ -307,6 +306,7 @@
     call packager#add('junegunn/fzf')
     call packager#add('junegunn/fzf.vim')
     call packager#add('junegunn/vim-easy-align')
+    call packager#add('kovisoft/slimv.git')
     call packager#add('ludovicchabant/vim-gutentags')
     call packager#add('majutsushi/tagbar')
     call packager#add('mbbill/undotree')
@@ -474,6 +474,10 @@
     autocmd!
     autocmd BufEnter * call NERDTreeRefresh()
   augroup END
+
+  " slimv - <leader>c for SBCL REPL (emacs SLIME for vim)
+  let g:lisp_rainbow = 1
+  let g:slimv_repl_split = 2 " REPL below code
 
   " tagbar - essential tag browser [right drawer]
   let g:tagbar_autofocus = 1 " autofocus tagbar
