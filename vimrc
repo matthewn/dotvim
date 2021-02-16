@@ -309,7 +309,6 @@
     call packager#add('junegunn/vim-easy-align')
     call packager#add('ludovicchabant/vim-gutentags')
     call packager#add('majutsushi/tagbar')
-    call packager#add('maralla/completor.vim')
     call packager#add('mbbill/undotree')
     call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
@@ -344,20 +343,38 @@
   let g:airline_section_y = ''
   let g:airline_theme = 'lucius'
 
-  " ale - essential asynchronous lint engine
+  " ale - essential: linting, completion, LSP & more
+  let g:ale_completion_enabled = 1
+  let g:ale_completion_autoimport = 1
+  let g:ale_completion_delay = 300
+  let g:ale_lsp_suggestions = 1
+  "set omnifunc=ale#completion#OmniFunc
+  " use tab to select completion
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
   let g:ale_lint_delay = 200
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   "let g:ale_list_window_size = 5
   let g:ale_open_list = 'on_save'
   let g:ale_linters = {
-    \ 'css': ['csslint'],
+    \ 'css': ['stylelint'],
     \ 'php': ['php'],
-    \ 'python': ['flake8'],
+    \ 'python': ['flake8', 'pyls'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['sasslint'],
     \}
+  let g:ale_python_pyls_config = {
+    \   'pyls': {
+    \     'plugins': {
+    \       'pyflakes': {
+    \         'enabled': v:false
+    \       }
+    \     }
+    \   }
+    \ }
   let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
     \ 'javascript': ['eslint'],
@@ -367,14 +384,6 @@
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
-
-  " completor - async omnicompletion
-  let g:completor_python_binary = '/usr/bin/python3' " NB: jedi must be installed
-  let g:completor_completion_delay = 500
-  " use tab to select completion
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
   " ctrlsf - search/replace across files visually
   if executable('rg')
