@@ -276,7 +276,6 @@
     call packager#add('junegunn/goyo.vim') " replaces vimroom
     call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
     call packager#add('mhinz/vim-hugefile') " handle large files more gracefully
-    call packager#add('mikewest/vimroom') " <leader>V to toggle; do i use this?
     call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
     call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
     call packager#add('thiderman/vim-reinhardt.git') " for django-aware 'gf'
