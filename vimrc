@@ -130,12 +130,16 @@
       \ if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$") |
       \   exe "normal! g`\"" |
       \ endif
+    " if another buffer tries to replace NERDTree, put in the other window,
+    " and bring back NERDTree
+    autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
     " re-source vimrc on save, then refresh Airline if necessary
     function! RefreshAirline()
       if exists(':AirlineRefresh')
         AirlineRefresh
       endif
     endfunction
+    " source vimrc after saving it
     autocmd BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
     " autoclose quickfix on selection
     autocmd FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
