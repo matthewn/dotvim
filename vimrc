@@ -155,6 +155,8 @@
     autocmd BufLeave *.js         normal! mJ
     " auto-delete fugitive buffers
     autocmd BufReadPost fugitive://* set bufhidden=delete
+    " vertically maximize gvim on startup
+    autocmd GUIEnter * call system('wmctrl -i -b toggle,maximized_vert -r ' . v:windowid)
   augroup END
 
 " COMMANDS
