@@ -263,7 +263,6 @@
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
     call packager#add('Bakudankun/vim-makejob') " essential: async make
     call packager#add('Vimjas/vim-python-pep8-indent') " fix python indenting
-    call packager#add('arzg/vim-substrata') " colorscheme
     call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
     call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
     call packager#add('dhruvasagar/vim-open-url') " gB to open url
@@ -306,8 +305,8 @@
     call packager#add('junegunn/fzf.vim')
     call packager#add('junegunn/vim-easy-align')
     call packager#add('kovisoft/slimv.git')
+    call packager#add('liuchengxu/vista.vim')
     call packager#add('ludovicchabant/vim-gutentags')
-    call packager#add('majutsushi/tagbar')
     call packager#add('mbbill/undotree')
     call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
@@ -332,7 +331,6 @@
   nmap <leader>8 <Plug>AirlineSelectTab8
   nmap <leader>9 <Plug>AirlineSelectTab9
   let g:airline#extensions#tabline#formatter = 'unique_tail'
-  let g:airline#extensions#tagbar#enabled = 0
   let g:airline#extensions#whitespace#enabled = 0
   let g:airline_left_sep=''
   let g:airline_mode_map = {'__': '-', 'n': 'N', 'i': 'I', 'R': 'R', 'c': 'C', 'v': 'V', 'V': 'V', 's': 'S', 'S': 'S',}
@@ -343,11 +341,6 @@
   let g:airline_theme = 'lucius'
 
   " ale - essential: linting, completion, LSP & more
-  nmap <leader>A :ALEToggleBuffer<cr>
-  " use tab to select completion
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
   let g:ale_completion_enabled = 1
   let g:ale_completion_autoimport = 1
   let g:ale_completion_delay = 300
@@ -378,6 +371,11 @@
     \     }
     \   }
     \ }
+  nmap <leader>A :ALEToggleBuffer<cr>
+  " use tab to select completion
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
@@ -476,14 +474,6 @@
   let g:lisp_rainbow = 1
   let g:slimv_repl_split = 2 " REPL below code
 
-  " tagbar - essential tag browser [right drawer]
-  let g:tagbar_autofocus = 1 " autofocus tagbar
-  let g:tagbar_compact = 1 " don't show help banner
-  let g:tagbar_expand = 1 " expand gvim window
-  let g:tagbar_iconchars = ['▸', '▾']
-  let g:tagbar_sort = 0 " show tags in the order they appear, not sorted
-  nnoremap <leader>T :TagbarToggle<cr>
-
   " undotree - essential undo history visualizer (gundo replacement)
   let g:undotree_SetFocusWhenToggle = 1
   nnoremap <leader>u :UndotreeToggle<cr>
@@ -517,7 +507,7 @@
 
   " vim-indent-guides - pretty!
   let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
+  let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vista']
 
   " vim-lotr - a sidebar for the register list
   let lotr_position = 'left'
@@ -545,5 +535,12 @@
   nnoremap <leader>sd :SDelete<space>
   nnoremap <leader>so :SLoad<space>
   nnoremap <leader>ss :SSave!<cr>
+
+  " vista - essential tag/symbol browser [right drawer]
+  " (async, replaces tagbar, speaks LSP)
+  let g:vista_fold_toggle_icons = ['▾', '▸']
+  let g:vista_renderer#enable_icon = 0
+  nnoremap <leader>T :Vista<cr>
+
 
 " /\/\/\/ vimrc END
