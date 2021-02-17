@@ -6,7 +6,7 @@
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
   set dict +=~/.vim/dictionaries/wordlist.dict
-  set directory=~/.vim/tmp//
+  set directory=~/.vim/tmp// " where the swapfiles lives
   set encoding=utf-8
   set nofoldenable
   set foldmethod=indent
@@ -33,7 +33,6 @@
   set shiftround
   set shiftwidth=4
   set softtabstop=4
-  "set tabstop=4
 
   if has("mouse")
     set mouse=a
@@ -45,16 +44,12 @@
     set undodir=$HOME/.vim/undo,/tmp
   endif
 
+  filetype plugin indent on
+
 " COLOR OPTIONS
   if &t_Co > 2 || has("gui_running")
     if !exists("g:syntax_on") | syntax enable | endif
     set hlsearch
-
-    " useful for highlight debugging
-    function! SynGroup()
-      let l:s = synID(line('.'), col('.'), 1)
-      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-    endfunction
 
     " re-enable custom highlights after loading a colorscheme
     "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
@@ -88,6 +83,12 @@
       set background=dark
       colorscheme gotham256
     endif
+
+    " useful for highlight debugging
+    function! SynGroup()
+      let l:s = synID(line('.'), col('.'), 1)
+      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+    endfunction
   endif
 
 " GVIM OPTIONS
@@ -110,14 +111,9 @@
     if has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
-    " on big pc
-    if match(system('hostname'), 'hillsboro') == 0
-      if has("vim_starting") | set lines=64 | endif
-    endif
   endif
 
 " AUTOCOMMANDS
-  filetype plugin indent on
   " put these in an autocmd group (so we can delete them easily)
   augroup vimrc
     " important: clear out the augroup first!
@@ -260,7 +256,7 @@
     packadd vim-packager
     call packager#init({ 'window_cmd': 'below split new' })
 
-    " plugins which need no config or tweaking
+    " plugins that have no config
     call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
     call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
     call packager#add('Bakudankun/vim-makejob') " essential: async make
@@ -291,7 +287,7 @@
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
 
-    " plugins that are further tweaked below
+    " plugins that have config below
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
     call packager#add('airblade/vim-gitgutter')
@@ -474,8 +470,14 @@
   " slimv - <leader>c for SBCL REPL (emacs SLIME for vim)
   let g:lisp_rainbow = 1
   let g:slimv_repl_split = 2 " REPL below code
+  augroup lisp
+    autocmd!
+    " enable gvim menubar on lisp files
+    autocmd BufEnter *.lisp,REPL set guioptions+=m
+    autocmd BufLeave *.lisp,REPL set guioptions-=m
+  augroup END
 
-  " undotree - essential undo history visualizer (gundo replacement)
+  " undotree - essential undo history visualizer (replaces gundo)
   let g:undotree_SetFocusWhenToggle = 1
   nnoremap <leader>u :UndotreeToggle<cr>
 
@@ -542,6 +544,5 @@
   let g:vista_fold_toggle_icons = ['▾', '▸']
   let g:vista_renderer#enable_icon = 0
   nnoremap <leader>T :Vista<cr>
-
 
 " /\/\/\/ vimrc END
