@@ -288,7 +288,6 @@
     call packager#add('tweekmonster/django-plus.vim') " django niceties
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
-    call packager#add('https://gitlab.com/protesilaos/tempus-themes-vim.git') " WCAG compliant colorscheme
 
     " plugins that are further tweaked below
     call packager#add('Valloric/MatchTagAlways')
