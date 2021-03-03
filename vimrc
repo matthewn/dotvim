@@ -349,7 +349,7 @@
   let g:ale_linters = {
     \ 'css': ['stylelint'],
     \ 'php': ['php'],
-    \ 'python': ['flake8', 'pyls'],
+    \ 'python': ['pyls'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['sasslint'],
@@ -359,12 +359,17 @@
     \ 'javascript': ['eslint'],
     \ 'python': ['autopep8'],
     \}
+  " python language server (pyls) config
+  " enable flake8 (config at ~/.config/flake8) and disable other pyls linters
+  " https://github.com/palantir/python-language-server/issues/190#issuecomment-721764819
   let g:ale_python_pyls_config = {
     \   'pyls': {
+    \     'configurationSources': ['flake8'],
     \     'plugins': {
-    \       'pyflakes': {
-    \         'enabled': v:false
-    \       }
+    \       'flake8': {'enabled': v:true},
+    \       'mccabe': {'enabled': v:false},
+    \       'pyflakes': {'enabled': v:false},
+    \       'pycodestyle': {'enabled': v:false},
     \     }
     \   }
     \ }
