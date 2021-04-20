@@ -62,7 +62,7 @@
       highlight ColorColumn ctermbg=magenta guibg=DarkRed
       call matchadd('ColorColumn', '\%81v', 100)
       " tweaks to gotham
-      if g:colors_name == 'gotham256'
+      if g:colors_name == 'gotham'
         highlight Comment guifg=#22738c
         highlight MatchParen guifg=#ffffff guibg=#0a3749
         highlight Search guifg=#ffffff guibg=#245361
@@ -81,7 +81,7 @@
     augroup END
     if has("vim_starting")
       set background=dark
-      colorscheme gotham256
+      colorscheme gotham
     endif
 
     " useful for highlight debugging
