@@ -308,6 +308,7 @@
     call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
     call packager#add('pbogut/fzf-mru.vim')
+    call packager#add('petobens/poet-v')
     call packager#add('scrooloose/nerdtree')
     call packager#add('vim-airline/vim-airline')
     call packager#add('vim-airline/vim-airline-themes')
@@ -470,6 +471,16 @@
   augroup nerd
     autocmd!
     autocmd BufEnter * call NERDTreeRefresh()
+  augroup END
+
+  " poet-v - python pipenv/poetry virtualenvs integration
+  " activate poet-v and reset ALE's LSP when loading new python buffer
+  augroup poetv_autocmd
+    au!
+    au WinEnter,BufWinEnter *.py
+      \ if &previewwindow != 1 && expand('%:p') !~# "/\\.git/" |
+        \ call poetv#activate() | call ale#lsp#reset#StopAllLSPs() |
+      \ endif
   augroup END
 
   " slimv - <leader>c for SBCL REPL (emacs SLIME for vim)
