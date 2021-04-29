@@ -390,7 +390,7 @@
   let g:ctrlsf_auto_focus = { "at" : "done" }
   let g:ctrlsf_default_root = 'project+ff' " ctrlsf in project by default
   let g:ctrlsf_position = 'bottom'
-  nmap <leader>a :CtrlSF<space>
+  nmap <leader>F :CtrlSF<space>
 
   " Dokumentary - shift-K anything
   let g:dokumentary_docprgs = {'php': 'pman {0}'}
@@ -515,8 +515,6 @@
   " vim-easy-align - hit <enter> in visual mode to begin
   " EasyAlign in visual mode (e.g. vip<Enter>)
   vmap <Enter> <Plug>(EasyAlign)
-  " EasyAlign for a motion/text object (e.g. <Leader>aip)
-  nmap <leader>a <Plug>(EasyAlign)
 
   " vim-gitgutter - git info expressed as vim signs
   let g:gitgutter_enabled = 0
