@@ -444,6 +444,7 @@
   let g:mta_use_matchparen_group = 0
 
   " nerdtree - essential tree file explorer [left drawer]
+  let NERDTreeIgnore=['__pycache__[[dir]]']
   let NERDTreeMapQuit='<esc>'
   let NERDTreeMinimalUI = 1
   let NERDTreeQuitOnOpen = 1
