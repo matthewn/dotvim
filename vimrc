@@ -330,10 +330,10 @@
   nmap <leader>9 <Plug>AirlineSelectTab9
   let g:airline#extensions#tabline#formatter = 'unique_tail'
   let g:airline#extensions#whitespace#enabled = 0
-  let g:airline_left_sep=''
+  " let g:airline_left_sep=''
   let g:airline_mode_map = {'__': '-', 'n': 'N', 'i': 'I', 'R': 'R', 'c': 'C', 'v': 'V', 'V': 'V', 's': 'S', 'S': 'S',}
-  let g:airline_right_sep=''
-  let g:airline_section_warning = ''
+  " let g:airline_right_sep=''
+  " let g:airline_section_warning = ''
   let g:airline_section_x = ''
   let g:airline_section_y = ''
   let g:airline_theme = 'lucius'
@@ -548,6 +548,7 @@
     \ { 'type': 'files',     'header': ['   MRU']            },
     \ { 'type': 'commands',  'header': ['   Commands']       },
   \ ]
+  let g:startify_fortune_use_unicode = 1
   let g:startify_session_dir = $HOME . '/.vim/sessions'
   let g:startify_session_persistence = 1
   nnoremap <leader>sc :SClose<cr>
@@ -559,6 +560,6 @@
   " (async, replaces tagbar, speaks LSP)
   let g:vista_fold_toggle_icons = ['▾', '▸']
   let g:vista_renderer#enable_icon = 0
-  nnoremap <leader>T :Vista<cr>
+  nnoremap <leader>T :Vista!!<cr>
 
 " /\/\/\/ vimrc END
