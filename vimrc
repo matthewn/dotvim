@@ -19,6 +19,7 @@
   set scrolloff=10
   set showcmd     " display incomplete commands in status bar
   set showmatch   " highlight matching parens, etc.
+  set splitbelow  " so that the preview window opens at bottom
   set ttyfast
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
@@ -62,7 +63,7 @@
       highlight ColorColumn ctermbg=magenta guibg=DarkRed
       call matchadd('ColorColumn', '\%81v', 100)
       " tweaks to gotham
-      if g:colors_name == 'gotham'
+      if g:colors_name == 'gotham256'
         highlight Comment guifg=#22738c
         highlight MatchParen guifg=#ffffff guibg=#0a3749
         highlight Search guifg=#ffffff guibg=#245361
@@ -81,7 +82,7 @@
     augroup END
     if has("vim_starting")
       set background=dark
-      colorscheme gotham
+      colorscheme gotham256
     endif
 
     " useful for highlight debugging
@@ -287,6 +288,7 @@
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
 
+
     " plugins that have config below
     call packager#add('Valloric/MatchTagAlways')
     call packager#add('Xuyuanp/nerdtree-git-plugin')
@@ -308,7 +310,6 @@
     call packager#add('mhinz/vim-startify')
     call packager#add('nathanaelkane/vim-indent-guides')
     call packager#add('pbogut/fzf-mru.vim')
-    call packager#add('petobens/poet-v')
     call packager#add('scrooloose/nerdtree')
     call packager#add('vim-airline/vim-airline')
     call packager#add('vim-airline/vim-airline-themes')
@@ -347,10 +348,11 @@
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   let g:ale_open_list = 'on_save'
+  let g:ale_python_pylsp_auto_poetry = 1
   let g:ale_linters = {
     \ 'css': ['stylelint'],
     \ 'php': ['php'],
-    \ 'python': ['pyls'],
+    \ 'python': ['pylsp'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['sasslint'],
@@ -360,11 +362,11 @@
     \ 'javascript': ['eslint'],
     \ 'python': ['autopep8'],
     \}
-  " python language server (pyls) config
-  " enable flake8 (config at ~/.config/flake8) and disable other pyls linters
+  " python-lsp-server (pylsp) config
+  " enable flake8, use config at ~/.config/flake8, disable other pylsp linters
   " https://github.com/palantir/python-language-server/issues/190#issuecomment-721764819
-  let g:ale_python_pyls_config = {
-    \   'pyls': {
+  let g:ale_python_pylsp_config = {
+    \   'pylsp': {
     \     'configurationSources': ['flake8'],
     \     'plugins': {
     \       'flake8': {'enabled': v:true},
@@ -473,16 +475,6 @@
   augroup nerd
     autocmd!
     autocmd BufEnter * call NERDTreeRefresh()
-  augroup END
-
-  " poet-v - python pipenv/poetry virtualenvs integration
-  " activate poet-v and reset ALE's LSP when loading new python buffer
-  augroup poetv_autocmd
-    au!
-    au WinEnter,BufWinEnter *.py
-      \ if &previewwindow != 1 && expand('%:p') !~# "/\\.git/" |
-        \ call poetv#activate() | call ale#lsp#reset#StopAllLSPs() |
-      \ endif
   augroup END
 
   " slimv - <leader>c for SBCL REPL (emacs SLIME for vim)
