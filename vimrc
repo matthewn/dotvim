@@ -300,7 +300,7 @@
     call packager#add('dyng/ctrlsf.vim')
     call packager#add('editorconfig/editorconfig-vim')
     call packager#add('gastonsimone/vim-dokumentary')
-    call packager#add('junegunn/fzf')
+    call packager#add('junegunn/fzf', {'do': { -> fzf#install() }})
     call packager#add('junegunn/fzf.vim')
     call packager#add('junegunn/vim-easy-align')
     call packager#add('kovisoft/slimv.git')
