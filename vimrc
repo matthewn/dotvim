@@ -6,7 +6,7 @@
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
   set dict +=~/.vim/dictionaries/wordlist.dict
-  set directory=~/.vim/tmp// " where the swapfiles lives
+  set directory=~/.vim/tmp// " where the swapfiles live
   set encoding=utf-8
   set nofoldenable
   set foldmethod=indent
@@ -15,7 +15,6 @@
   set history=1000
   set iskeyword-=_ " make _ act as a word boundary
   set printfont=:h09
-  set runtimepath+=~/.composer/vendor/bin
   set scrolloff=10
   set showcmd     " display incomplete commands in status bar
   set showmatch   " highlight matching parens, etc.
