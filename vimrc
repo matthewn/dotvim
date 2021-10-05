@@ -266,6 +266,7 @@
     call packager#add('dhruvasagar/vim-open-url') " gB to open url
     call packager#add('fcpg/vim-orbital') " colorscheme
     call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
+    call packager#add('gorkunov/smartpairs.vim') " 'vv' for quick visual selection
     call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
     call packager#add('haishanh/night-owl.vim') " colorscheme
     call packager#add('joukevandermaas/vim-ember-hbs.git') " syntax highlighting
