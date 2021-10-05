@@ -343,6 +343,8 @@
   let g:ale_completion_enabled = 1
   let g:ale_completion_autoimport = 1
   let g:ale_completion_delay = 300
+  let g:ale_floating_preview = 1
+  let g:ale_floating_window_border = repeat([''], 6)
   let g:ale_lsp_suggestions = 1
   let g:ale_lint_delay = 200
   let g:ale_lint_on_text_changed = 'normal'
