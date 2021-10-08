@@ -111,6 +111,15 @@
     if has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
+    " switch between buffers with ctrl-tabs
+    nmap <C-tab> :bnext<cr>
+    nmap <C-S-tab> :bprev<cr>
+    imap <C-tab> <esc>:bnext<cr>
+    imap <C-S-tab> <esc>:bprev<cr>
+    " maximize gvim
+    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz<cr>
+    " maximize gvim vertically
+    nmap <leader>M :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert<cr>
   endif
 
 " AUTOCOMMANDS
@@ -191,17 +200,15 @@
     vmap y ygv<esc>
 
   " custom mappings
+    " <space> and - for pagedown/up
+    noremap <Space> <PageDown>
+    noremap - <PageUp>
     " back to Startify
     nnoremap <leader><esc> :Startify<cr>
     " easy escape
     inoremap jj <esc>
     " warp speed omnicomplete: map ';;' to trigger in insert mode
     imap ;; <C-x><C-o>
-    " switch between buffers with ctrl-tabs
-    nmap <C-tab> :bnext<cr>
-    nmap <C-S-tab> :bprev<cr>
-    imap <C-tab> <esc>:bnext<cr>
-    imap <C-S-tab> <esc>:bprev<cr>
     " shortcut to .vimrc
     nmap <leader>v :e $MYVIMRC<cr>
     " clear the search highlights
@@ -240,16 +247,10 @@
     command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
-    " maximize gvim
-    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz<cr>
-    nmap <leader>M :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert<cr>
 
-  " blog input mappings
+  " html input mappings
     map <leader>a gewi<a href=""><esc>ea</a><esc>F>hi
     vmap <leader>a di<a href=""<esc>mza><esc>pa</a><esc>`zi
-    vmap <leader>i di<i>pa</i>
-    vmap <leader>b di<b>pa</b>
-    map <leader>I i<img src="" class="" width="" height="" alt="" /><esc>
 
 " PLUGINS - PACKAGES BY VIM-PACKAGER
   function! PackagerInit() abort
@@ -287,7 +288,6 @@
     call packager#add('tweekmonster/django-plus.vim') " django niceties
     call packager#add('whatyouhide/vim-gotham') " dark colorscheme
     call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
-
 
     " plugins that have config below
     call packager#add('Valloric/MatchTagAlways')
