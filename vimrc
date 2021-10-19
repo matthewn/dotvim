@@ -111,15 +111,6 @@
     if has("win64")
       set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
-    " switch between buffers with ctrl-tabs
-    nmap <C-tab> :bnext<cr>
-    nmap <C-S-tab> :bprev<cr>
-    imap <C-tab> <esc>:bnext<cr>
-    imap <C-S-tab> <esc>:bprev<cr>
-    " maximize gvim
-    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz<cr>
-    " maximize gvim vertically
-    nmap <leader>M :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert<cr>
   endif
 
 " AUTOCOMMANDS
@@ -173,6 +164,18 @@
 
 " KEY REMAPPINGS
   let mapleader = ","
+
+  if v:progname =~? "gvim"
+    " switch between buffers with ctrl-tabs
+    nmap <C-tab> :bnext<cr>
+    nmap <C-S-tab> :bprev<cr>
+    imap <C-tab> <esc>:bnext<cr>
+    imap <C-S-tab> <esc>:bprev<cr>
+    " maximize gvim
+    nmap <leader><space> :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz<cr>
+    " maximize gvim vertically
+    nmap <leader>M :silent !wmctrl -r :ACTIVE: -b toggle,maximized_vert<cr>
+  endif
 
   " make up and down arrows NOT linewise in insert mode
     inoremap <Up> <c-\><c-o>gk
