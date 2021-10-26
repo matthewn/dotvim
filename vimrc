@@ -68,6 +68,47 @@
     endif
   endif
 
+" COLOR OPTIONS
+  if &t_Co > 2 || has("gui_running")
+    if !exists("g:syntax_on") | syntax enable | endif
+    set hlsearch
+
+    " re-enable custom highlights after loading a colorscheme
+    "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
+    "    for more on why this is where custom color changes should go)
+    function! MyHighlights() abort
+      " highlight trailing whitespace
+      highlight ExtraWhitespace ctermbg=red guibg=purple
+      match ExtraWhitespace /\s\+$/
+      " highlight 81st column on long lines only
+      highlight ColorColumn ctermbg=magenta guibg=DarkRed
+      call matchadd('ColorColumn', '\%81v', 100)
+      " tweaks to gotham
+      if g:colors_name == 'gotham256'
+        highlight Comment guifg=#22738c
+        highlight MatchParen guifg=#ffffff guibg=#0a3749
+        highlight Search guifg=#ffffff guibg=#245361
+        highlight Pmenu guifg=#ffffff guibg=#000066
+        highlight pythonStatement guifg=#999999
+      endif
+    endfunction
+    augroup MyColors
+      autocmd!
+      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+      autocmd BufWinLeave * call clearmatches()
+      autocmd ColorScheme * call MyHighlights()
+      autocmd BufWinEnter * call MyHighlights()
+    augroup END
+
+    " useful for highlight debugging
+    function! SynGroup()
+      let l:s = synID(line('.'), col('.'), 1)
+      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+    endfunction
+  endif
+
 " AUTOCOMMANDS
   " put these in an autocmd group (so we can delete them easily)
   augroup vimrc
@@ -110,7 +151,7 @@
     autocmd GUIEnter * call system('wmctrl -i -b toggle,maximized_vert -r ' . v:windowid)
   augroup END
 
-" KEY REMAPPINGS
+" MAPPINGS
   let mapleader = ","
 
   if v:progname =~? "gvim"
@@ -512,49 +553,10 @@
   let g:vista_renderer#enable_icon = 0
   nnoremap <leader>T :Vista!!<cr>
 
-" COLOR OPTIONS
-  if &t_Co > 2 || has("gui_running")
-    if !exists("g:syntax_on") | syntax enable | endif
-    set hlsearch
-
-    " re-enable custom highlights after loading a colorscheme
-    "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
-    "    for more on why this is where custom color changes should go)
-    function! MyHighlights() abort
-      " highlight trailing whitespace
-      highlight ExtraWhitespace ctermbg=red guibg=purple
-      match ExtraWhitespace /\s\+$/
-      " highlight 81st column on long lines only
-      highlight ColorColumn ctermbg=magenta guibg=DarkRed
-      call matchadd('ColorColumn', '\%81v', 100)
-      " tweaks to gotham
-      if g:colors_name == 'gotham256'
-        highlight Comment guifg=#22738c
-        highlight MatchParen guifg=#ffffff guibg=#0a3749
-        highlight Search guifg=#ffffff guibg=#245361
-        highlight Pmenu guifg=#ffffff guibg=#000066
-        highlight pythonStatement guifg=#999999
-      endif
-    endfunction
-    augroup MyColors
-      autocmd!
-      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-      autocmd BufWinLeave * call clearmatches()
-      autocmd ColorScheme * call MyHighlights()
-      autocmd BufWinEnter * call MyHighlights()
-    augroup END
-    if has("vim_starting")
-      set background=dark
-      colorscheme gotham256
-    endif
-
-    " useful for highlight debugging
-    function! SynGroup()
-      let l:s = synID(line('.'), col('.'), 1)
-      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-    endfunction
+" ONLY ON STARTUP
+  if has("vim_starting")
+    set background=dark
+    colorscheme gotham256  " must come after vim-plug does its thing
   endif
 
 " /\/\/\/ vimrc END
