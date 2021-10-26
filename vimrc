@@ -246,15 +246,19 @@
 
 " PLUGINS - MANAGED BY VIM-PLUG
   " install vim-plug if not found
+  " https://github.com/junegunn/vim-plug/wiki/tips
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   endif
   call plug#begin('~/.vim/plugs')
+  " run PlugInstall if there are missing plugins
+  autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    \| PlugInstall --sync | source $MYVIMRC
+  \| endif
   "
   " plugins that have no config
   "
-  Plug 'kristijanhusak/vim-packager', { 'type': 'opt' }
   Plug 'AndrewRadev/ember_tools.vim' " ember.js niceties
   Plug 'Bakudankun/vim-makejob' " essential: async make
   Plug 'Vimjas/vim-python-pep8-indent' " fix python indenting
@@ -269,6 +273,7 @@
   Plug 'joukevandermaas/vim-ember-hbs' " syntax highlighting
   Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a fileman
   Plug 'junegunn/goyo.vim' " replaces vimroom
+  Plug 'junegunn/vim-plug' " makes vim-plug's help available
   Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
   Plug 'mhinz/vim-hugefile' " handle large files more gracefully
   Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
@@ -314,6 +319,7 @@
   Plug 'vim-vdebug/vdebug'
   call plug#end()
 
+" PLUGIN SETTINGS
   " airline - essential status line replacement
   let g:airline#extensions#tabline#enabled = 1 " (replaces vim-buftabline)
   let g:airline#extensions#tabline#buffer_idx_mode = 1 " easy buffer switching
