@@ -46,51 +46,6 @@
 
   filetype plugin indent on
 
-" COLOR OPTIONS
-  if &t_Co > 2 || has("gui_running")
-    if !exists("g:syntax_on") | syntax enable | endif
-    set hlsearch
-
-    " re-enable custom highlights after loading a colorscheme
-    "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
-    "    for more on why this is where custom color changes should go)
-    function! MyHighlights() abort
-      " highlight trailing whitespace
-      highlight ExtraWhitespace ctermbg=red guibg=purple
-      match ExtraWhitespace /\s\+$/
-      " highlight 81st column on long lines only
-      highlight ColorColumn ctermbg=magenta guibg=DarkRed
-      call matchadd('ColorColumn', '\%81v', 100)
-      " tweaks to gotham
-      if g:colors_name == 'gotham256'
-        highlight Comment guifg=#22738c
-        highlight MatchParen guifg=#ffffff guibg=#0a3749
-        highlight Search guifg=#ffffff guibg=#245361
-        highlight Pmenu guifg=#ffffff guibg=#000066
-        highlight pythonStatement guifg=#999999
-      endif
-    endfunction
-    augroup MyColors
-      autocmd!
-      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-      autocmd BufWinLeave * call clearmatches()
-      autocmd ColorScheme * call MyHighlights()
-      autocmd BufWinEnter * call MyHighlights()
-    augroup END
-    if has("vim_starting")
-      set background=dark
-      colorscheme gotham256
-    endif
-
-    " useful for highlight debugging
-    function! SynGroup()
-      let l:s = synID(line('.'), col('.'), 1)
-      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-    endfunction
-  endif
-
 " GVIM OPTIONS
   if v:progname =~? "gvim"
     set guioptions-=T " remove toolbar
@@ -154,13 +109,6 @@
     " vertically maximize gvim on startup
     autocmd GUIEnter * call system('wmctrl -i -b toggle,maximized_vert -r ' . v:windowid)
   augroup END
-
-" COMMANDS
-  " packager convenience commands
-  command! PackagerInstall call PackagerInit() | call packager#install()
-  command! -bang PackagerUpdate call PackagerInit() | call packager#update({ 'force_hooks': '<bang>' })
-  command! PackagerClean call PackagerInit() | call packager#clean()
-  command! PackagerStatus call PackagerInit() | call packager#status()
 
 " KEY REMAPPINGS
   let mapleader = ","
@@ -255,70 +203,75 @@
     map <leader>a gewi<a href=""><esc>ea</a><esc>F>hi
     vmap <leader>a di<a href=""<esc>mza><esc>pa</a><esc>`zi
 
-" PLUGINS - PACKAGES BY VIM-PACKAGER
-  function! PackagerInit() abort
-    packadd vim-packager
-    call packager#init({ 'window_cmd': 'below split new' })
-
-    " plugins that have no config
-    call packager#add('kristijanhusak/vim-packager', { 'type': 'opt' })
-    call packager#add('AndrewRadev/ember_tools.vim') " ember.js niceties
-    call packager#add('Bakudankun/vim-makejob') " essential: async make
-    call packager#add('Vimjas/vim-python-pep8-indent') " fix python indenting
-    call packager#add('cakebaker/scss-syntax.vim') " essential: syntax for scss
-    call packager#add('cohama/agit.vim') " git browser at :Agit (replaces rbong/vim-flog)
-    call packager#add('dhruvasagar/vim-open-url') " gB to open url
-    call packager#add('fcpg/vim-orbital') " colorscheme
-    call packager#add('gioele/vim-autoswap') " essential: don't bug me about swap files
-    call packager#add('gorkunov/smartpairs.vim') " 'vv' for quick visual selection
-    call packager#add('hail2u/vim-css3-syntax') " essential: syntax for css3
-    call packager#add('haishanh/night-owl.vim') " colorscheme
-    call packager#add('joukevandermaas/vim-ember-hbs.git') " syntax highlighting
-    call packager#add('justinmk/vim-gtfo') " got/T for a term; gof/F for a fileman
-    call packager#add('junegunn/goyo.vim') " replaces vimroom
-    call packager#add('keith/investigate.vim') " gK for vimhelp on word at cursor
-    call packager#add('mhinz/vim-hugefile') " handle large files more gracefully
-    call packager#add('milkypostman/vim-togglelist') " <leader>q toggles quickfix; <leader>l toggles location
-    call packager#add('rhysd/clever-f.vim') " improve f and F searches; no need for ; or ,
-    call packager#add('thiderman/vim-reinhardt.git') " for django-aware 'gf'
-    call packager#add('tmhedberg/SimpylFold') " improved folding for python
-    call packager#add('tomtom/tcomment_vim') " essential; gc to comment/uncomment
-    call packager#add('tpope/vim-fugitive') " essential: git gateway
-    call packager#add('tpope/vim-ragtag') " useful html-related mappings
-    call packager#add('tpope/vim-repeat') " makes vim-surround better
-    call packager#add('tpope/vim-surround') " essential
-    call packager#add('tpope/vim-unimpaired') " handy mappings
-    call packager#add('tweekmonster/django-plus.vim') " django niceties
-    call packager#add('whatyouhide/vim-gotham') " dark colorscheme
-    call packager#add('xuhdev/vim-latex-live-preview') " what it says on the tin
-
-    " plugins that have config below
-    call packager#add('Valloric/MatchTagAlways')
-    call packager#add('Xuyuanp/nerdtree-git-plugin')
-    call packager#add('airblade/vim-gitgutter')
-    call packager#add('airblade/vim-rooter')
-    call packager#add('andymass/vim-matchup')
-    call packager#add('dahu/vim-lotr')
-    call packager#add('dense-analysis/ale')
-    call packager#add('dyng/ctrlsf.vim')
-    call packager#add('editorconfig/editorconfig-vim')
-    call packager#add('gastonsimone/vim-dokumentary')
-    call packager#add('junegunn/fzf', {'do': { -> fzf#install() }})
-    call packager#add('junegunn/fzf.vim')
-    call packager#add('junegunn/vim-easy-align')
-    call packager#add('kovisoft/slimv.git')
-    call packager#add('liuchengxu/vista.vim')
-    call packager#add('ludovicchabant/vim-gutentags')
-    call packager#add('mbbill/undotree')
-    call packager#add('mhinz/vim-startify')
-    call packager#add('nathanaelkane/vim-indent-guides')
-    call packager#add('pbogut/fzf-mru.vim')
-    call packager#add('scrooloose/nerdtree')
-    call packager#add('vim-airline/vim-airline')
-    call packager#add('vim-airline/vim-airline-themes')
-    call packager#add('vim-scripts/BufOnly.vim')
-    call packager#add('vim-vdebug/vdebug')
-  endfunction
+" PLUGINS - MANAGED BY VIM-PLUG
+  " install vim-plug if not found
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  endif
+  call plug#begin('~/.vim/plugs')
+  "
+  " plugins that have no config
+  "
+  Plug 'kristijanhusak/vim-packager', { 'type': 'opt' }
+  Plug 'AndrewRadev/ember_tools.vim' " ember.js niceties
+  Plug 'Bakudankun/vim-makejob' " essential: async make
+  Plug 'Vimjas/vim-python-pep8-indent' " fix python indenting
+  Plug 'cakebaker/scss-syntax.vim' " essential: syntax for scss
+  Plug 'cohama/agit.vim' " git browser at :Agit (replaces rbong/vim-flog
+  Plug 'dhruvasagar/vim-open-url' " gB to open url
+  Plug 'fcpg/vim-orbital' " colorscheme
+  Plug 'gioele/vim-autoswap' " essential: don't bug me about swap files
+  Plug 'gorkunov/smartpairs.vim' " 'vv' for quick visual selection
+  Plug 'hail2u/vim-css3-syntax' " essential: syntax for css3
+  Plug 'haishanh/night-owl.vim' " colorscheme
+  Plug 'joukevandermaas/vim-ember-hbs' " syntax highlighting
+  Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a fileman
+  Plug 'junegunn/goyo.vim' " replaces vimroom
+  Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
+  Plug 'mhinz/vim-hugefile' " handle large files more gracefully
+  Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
+  Plug 'rhysd/clever-f.vim' " improve f and F searches; no need for ; or ,
+  Plug 'thiderman/vim-reinhardt' " for django-aware 'gf'
+  Plug 'tmhedberg/SimpylFold' " improved folding for python
+  Plug 'tomtom/tcomment_vim' " essential; gc to comment/uncomment
+  Plug 'tpope/vim-fugitive' " essential: git gateway
+  Plug 'tpope/vim-ragtag' " useful html-related mappings
+  Plug 'tpope/vim-repeat' " makes vim-surround better
+  Plug 'tpope/vim-surround' " essential
+  Plug 'tpope/vim-unimpaired' " handy mappings
+  Plug 'tweekmonster/django-plus.vim' " django niceties
+  Plug 'whatyouhide/vim-gotham' " dark colorscheme
+  Plug 'xuhdev/vim-latex-live-preview' " what it says on the tin
+  "
+  " plugins that have config below
+  "
+  Plug 'Valloric/MatchTagAlways'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'airblade/vim-rooter'
+  Plug 'andymass/vim-matchup'
+  Plug 'dahu/vim-lotr'
+  Plug 'dense-analysis/ale'
+  Plug 'dyng/ctrlsf.vim'
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'gastonsimone/vim-dokumentary'
+  Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
+  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/vim-easy-align'
+  Plug 'kovisoft/slimv'
+  Plug 'liuchengxu/vista.vim'
+  Plug 'ludovicchabant/vim-gutentags'
+  Plug 'mbbill/undotree'
+  Plug 'mhinz/vim-startify'
+  Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'pbogut/fzf-mru.vim'
+  Plug 'scrooloose/nerdtree'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'vim-scripts/BufOnly.vim'
+  Plug 'vim-vdebug/vdebug'
+  call plug#end()
 
   " airline - essential status line replacement
   let g:airline#extensions#tabline#enabled = 1 " (replaces vim-buftabline)
@@ -558,5 +511,50 @@
   let g:vista_fold_toggle_icons = ['▾', '▸']
   let g:vista_renderer#enable_icon = 0
   nnoremap <leader>T :Vista!!<cr>
+
+" COLOR OPTIONS
+  if &t_Co > 2 || has("gui_running")
+    if !exists("g:syntax_on") | syntax enable | endif
+    set hlsearch
+
+    " re-enable custom highlights after loading a colorscheme
+    "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
+    "    for more on why this is where custom color changes should go)
+    function! MyHighlights() abort
+      " highlight trailing whitespace
+      highlight ExtraWhitespace ctermbg=red guibg=purple
+      match ExtraWhitespace /\s\+$/
+      " highlight 81st column on long lines only
+      highlight ColorColumn ctermbg=magenta guibg=DarkRed
+      call matchadd('ColorColumn', '\%81v', 100)
+      " tweaks to gotham
+      if g:colors_name == 'gotham256'
+        highlight Comment guifg=#22738c
+        highlight MatchParen guifg=#ffffff guibg=#0a3749
+        highlight Search guifg=#ffffff guibg=#245361
+        highlight Pmenu guifg=#ffffff guibg=#000066
+        highlight pythonStatement guifg=#999999
+      endif
+    endfunction
+    augroup MyColors
+      autocmd!
+      autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+      autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+      autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+      autocmd BufWinLeave * call clearmatches()
+      autocmd ColorScheme * call MyHighlights()
+      autocmd BufWinEnter * call MyHighlights()
+    augroup END
+    if has("vim_starting")
+      set background=dark
+      colorscheme gotham256
+    endif
+
+    " useful for highlight debugging
+    function! SynGroup()
+      let l:s = synID(line('.'), col('.'), 1)
+      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+    endfunction
+  endif
 
 " /\/\/\/ vimrc END
