@@ -132,7 +132,7 @@
       endif
     endfunction
     " source vimrc after saving it
-    autocmd BufWritePost .vimrc,vimrc nested source % | call RefreshAirline()
+    autocmd BufWritePost .vimrc,vimrc nested silent source % | call RefreshAirline()
     " autoclose quickfix on selection
     autocmd FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
     " ensure proper highlighting of css files
