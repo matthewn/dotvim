@@ -251,11 +251,11 @@
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
       \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   endif
-  call plug#begin('~/.vim/plugs')
   " run PlugInstall if there are missing plugins
   autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
     \| PlugInstall --sync | source $MYVIMRC
   \| endif
+  call plug#begin('~/.vim/plugs')
   "
   " plugins that have no config
   "
@@ -273,7 +273,6 @@
   Plug 'joukevandermaas/vim-ember-hbs' " syntax highlighting
   Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a fileman
   Plug 'junegunn/goyo.vim' " replaces vimroom
-  Plug 'junegunn/vim-plug' " makes vim-plug's help available
   Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
   Plug 'mhinz/vim-hugefile' " handle large files more gracefully
   Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
@@ -305,6 +304,7 @@
   Plug 'junegunn/fzf', {'do': { -> fzf#install() }}
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
+  Plug 'junegunn/vim-plug'
   Plug 'kovisoft/slimv'
   Plug 'liuchengxu/vista.vim'
   Plug 'ludovicchabant/vim-gutentags'
@@ -533,6 +533,9 @@
 
   " vim-matchup - replaces vim's matchit plugin
   let g:matchup_transmute_enabled = 1 " enable paired tag renaming (replaces tagalong)
+
+  " vim-plug - essential plugin manager
+  let g:plug_window = '20new'
 
   " vim-rooter - auto cwd to project root
   let g:rooter_silent_chdir = 1
