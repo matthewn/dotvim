@@ -137,8 +137,6 @@
     autocmd FileType qf nmap <buffer> <cr> <cr>:cclose<cr>
     " ensure proper highlighting of css files
     autocmd FileType css setlocal iskeyword+=-
-    " blog
-    autocmd BufNewFile,BufRead *.blog setf html | set lbr | set spell
     " drupal
     autocmd BufNewFile,BufRead *.module,*.install,*.inc,*.theme setf php
     " webdev auto-marks for jumping between files
