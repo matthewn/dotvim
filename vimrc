@@ -412,7 +412,9 @@
 
   " fzf and fzf.vim - replaces ctrlp and vim-grepper
   " set layout
-  let g:fzf_layout = { 'down': '~20%' }
+  let g:fzf_layout = { 'down': '~30%' }
+  " set preview window toggle keystroke
+  let g:fzf_preview_window = ['right:50%', 'ctrl-p']
   " inherit colors from current colorscheme
   let g:fzf_colors =
   \ { 'fg':      ['fg', 'Normal'],
