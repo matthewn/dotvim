@@ -6,3 +6,4 @@ tags/*
 tmp/*
 sessions/*
 .netrwhist
+.viminfo

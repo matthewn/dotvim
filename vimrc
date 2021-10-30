@@ -34,6 +34,10 @@
   set shiftwidth=4
   set softtabstop=4
 
+  if exists("&viminfofile")  " vim 8.0.0716 & up
+    set viminfofile=~/.vim/.viminfo  " keep .viminfo out of ~
+  endif
+
   if has("mouse")
     set mouse=a
     set mousemodel=popup_setpos
