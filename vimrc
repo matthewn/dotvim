@@ -265,7 +265,7 @@
   Plug 'Bakudankun/vim-makejob' " essential: async make
   Plug 'Vimjas/vim-python-pep8-indent' " fix python indenting
   Plug 'cakebaker/scss-syntax.vim' " essential: syntax for scss
-  Plug 'cohama/agit.vim' " git browser at :Agit (replaces rbong/vim-flog
+  Plug 'cohama/agit.vim' " git browser at :Agit (replaces rbong/vim-flog)
   Plug 'dhruvasagar/vim-open-url' " gB to open url
   Plug 'fcpg/vim-orbital' " colorscheme
   Plug 'gioele/vim-autoswap' " essential: don't bug me about swap files
@@ -527,7 +527,7 @@
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vista']
 
-  " vim-lotr - a sidebar for the register list
+  " vim-lotr - a sidebar for the register list [left drawer]
   let lotr_position = 'left'
   let lotr_winsize = '40'
   let lotr_map_keys = 0
