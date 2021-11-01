@@ -14,6 +14,7 @@
   set hidden       " abandoned buffers get hidden, not unloaded
   set history=1000
   set iskeyword-=_ " make _ act as a word boundary
+  set nrformats=  " force decimal-based arithmetic on ctrl-a/x
   set printfont=:h09
   set scrolloff=10
   set showcmd     " display incomplete commands in status bar
