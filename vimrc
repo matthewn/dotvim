@@ -279,6 +279,7 @@
   Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
   Plug 'mhinz/vim-hugefile' " handle large files more gracefully
   Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
+  Plug 'rbong/vim-buffest'  " register/macro editing
   Plug 'rhysd/clever-f.vim' " improve f and F searches; no need for ; or ,
   Plug 'thiderman/vim-reinhardt' " for django-aware 'gf'
   Plug 'tmhedberg/SimpylFold' " improved folding for python
@@ -570,7 +571,7 @@
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    colorscheme gotham256  " must come after vim-plug does its thing
+    execute 'colorscheme ' . (strftime('%H') < 19 ? 'gotham256' : 'orbital')
   endif
 
 " /\/\/\/ vimrc END
