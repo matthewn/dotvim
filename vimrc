@@ -364,7 +364,7 @@
     \ 'python': ['pylsp'],
     \ 'javascript': ['eslint'],
     \ 'html': [],
-    \ 'scss': ['sasslint'],
+    \ 'scss': ['stylelint'],
     \}
   let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
