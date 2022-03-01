@@ -262,7 +262,6 @@
   "
   " plugins that have no config
   "
-  Plug 'AndrewRadev/ember_tools.vim' " ember.js niceties
   Plug 'Bakudankun/vim-makejob' " essential: async make
   Plug 'Vimjas/vim-python-pep8-indent' " fix python indenting
   Plug 'cakebaker/scss-syntax.vim' " essential: syntax for scss
@@ -273,7 +272,6 @@
   Plug 'gorkunov/smartpairs.vim' " 'vv' for quick visual selection
   Plug 'hail2u/vim-css3-syntax' " essential: syntax for css3
   Plug 'haishanh/night-owl.vim' " colorscheme
-  Plug 'joukevandermaas/vim-ember-hbs' " syntax highlighting
   Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a fileman
   Plug 'junegunn/goyo.vim' " replaces vimroom
   Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
