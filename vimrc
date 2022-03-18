@@ -86,15 +86,25 @@
       highlight ExtraWhitespace ctermbg=red guibg=purple
       match ExtraWhitespace /\s\+$/
       " highlight 81st column on long lines only
-      highlight ColorColumn ctermbg=magenta guibg=DarkRed
       call matchadd('ColorColumn', '\%81v', 100)
-      " tweaks to gotham
+      " tweaks for gotham
       if g:colors_name == 'gotham256'
         highlight Comment guifg=#22738c
         highlight MatchParen guifg=#ffffff guibg=#0a3749
         highlight Search guifg=#ffffff guibg=#245361
         highlight Pmenu guifg=#ffffff guibg=#000066
         highlight pythonStatement guifg=#999999
+        highlight ColorColumn ctermbg=magenta guibg=DarkRed
+      endif
+      " tweaks for iceberg
+      if g:colors_name == 'iceberg'
+        if &background ==# 'light'
+          highlight TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#cad0de guifg=#3f83a6
+          highlight ColorColumn ctermbg=grey guibg=#c9cdd7
+        else
+          highlight TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#161821 guifg=#84a0c6
+          highlight ColorColumn ctermbg=grey guibg=#6b7089
+        endif
       endif
     endfunction
     augroup MyColors
@@ -265,6 +275,8 @@
   Plug 'Bakudankun/vim-makejob' " essential: async make
   Plug 'Vimjas/vim-python-pep8-indent' " fix python indenting
   Plug 'cakebaker/scss-syntax.vim' " essential: syntax for scss
+  Plug 'chrisbra/Colorizer' " show hex colors, etc.
+  Plug 'cocopon/iceberg.vim' " colorscheme
   Plug 'cohama/agit.vim' " git browser at :Agit (replaces rbong/vim-flog)
   Plug 'dhruvasagar/vim-open-url' " gB to open url
   Plug 'fcpg/vim-orbital' " colorscheme
@@ -569,7 +581,8 @@
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    execute 'colorscheme ' . (strftime('%H') < 19 ? 'gotham256' : 'orbital')
+    " execute 'colorscheme ' . (strftime('%H') < 19 ? 'gotham256' : 'orbital')
+    colorscheme iceberg
   endif
 
 " /\/\/\/ vimrc END
