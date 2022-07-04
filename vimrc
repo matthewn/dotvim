@@ -2,6 +2,7 @@
 " reminder: zi toggles folds, zR opens all, zM closes all
 
 " OPTIONS
+  set nocompatible " became necessary with vim9 pkg on ubuntu
   set backspace=indent,eol,start " allow b/s over everything in insert mode
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
