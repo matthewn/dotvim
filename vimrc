@@ -85,8 +85,6 @@
       " highlight trailing whitespace
       highlight ExtraWhitespace ctermbg=red guibg=purple
       match ExtraWhitespace /\s\+$/
-      " highlight 81st column on long lines only
-      call matchadd('ColorColumn', '\%81v', 100)
       " tweaks for gotham
       if g:colors_name == 'gotham256'
         highlight Comment guifg=#22738c
@@ -94,7 +92,6 @@
         highlight Search guifg=#ffffff guibg=#245361
         highlight Pmenu guifg=#ffffff guibg=#000066
         highlight pythonStatement guifg=#999999
-        highlight ColorColumn ctermbg=magenta guibg=DarkRed
       endif
       " tweaks for iceberg
       if g:colors_name == 'iceberg'
@@ -331,6 +328,7 @@
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-scripts/BufOnly.vim'
   Plug 'vim-vdebug/vdebug'
+  Plug 'whatyouhide/vim-lengthmatters'
   call plug#end()
 
 " PLUGIN SETTINGS
@@ -540,6 +538,12 @@
   " vim-indent-guides - pretty!
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vista']
+
+  " vim-lengthmatters - show column 81, toggle-able
+  let g:lengthmatters_highlight_one_column = 1
+  let g:lengthmatters_use_textwidth = 0
+  call lengthmatters#highlight('ctermbg=magenta guibg=DarkRed')
+  nmap <leader>L :LengthmattersReload<cr>
 
   " vim-lotr - a sidebar for the register list [left drawer]
   let lotr_position = 'left'
