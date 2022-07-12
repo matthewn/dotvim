@@ -376,12 +376,12 @@
     \ 'javascript': ['eslint'],
     \ 'html': [],
     \ 'scss': ['stylelint'],
-    \}
+    \ }
   let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
     \ 'javascript': ['eslint'],
     \ 'python': ['autopep8'],
-    \}
+    \ }
   " python-lsp-server (pylsp) config
   " enable flake8, use config at ~/.config/flake8, disable other pylsp linters
   " https://github.com/palantir/python-language-server/issues/190#issuecomment-721764819
@@ -429,8 +429,8 @@
   " set preview window toggle keystroke
   let g:fzf_preview_window = ['right:50%', 'ctrl-p']
   " inherit colors from current colorscheme
-  let g:fzf_colors =
-  \ { 'fg':      ['fg', 'Normal'],
+  let g:fzf_colors = {
+    \ 'fg':      ['fg', 'Normal'],
     \ 'bg':      ['bg', 'Normal'],
     \ 'hl':      ['fg', 'Comment'],
     \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -442,7 +442,8 @@
     \ 'pointer': ['fg', 'Exception'],
     \ 'marker':  ['fg', 'Keyword'],
     \ 'spinner': ['fg', 'Label'],
-    \ 'header':  ['fg', 'Comment'] }
+    \ 'header':  ['fg', 'Comment']
+    \ }
   " hide fzf's useless statusline
   autocmd! FileType fzf
   autocmd FileType fzf set laststatus=0 noshowmode noruler
@@ -465,7 +466,7 @@
     \ 'xml' : 1,
     \ 'twig' : 1,
     \ 'php' : 1,
-    \}
+    \ }
   let g:mta_use_matchparen_group = 0
 
   " nerdtree - essential tree file explorer [left drawer]
@@ -487,7 +488,7 @@
     \ "Clean"     : "*",
     \ 'Ignored'   : '-',
     \ "Unknown"   : "?"
-    \}
+    \ }
   " autorefresh on focus
   function! NERDTreeRefresh()
     if &filetype == "nerdtree"
