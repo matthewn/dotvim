@@ -83,8 +83,10 @@
     "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
     "    for more on why this is where custom color changes should go)
     function! MyHighlights() abort
+      " set color for colorcolumn
+      highlight ColorColumn ctermbg=red guibg=darkred
       " highlight trailing whitespace
-      highlight ExtraWhitespace ctermbg=red guibg=purple
+      highlight ExtraWhitespace ctermbg=red guibg=darkred
       match ExtraWhitespace /\s\+$/
       " tweaks for gotham
       if g:colors_name == 'gotham256'
@@ -98,10 +100,8 @@
       if g:colors_name == 'iceberg'
         if &background ==# 'light'
           highlight TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#cad0de guifg=#3f83a6
-          highlight ColorColumn ctermbg=grey guibg=#c9cdd7
         else
           highlight TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#161821 guifg=#84a0c6
-          highlight ColorColumn ctermbg=grey guibg=#6b7089
         endif
       endif
     endfunction
@@ -250,6 +250,8 @@
     command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
+    " toggle cursorcolumn
+    nnoremap <silent> <leader>L :execute "setlocal colorcolumn=" . (&colorcolumn == "" ? "80" : "")<cr>
 
   " html input mappings
     map <leader>a gewi<a href=""><esc>ea</a><esc>F>hi
@@ -310,6 +312,7 @@
   Plug 'andymass/vim-matchup'
   Plug 'dahu/vim-lotr'
   Plug 'dense-analysis/ale'
+  " Plug 'dense-analysis/ale', { 'tag': 'v3.2.0' }
   Plug 'dyng/ctrlsf.vim'
   Plug 'editorconfig/editorconfig-vim'
   Plug 'gastonsimone/vim-dokumentary'
@@ -329,7 +332,6 @@
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-scripts/BufOnly.vim'
   Plug 'vim-vdebug/vdebug'
-  Plug 'whatyouhide/vim-lengthmatters'
   call plug#end()
 
 " PLUGIN SETTINGS
@@ -539,12 +541,6 @@
   " vim-indent-guides - pretty!
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'vista']
-
-  " vim-lengthmatters - show column 81, toggle-able
-  let g:lengthmatters_highlight_one_column = 1
-  let g:lengthmatters_use_textwidth = 0
-  call lengthmatters#highlight('ctermbg=magenta guibg=DarkRed')
-  nmap <leader>L :LengthmattersReload<cr>
 
   " vim-lotr - a sidebar for the register list [left drawer]
   let lotr_position = 'left'
