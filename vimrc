@@ -571,7 +571,7 @@
     \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
     \ { 'type': 'files',     'header': ['   MRU']            },
     \ { 'type': 'commands',  'header': ['   Commands']       },
-  \ ]
+    \ ]
   let g:startify_fortune_use_unicode = 1
   let g:startify_session_dir = $HOME . '/.vim/sessions'
   let g:startify_session_persistence = 1
@@ -589,7 +589,9 @@
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    execute 'colorscheme ' . (strftime('%H') < 19 ? 'gotham256' : 'night-owl')
+    execute 'colorscheme ' . (
+      \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
+      \ )
   endif
 
 " /\/\/\/ vimrc END
