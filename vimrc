@@ -121,6 +121,12 @@
   command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
   command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
 
+  " taken from defaults.vim
+  if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+      \ | wincmd p | diffthis
+  endif
+
   function! RefreshAirline()
     if exists(':AirlineRefresh')
       AirlineRefresh
