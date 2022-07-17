@@ -203,6 +203,8 @@
     vmap y ygv<esc>
 
   " custom mappings
+    " switch to last active buffer
+    noremap <leader>, :buffer #<cr>
     " <space> and - for pagedown/up
     noremap <Space> <PageDown>
     noremap - <PageUp>
