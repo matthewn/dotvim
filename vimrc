@@ -115,12 +115,23 @@
       autocmd BufWinEnter * call MyHighlights()
     augroup END
 
-    " useful for highlight debugging
-    function! SynGroup()
-      let l:s = synID(line('.'), col('.'), 1)
-      echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-    endfunction
   endif
+
+" CUSTOM COMMANDS/FUNCTIONS
+  command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+  command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
+
+  function! RefreshAirline()
+    if exists(':AirlineRefresh')
+      AirlineRefresh
+    endif
+  endfunction
+
+  " useful for highlight debugging
+  function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+  endfunction
 
 " AUTOCOMMANDS
   " put these in an autocmd group (so we can delete them easily)
@@ -139,11 +150,6 @@
     " and bring back NERDTree
     autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
     " re-source vimrc on save, then refresh Airline if necessary
-    function! RefreshAirline()
-      if exists(':AirlineRefresh')
-        AirlineRefresh
-      endif
-    endfunction
     " source vimrc after saving it
     autocmd BufWritePost .vimrc,vimrc nested silent source % | call RefreshAirline()
     " autoclose quickfix on selection
@@ -248,8 +254,6 @@
     " this used to point at bufkill.vim's :BD
     nmap <silent> gx :bd<cr>
     " font twiddling
-    command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
-    command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
     nmap g= :Bigger<cr>
     nmap g- :Smaller<cr>
     " toggle cursorcolumn
