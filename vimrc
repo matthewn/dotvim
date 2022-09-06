@@ -597,9 +597,10 @@
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    execute 'colorscheme ' . (
-      \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
-      \ )
+    colorscheme night-owl
+    " execute 'colorscheme ' . (
+    "   \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
+    "   \ )
   endif
 
 " /\/\/\/ vimrc END
