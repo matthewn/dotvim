@@ -139,6 +139,19 @@
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
   endfunction
 
+  " open github pages from vimrc Plug lines
+  " taken from https://iamsang.com/en/2022/04/13/vimrc/
+  function! s:open_plug_gh()
+    let line = getline('.')
+    let line = trim(line)
+    let plug_regex = '\vPlug [''"](.{-})[''"].*'
+    let path = substitute(line, plug_regex, '\1', '')
+    let url = 'https://github.com/' .. path
+    " echo "!open '"..url.."'"
+    exec "!xdg-open '"..url.."' &"
+  endfunction
+  nnoremap <leader>hh :call <SID>open_plug_gh()<cr><cr>
+
 " AUTOCOMMANDS
   " put these in an autocmd group (so we can delete them easily)
   augroup vimrc
