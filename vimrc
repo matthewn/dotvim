@@ -525,6 +525,10 @@
   augroup nerd
     autocmd!
     autocmd BufEnter * call NERDTreeRefresh()
+    " close tab if NERDTree is the only window remaining
+    autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+    " exit Vim if NERDTree is the only window remaining in the only tab
+    autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
   augroup END
 
   " slimv - <leader>c for SBCL REPL (emacs SLIME for vim)
