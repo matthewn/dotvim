@@ -307,11 +307,13 @@
   Plug 'cohama/agit.vim' " git browser at :Agit (replaces rbong/vim-flog)
   Plug 'dhruvasagar/vim-open-url' " gB to open url
   Plug 'fcpg/vim-orbital' " colorscheme
+  Plug 'fisadev/vim-isort'  " :isort for python
   Plug 'gioele/vim-autoswap' " essential: don't bug me about swap files
   Plug 'gorkunov/smartpairs.vim' " 'vv' for quick visual selection
   Plug 'hail2u/vim-css3-syntax' " essential: syntax for css3
   Plug 'haishanh/night-owl.vim' " colorscheme
-  Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a fileman
+  Plug 'jlanzarotta/colorSchemeExplorer' " does what it says on the tin
+  Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a filemanager
   Plug 'junegunn/goyo.vim' " replaces vimroom
   Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
   Plug 'mhinz/vim-hugefile' " handle large files more gracefully
