@@ -334,6 +334,7 @@
   "
   " plugins that have config below
   "
+  Plug 'AndrewRadev/sideways.vim'
   Plug 'Valloric/MatchTagAlways'
   Plug 'Xuyuanp/nerdtree-git-plugin'
   Plug 'airblade/vim-gitgutter'
@@ -533,6 +534,10 @@
     " exit Vim if NERDTree is the only window remaining in the only tab
     autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
   augroup END
+
+  " sideways - move arguments left/right
+  nnoremap <c-s-h> :SidewaysLeft<cr>
+  nnoremap <c-s-l> :SidewaysRight<cr>
 
   " slimv - <leader>c for SBCL REPL (emacs SLIME for vim)
   let g:lisp_rainbow = 1
