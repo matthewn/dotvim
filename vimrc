@@ -397,6 +397,7 @@
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   let g:ale_open_list = 'on_save'
+  let g:ale_python_auto_poetry = 1
   let g:ale_python_pylsp_auto_poetry = 1
   let g:ale_linters = {
     \ 'css': ['stylelint'],
