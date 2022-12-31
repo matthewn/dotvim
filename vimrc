@@ -400,6 +400,7 @@
   let g:ale_open_list = 'on_save'
   let g:ale_python_auto_poetry = 1
   let g:ale_python_pylsp_auto_poetry = 1
+  let g:ale_virtualtext_cursor = 0
   let g:ale_linters = {
     \ 'css': ['stylelint'],
     \ 'php': ['php'],
