@@ -412,7 +412,7 @@
   let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
     \ 'javascript': ['eslint'],
-    \ 'python': ['black'],
+    \ 'python': ['black', 'isort'],
     \ }
   " python-lsp-server (pylsp) config
   " enable flake8, use config at ~/.config/flake8, disable other pylsp linters
