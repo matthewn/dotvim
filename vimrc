@@ -83,6 +83,12 @@
     "   (see https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
     "    for more on why this is where custom color changes should go)
     function! MyHighlights() abort
+      " set colors for airline's tabline
+      highlight airline_tab cterm=NONE ctermfg=lightgray gui=NONE guifg=lightgray
+      highlight airline_tabhid cterm=NONE ctermfg=lightgray gui=NONE guifg=lightgray
+      highlight airline_tabsel cterm=NONE ctermbg=blue ctermfg=white gui=NONE guibg=#445544 guifg=white
+      highlight airline_tabmod cterm=NONE ctermbg=blue ctermfg=lightred gui=NONE guibg=#445544 guifg=lightred
+      highlight airline_tabmod_unsel cterm=NONE ctermfg=lightred gui=NONE guifg=lightred
       " set color for colorcolumn
       highlight ColorColumn ctermbg=red guibg=darkred
       " highlight trailing whitespace
