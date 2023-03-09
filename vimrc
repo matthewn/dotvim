@@ -304,7 +304,6 @@
   Plug 'cakebaker/scss-syntax.vim' " essential: syntax for scss
   Plug 'chrisbra/Colorizer' " show hex colors, etc.
   Plug 'cocopon/iceberg.vim' " colorscheme
-  Plug 'cohama/agit.vim' " git browser at :Agit (replaces rbong/vim-flog)
   Plug 'dhruvasagar/vim-open-url' " gB to open url
   Plug 'fcpg/vim-orbital' " colorscheme
   Plug 'fisadev/vim-isort'  " :isort for python
@@ -315,6 +314,7 @@
   Plug 'jlanzarotta/colorSchemeExplorer' " does what it says on the tin
   Plug 'justinmk/vim-gtfo' " got/T for a term; gof/F for a filemanager
   Plug 'junegunn/goyo.vim' " replaces vimroom
+  Plug 'junegunn/gv.vim' " git browser at :GV :GV! :GV? (replaces cohama/agit.vim for now)
   Plug 'keith/investigate.vim' " gK for vimhelp on word at cursor
   Plug 'mhinz/vim-hugefile' " handle large files more gracefully
   Plug 'milkypostman/vim-togglelist' " <leader>q toggles quickfix; <leader>l toggles location
