@@ -2,7 +2,7 @@
 " reminder: zi toggles folds, zR opens all, zM closes all
 
 " OPTIONS
-  set nocompatible " became necessary with vim9 pkg on ubuntu
+  set nocompatible " necessary since vim9 pkg on ubuntu
   set backspace=indent,eol,start " allow b/s over everything in insert mode
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
@@ -36,6 +36,10 @@
   set shiftwidth=4
   set softtabstop=4
 
+  if exists("&smoothscroll")  " vim 9.0.0640 & up
+    set smoothscroll  " scroll linewise with mouse, ctrl-e/ctrl-y
+  endif
+
   if exists("&viminfofile")  " vim 8.0.0716 & up
     set viminfofile=~/.vim/.viminfo  " keep .viminfo out of ~
   endif
@@ -67,10 +71,6 @@
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
       if has("vim_starting") | set guifont=Ubuntu\ Mono\ 13 | endif
-    endif
-    " on windows
-    if has("win64")
-      set guifont=Lucida_Sans_Typewriter:h10:cANSI
     endif
   endif
 
@@ -120,7 +120,6 @@
       autocmd ColorScheme * call MyHighlights()
       autocmd BufWinEnter * call MyHighlights()
     augroup END
-
   endif
 
 " CUSTOM COMMANDS/FUNCTIONS
@@ -630,6 +629,7 @@
   if has("vim_starting")
     set background=dark
     colorscheme night-owl
+    " colorscheme based on time of day
     " execute 'colorscheme ' . (
     "   \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
     "   \ )
