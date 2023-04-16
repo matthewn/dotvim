@@ -384,6 +384,7 @@
   nmap <leader>9 <Plug>AirlineSelectTab9
   let g:airline#extensions#tabline#formatter = 'unique_tail'
   let g:airline#extensions#whitespace#enabled = 0
+  " let g:airline#extensions#ale#enabled = 1
   " let g:airline_left_sep=''
   let g:airline_mode_map = {'__': '-', 'n': 'N', 'i': 'I', 'R': 'R', 'c': 'C', 'v': 'V', 'V': 'V', 's': 'S', 'S': 'S',}
   " let g:airline_right_sep=''
@@ -394,12 +395,11 @@
 
   " ale - essential: linting, completion, LSP & more
   let g:ale_completion_enabled = 1
-  let g:ale_completion_autoimport = 1
-  let g:ale_completion_delay = 300
+  let g:ale_completion_delay = 200
   let g:ale_floating_preview = 1
   let g:ale_floating_window_border = repeat([''], 6)
   let g:ale_lsp_suggestions = 1
-  let g:ale_lint_delay = 200
+  let g:ale_lint_delay = 250
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   let g:ale_open_list = 'on_save'
@@ -417,8 +417,9 @@
   let g:ale_fixers = {
     \ '*': ['remove_trailing_lines', 'trim_whitespace'],
     \ 'javascript': ['eslint'],
-    \ 'python': ['black', 'isort'],
+    \ 'python': ['autoimport', 'black', 'isort'],
     \ }
+
   " python-lsp-server (pylsp) config
   " enable flake8, use config at ~/.config/flake8, disable other pylsp linters
   " https://github.com/palantir/python-language-server/issues/190#issuecomment-721764819
@@ -439,6 +440,8 @@
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+  " let ale's completion handle omnicompletion
+  set omnifunc=ale#completion#OmniFunc
 
   " bufonly - closes all but current buffer; do I use this?
   nmap <leader>o :BufOnly<cr>
