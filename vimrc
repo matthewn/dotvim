@@ -629,15 +629,20 @@
   let g:vista_fold_toggle_icons = ['▾', '▸']
   let g:vista_renderer#enable_icon = 0
   nnoremap <leader>T :Vista!!<cr>
+  augroup vista
+    autocmd!
+    " exit Vim if Vista is the only window remaining in the only tab
+    autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && bufname() == '__vista__' | quit | endif
+  augroup END
 
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    colorscheme night-owl
+    " colorscheme night-owl
     " colorscheme based on time of day
-    " execute 'colorscheme ' . (
-    "   \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
-    "   \ )
+    execute 'colorscheme ' . (
+      \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
+      \ )
   endif
 
 " /\/\/\/ vimrc END
