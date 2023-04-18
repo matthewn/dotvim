@@ -429,6 +429,7 @@
     \     'configurationSources': ['flake8'],
     \     'plugins': {
     \       'flake8': {'enabled': v:true},
+    \       'jedi_completion': {'eager': v:true},
     \       'mccabe': {'enabled': v:false},
     \       'pyflakes': {'enabled': v:false},
     \       'pycodestyle': {'enabled': v:false},
