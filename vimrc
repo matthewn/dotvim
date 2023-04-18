@@ -328,6 +328,7 @@
   Plug 'thiderman/vim-reinhardt' " for django-aware 'gf'
   Plug 'tmhedberg/SimpylFold' " improved folding for python
   Plug 'tomtom/tcomment_vim' " essential; gc to comment/uncomment
+  Plug 'tpope/vim-characterize' " power-up for 'ga'
   Plug 'tpope/vim-fugitive' " essential: git gateway
   Plug 'tpope/vim-ragtag' " useful html-related mappings
   Plug 'tpope/vim-repeat' " makes vim-surround better
