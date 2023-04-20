@@ -20,7 +20,8 @@
   set scrolloff=10
   set showcmd     " display incomplete commands in status bar
   set showmatch   " highlight matching parens, etc.
-  set splitbelow  " so that the preview window opens at bottom
+  set splitbelow  " make preview window open to bottom
+  set splitright  " make :vert <whatever> open to right
   set ttyfast
   set wildmenu    " waaaaay better tab completion
   set wildmode=list:longest,full
@@ -641,7 +642,7 @@
     " colorscheme night-owl
     " colorscheme based on time of day
     execute 'colorscheme ' . (
-      \ strftime('%H') > 4 && strftime('%H') < 19 ? 'gotham256' : 'night-owl'
+      \ strftime('%H') > 4 && strftime('%H') < 19 ? 'orbital' : 'night-owl'
       \ )
   endif
 
