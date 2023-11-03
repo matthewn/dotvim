@@ -408,6 +408,7 @@
   let g:ale_completion_delay = 200
   let g:ale_floating_preview = 1
   let g:ale_floating_window_border = repeat([''], 6)
+  let g:ale_hover_cursor = 0
   let g:ale_lsp_suggestions = 1
   let g:ale_lint_delay = 250
   let g:ale_lint_on_text_changed = 'normal'
