@@ -638,7 +638,7 @@
   " vista - essential tag/symbol browser [right drawer]
   " (async, replaces tagbar, speaks LSP)
   let g:vista_fold_toggle_icons = ['▾', '▸']
-  let g:vista_renderer#enable_icon = 0
+  let g:vista#renderer#enable_icon = 0
   nnoremap <leader>T :Vista!!<cr>
   augroup vista
     autocmd!
