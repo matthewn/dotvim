@@ -649,11 +649,11 @@
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    " colorscheme night-owl
+    colorscheme gotham256
     " colorscheme based on time of day
-    execute 'colorscheme ' . (
-      \ strftime('%H') > 4 && strftime('%H') < 19 ? 'orbital' : 'night-owl'
-      \ )
+    " execute 'colorscheme ' . (
+    "   \ strftime('%H') > 4 && strftime('%H') < 19 ? 'orbital' : 'night-owl'
+    "   \ )
   endif
 
 " /\/\/\/ vimrc END
