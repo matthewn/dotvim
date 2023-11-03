@@ -422,6 +422,7 @@
     \ 'php': ['php'],
     \ 'python': ['pylsp'],
     \ 'javascript': ['eslint'],
+    \ 'json': ['jq'],
     \ 'html': [],
     \ 'scss': ['stylelint'],
     \ }
