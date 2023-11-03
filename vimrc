@@ -7,7 +7,6 @@
   set breakindent " smart/indented line wrapping
   set confirm     " confirm dialog instead of fail
   set dict +=~/.vim/dictionaries/wordlist.dict
-  set directory=~/.vim/tmp// " where the swapfiles live
   set encoding=utf-8
   set nofoldenable
   set foldmethod=indent
@@ -54,6 +53,11 @@
     set undofile
     set undodir=$HOME/.vim/undo,/tmp
   endif
+
+  if empty(glob('~/.vim/tmp'))
+    silent !mkdir -p ~/.vim/tmp
+  endif
+  set directory=~/.vim/tmp// " where the swapfiles live
 
   filetype plugin indent on
 
