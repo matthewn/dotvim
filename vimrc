@@ -107,6 +107,10 @@
         highlight Pmenu guifg=#ffffff guibg=#000066
         highlight pythonStatement guifg=#999999
       endif
+      " tweaks for night-owl
+      if g:colors_name == 'night-owl'
+        highlight MatchParen guifg=#ffffff guibg=#0a3749
+      endif
       " tweaks for iceberg
       if g:colors_name == 'iceberg'
         if &background ==# 'light'
