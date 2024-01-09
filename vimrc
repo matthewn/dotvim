@@ -255,6 +255,8 @@
     inoremap jj <esc>
     " warp speed omnicomplete: map ';;' to trigger in insert mode
     imap ;; <C-x><C-o>
+    " ctrl-l fixes most recent misspelling in insert mode
+    inoremap <c-l> <c-g>u<Esc>[s1z=`]a<c-g>u
     " shortcut to .vimrc
     nmap <leader>v :e $MYVIMRC<cr>
     " clear the search highlights
@@ -293,6 +295,8 @@
     nmap g- :Smaller<cr>
     " toggle cursorcolumn
     nnoremap <silent> <leader>L :execute "setlocal colorcolumn=" . (&colorcolumn == "" ? "80" : "")<cr>
+    " search for the current visual selection
+    vnoremap // y/\V<C-R>=escape(@",'/\')<cr><cr>
 
   " html input mappings
     map <leader>a gewi<a href=""><esc>ea</a><esc>F>hi
