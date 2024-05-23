@@ -320,7 +320,7 @@
   Plug 'Bakudankun/vim-makejob' " essential: async make
   Plug 'Vimjas/vim-python-pep8-indent' " fix python indenting
   Plug 'cakebaker/scss-syntax.vim' " essential: syntax for scss
-  Plug 'chrisbra/Colorizer' " show hex colors, etc.
+  Plug 'chrisbra/Colorizer' " show hex colors, etc. with :ColorToggle
   Plug 'cocopon/iceberg.vim' " colorscheme
   Plug 'dhruvasagar/vim-open-url' " gB to open url
   Plug 'fcpg/vim-orbital' " colorscheme
@@ -460,7 +460,7 @@
   " let ale's completion handle omnicompletion
   set omnifunc=ale#completion#OmniFunc
 
-  " bufonly - closes all but current buffer; do I use this?
+  " bufonly - closes all but current buffer
   nmap <leader>o :BufOnly<cr>
 
   " ctrlsf - search/replace across files visually
@@ -646,14 +646,17 @@
   nnoremap <leader>T :Vista!!<cr>
   augroup vista
     autocmd!
-    " exit Vim if Vista is the only window remaining in the only tab
-    autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && bufname() == '__vista__' | quit | endif
+    " exit Vim if Vista is the only buffer remaining in the only tab
+    autocmd BufEnter * if tabpagenr('$') == 1 && len(getbufinfo({'buflisted': 1})) == 1 && bufname() == '__vista__' | quit | endif
+    " close Vista if it has ended up out of its 'sidebar' window
+    autocmd BufEnter * if winnr('$') == 1 && bufname() == '__vista__' | bdelete! | endif
   augroup END
 
 " ONLY ON STARTUP
   if has("vim_starting")
     set background=dark
-    colorscheme gotham256
+    colorscheme night-owl
+    " colorscheme gotham256
     " colorscheme based on time of day
     " execute 'colorscheme ' . (
     "   \ strftime('%H') > 4 && strftime('%H') < 19 ? 'orbital' : 'night-owl'
