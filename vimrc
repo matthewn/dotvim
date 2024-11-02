@@ -75,7 +75,13 @@
     if has("unix")
       " use gtklp for printing
       set printexpr=system('gtklp'\ .\ '\ '\ .\ v:fname_in)\ .\ delete(v:fname_in)\ +\ v:shell_error
-      if has("vim_starting") | set guifont=Ubuntu\ Mono\ 12 | endif
+      " set initial font
+      if has("vim_starting")
+        set guifont=Ubuntu\ Mono\ 12
+        if substitute(system('hostname'), '\n', '', '') ==# 'chewie'
+          set guifont=Ubuntu\ Mono\ 13
+        endif
+      endif
     endif
   endif
 
