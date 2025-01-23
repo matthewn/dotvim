@@ -351,6 +351,7 @@
   Plug 'tpope/vim-surround' " essential
   Plug 'tpope/vim-unimpaired' " handy mappings
   Plug 'tweekmonster/django-plus.vim' " django niceties
+  Plug 'vim-python/python-syntax' " improved python syntax highlighting
   Plug 'whatyouhide/vim-gotham' " dark colorscheme
   Plug 'xuhdev/vim-latex-live-preview' " what it says on the tin
   "
