@@ -110,6 +110,9 @@
       " tweaks for night-owl
       if g:colors_name == 'night-owl'
         highlight MatchParen guifg=#ffffff guibg=#0a3749
+        highlight Search guifg=#ffffff guibg=blue
+        highlight IncSearch guifg=#ffffff guibg=blue
+        highlight Todo guifg=#ffffff guibg=red
       endif
       " tweaks for iceberg
       if g:colors_name == 'iceberg'
