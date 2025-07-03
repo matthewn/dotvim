@@ -326,7 +326,6 @@
   Plug 'chrisbra/Colorizer' " show hex colors, etc. with :ColorToggle
   Plug 'cocopon/iceberg.vim' " colorscheme
   Plug 'dhruvasagar/vim-open-url' " gB to open url
-  Plug 'direnv/direnv.vim' " direnv integration
   Plug 'fcpg/vim-orbital' " colorscheme
   Plug 'fisadev/vim-isort'  " :isort for python
   Plug 'gioele/vim-autoswap' " essential: don't bug me about swap files
@@ -423,9 +422,11 @@
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   let g:ale_open_list = 'on_save'
-  let g:ale_python_auto_poetry = 1
-  let g:ale_python_pylsp_auto_poetry = 1
   let g:ale_virtualtext_cursor = 0
+  "
+  let g:ale_python_auto_poetry = 1
+  let g:ale_python_auto_uv = 1
+  "
   let g:ale_linters = {
     \ 'css': ['stylelint'],
     \ 'php': ['php'],
@@ -440,10 +441,13 @@
     \ 'javascript': ['eslint'],
     \ 'python': ['autoimport', 'black', 'isort'],
     \ }
-
   " python-lsp-server (pylsp) config
   " enable flake8, use config at ~/.config/flake8, disable other pylsp linters
   " https://github.com/palantir/python-language-server/issues/190#issuecomment-721764819
+  let g:ale_python_pylsp_auto_poetry = 1
+  let g:ale_python_pylsp_auto_uv = 1
+  " for debugging, uncomment this:
+  " let g:ale_python_pylsp_options = '--log-file /tmp/pylsp.log --verbose'
   let g:ale_python_pylsp_config = {
     \   'pylsp': {
     \     'configurationSources': ['flake8'],
