@@ -326,6 +326,7 @@
   Plug 'chrisbra/Colorizer' " show hex colors, etc. with :ColorToggle
   Plug 'cocopon/iceberg.vim' " colorscheme
   Plug 'dhruvasagar/vim-open-url' " gB to open url
+  Plug 'direnv/direnv.vim' " direnv integration
   Plug 'fcpg/vim-orbital' " colorscheme
   Plug 'fisadev/vim-isort'  " :isort for python
   Plug 'gioele/vim-autoswap' " essential: don't bug me about swap files
